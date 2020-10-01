@@ -6,9 +6,9 @@ namespace tests.UnitTests.ApplicationCore.Entities.TouristTests
     [TestClass]
     public class CreateTourist
     {
-        string _name = "Juan";
-        string _surname = "Pérez";
-        string _email = "juan.perez@ort.edu.uy";
+        private string _name = "Juan";
+        private string _surname = "Pérez";
+        private string _email = "juan.perez@ort.edu.uy";
 
 
         [TestMethod]
@@ -16,15 +16,19 @@ namespace tests.UnitTests.ApplicationCore.Entities.TouristTests
         {
             Tourist tourist = new Tourist();
 
-            Assert.AreEqual(tourist.Name, null);
-            Assert.AreEqual(tourist.Surname, null);
-            Assert.AreEqual(tourist.Email, null);
+            Assert.IsNull(tourist.Name);
+            Assert.IsNull(tourist.Surname);
+            Assert.IsNull(tourist.Email);
         }
 
         [TestMethod]
         public void CreateTouristWithData()
         {
-            Tourist tourist = new Tourist { Name = _name, Surname = _surname, Email = _email };
+            Tourist tourist = new Tourist {
+                Name = _name,
+                Surname = _surname,
+                Email = _email,
+            };
 
             Assert.AreEqual(tourist.Name, _name);
             Assert.AreEqual(tourist.Surname, _surname);
