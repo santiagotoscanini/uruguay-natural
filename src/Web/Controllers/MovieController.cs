@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    [ApiController]
     [Route("api/movies")]
     public class MovieController : ControllerBase
     {
-
         [HttpGet]
         public IActionResult Get()
         {
