@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Entities;
+﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 

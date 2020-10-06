@@ -1,7 +1,6 @@
-﻿using Infrastructure;
-using Infrastructure.Data;
-using Infrastructure.Services;
-using Infrastructure.Services.Interfaces;
+﻿using Infrastructure.Data;
+using ApplicationCore.Services;
+using ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,7 +17,7 @@ namespace Factory
         }
         public void AddCustomServices()
         {
-            _services.AddScoped<IRepository, Repository>();
+            _services.AddScoped<IRepository, EfRepository>();
             _services.AddScoped<IBookingService, BookingService>();
         }
 

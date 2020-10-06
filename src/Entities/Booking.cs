@@ -1,6 +1,6 @@
 using System;
 
-namespace ApplicationCore.Entities
+namespace Entities
 {
     public class Booking
     {

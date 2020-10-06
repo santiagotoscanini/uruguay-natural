@@ -1,9 +1,7 @@
-﻿using ApplicationCore.Entities;
-using System;
+﻿using Entities;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Infrastructure.Data
+namespace ApplicationCore.Interfaces
 {
     public interface IRepository
     {

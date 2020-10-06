@@ -1,7 +1,7 @@
-﻿using ApplicationCore.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Entities;
 
-namespace Infrastructure.Services.Interfaces
+namespace ApplicationCore.Interfaces
 {
     public interface IBookingService
     {

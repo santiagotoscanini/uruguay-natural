@@ -1,11 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ApplicationCore.Entities;
+using Entities;
 using System;
 
-namespace tests.UnitTests.ApplicationCore.Entities.BookingTests
+namespace tests.UnitTests.Entities
 {
     [TestClass]
-    public class CreateBooking
+    public class BookingTest
     {
         private Tourist _tourist = new Tourist();
         private string _code = "XLR8";

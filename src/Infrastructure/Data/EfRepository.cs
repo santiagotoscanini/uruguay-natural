@@ -1,16 +1,17 @@
-﻿using ApplicationCore.Entities;
+﻿using Entities;
+using ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace Infrastructure.Data
 {
-    public class Repository : IRepository
+    public class EfRepository : IRepository
     {
 
         private readonly TourismContext _context;
         private readonly DbSet<Booking> _bookings;
 
-        public Repository(TourismContext context)
+        public EfRepository(TourismContext context)
         {
             _context = context;
             _bookings = context.Set<Booking>();

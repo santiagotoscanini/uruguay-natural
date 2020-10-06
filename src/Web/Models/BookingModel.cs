@@ -1,4 +1,4 @@
-using ApplicationCore.Entities;
+using Entities;
 using System;
 
 namespace Web.Models
