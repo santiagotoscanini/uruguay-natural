@@ -25,9 +25,9 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]BookingModel bookingModel)
         {
-            //var booking = _bookingService.Add(bookingModel.ToEntity());
-            //return CreatedAtRoute("GetName", new {id = booking.Code}, booking);
-            return Ok();
+            var booking = _bookingService.Add(bookingModel.ToEntity());
+            return CreatedAtRoute("GetName", new {id = booking.Code}, booking);
+            //return Ok();
         }
     }
 }

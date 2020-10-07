@@ -8,10 +8,10 @@ namespace Infrastructure.Data
     public class EfRepository : IRepository
     {
 
-        private readonly TourismContext _context;
+        private readonly DbContext _context;
         private readonly DbSet<Booking> _bookings;
 
-        public EfRepository(TourismContext context)
+        public EfRepository(DbContext context)
         {
             _context = context;
             _bookings = context.Set<Booking>();
