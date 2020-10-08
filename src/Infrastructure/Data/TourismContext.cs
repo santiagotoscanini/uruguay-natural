@@ -24,7 +24,6 @@ namespace Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
             if (!optionsBuilder.IsConfigured)
             {
                 string directory = Directory.GetCurrentDirectory();

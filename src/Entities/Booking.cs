@@ -11,5 +11,17 @@ namespace Entities
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
         public int NumberOfGuests { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var result = false;
+
+            if (obj is Booking booking)
+            {
+                result = this.Code == booking.Code;
+            }
+
+            return result;
+        }
     }
 }

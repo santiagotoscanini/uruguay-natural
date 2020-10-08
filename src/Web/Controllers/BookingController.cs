@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ApplicationCore.Interfaces;
+using ApplicationCoreInterface.Services;
 using System;
 using Web.Models;
 
@@ -9,7 +9,7 @@ namespace Web.Controllers
     public class BookingController : ControllerBase
     {
 
-        private readonly IBookingService _bookingService;
+        private IBookingService _bookingService;
 
         public BookingController(IBookingService bookingService)
         {
@@ -27,7 +27,6 @@ namespace Web.Controllers
         {
             var booking = _bookingService.Add(bookingModel.ToEntity());
             return CreatedAtRoute("GetName", new {id = booking.Code}, booking);
-            //return Ok();
         }
     }
 }
