@@ -14,7 +14,6 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
     {
         private IBookingRepository _bookingRepository;
         private DbContext _context;
-        private DbContextOptions<TourismContext> _options;
 
         private readonly string _code = "test_code123";
         private readonly string _code_2 = "test_code456";
@@ -22,8 +21,8 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         [TestInitialize]
         public void Setup()
         {
-            _options = new DbContextOptionsBuilder<TourismContext>().UseInMemoryDatabase(databaseName: "database_test").Options;
-            _context = new TourismContext(_options);
+            DbContextOptions<TourismContext>  options = new DbContextOptionsBuilder<TourismContext>().UseInMemoryDatabase(databaseName: "database_test").Options;
+            _context = new TourismContext(options);
             _bookingRepository = new BookingRepository(_context);
         }
 
