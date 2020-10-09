@@ -1,4 +1,4 @@
-namespace ApplicationCore.Entities
+namespace Entities
 {
     public enum BookingState
     {

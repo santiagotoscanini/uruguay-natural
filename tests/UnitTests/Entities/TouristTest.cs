@@ -1,15 +1,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ApplicationCore.Entities;
+using Entities;
 
-namespace tests.UnitTests.ApplicationCore.Entities.TouristTests
+namespace tests.UnitTests.Entities
 {
     [TestClass]
-    public class CreateTourist
+    public class TouristTest
     {
         private string _name = "Juan";
         private string _surname = "Pérez";
         private string _email = "juan.perez@ort.edu.uy";
-
 
         [TestMethod]
         public void CreateEmptyTourist()
