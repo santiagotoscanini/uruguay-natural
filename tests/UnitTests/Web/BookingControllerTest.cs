@@ -26,14 +26,14 @@ namespace UnitTests.Web
         private DateTime _checkOutDate = DateTime.Now;
         private int _numberOfGuests = 3;
         private BookingState _state2 = BookingState.PENDING_OF_PAY;
-        private string _description2 = "This is a other dummy description.";
+        private string _description2 = "This is another dummy description.";
 
         [TestMethod]
         public void TestGetAllBookingsOk()
         {
-            List<Booking> BookingsToReturn = new List<Booking>()
+            var bookingsToReturn = new List<Booking>
             {
-                new Booking()
+                new Booking
                 {
                     Code = _bookingCode1,
                     Tourist = _tourist,
@@ -43,7 +43,7 @@ namespace UnitTests.Web
                     CheckOutDate = _checkOutDate,
                     NumberOfGuests = _numberOfGuests,
                 },
-                new Booking()
+                new Booking
                 {
                     Code = _bookingCode2,
                     Tourist = _tourist,
@@ -54,23 +54,22 @@ namespace UnitTests.Web
                     NumberOfGuests = _numberOfGuests,
                 }
             };
+            var mock = new Mock<IBookingService>(MockBehavior.Strict);
+            mock.Setup(m => m.GetAll()).Returns(bookingsToReturn);
+            var controller = new BookingController(mock.Object);
 
-            var Mock = new Mock<IBookingService>(MockBehavior.Strict);
-            Mock.Setup(m => m.GetAll()).Returns(BookingsToReturn);
-            var Controller = new BookingController(Mock.Object);
+            IActionResult result = controller.Get();
+            var okResult = result as OkObjectResult;
+            var bookings = okResult.Value as IEnumerable<BookingModel>;
 
-            var Result = Controller.Get();
-            var OkResult = Result as OkObjectResult;
-            var Bookings = OkResult.Value as IEnumerable<BookingModel>;
-
-            Mock.VerifyAll();
-            Assert.IsTrue(BookingsToReturn.Select(b => new BookingModel(b)).SequenceEqual(Bookings));
+            mock.VerifyAll();
+            Assert.IsTrue(bookingsToReturn.Select(b => new BookingModel(b)).SequenceEqual(bookings));
         }
 
         [TestMethod]
         public void TestPostMovieOk()
         {
-            BookingCreatingInfoModel BookingModel = new BookingCreatingInfoModel()
+            var bookingModel = new BookingCreatingInfoModel
             {
                 TouristName = _touristName,
                 TouristSurname = _touristSurname,
@@ -79,7 +78,7 @@ namespace UnitTests.Web
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
             };
-            Booking BookingToReturn = new Booking()
+            var bookingToReturn = new Booking
             {
                 Code = _bookingCode2,
                 Tourist = _tourist,
@@ -89,22 +88,22 @@ namespace UnitTests.Web
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
             };
-            var Mock = new Mock<IBookingService>();
-            Mock.Setup(m => m.Add(It.IsAny<Booking>())).Returns(BookingToReturn);
-            var Controller = new BookingController(Mock.Object);
+            var mock = new Mock<IBookingService>();
+            mock.Setup(m => m.Add(It.IsAny<Booking>())).Returns(bookingToReturn);
+            var controller = new BookingController(mock.Object);
 
-            var Result = Controller.Post(BookingModel);
-            var Status = Result as CreatedAtRouteResult;
-            var Content = Status.Value as BookingBaseCreateInfoModel;
+            IActionResult result = controller.Post(bookingModel);
+            var status = result as CreatedAtRouteResult;
+            var content = status.Value as BookingBaseCreateInfoModel;
 
-            Mock.VerifyAll();
-            Assert.AreEqual(Content, new BookingBaseCreateInfoModel(BookingToReturn));
+            mock.VerifyAll();
+            Assert.AreEqual(content, new BookingBaseCreateInfoModel(bookingToReturn));
         }
 
         [TestMethod]
         public void TestGetBookingOk()
         {
-            Booking BookingToReturn = new Booking()
+            var bookingToReturn = new Booking
             {
                 Code = _bookingCode2,
                 Tourist = _tourist,
@@ -114,23 +113,22 @@ namespace UnitTests.Web
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
             };
+            var mock = new Mock<IBookingService>(MockBehavior.Strict);
+            mock.Setup(m => m.Get(_bookingCode2)).Returns(bookingToReturn);
+            var controller = new BookingController(mock.Object);
 
-            var Mock = new Mock<IBookingService>(MockBehavior.Strict);
-            Mock.Setup(m => m.Get(_bookingCode2)).Returns(BookingToReturn);
-            var Controller = new BookingController(Mock.Object);
+            IActionResult result = controller.Get(_bookingCode2);
+            var okResult = result as OkObjectResult;
+            var booking = okResult.Value as BookingStateInfoModel;
 
-            var Result = Controller.Get(_bookingCode2);
-            var OkResult = Result as OkObjectResult;
-            var Booking = OkResult.Value as BookingStateInfoModel;
-
-            Mock.VerifyAll();
-            Assert.AreEqual(new BookingStateInfoModel(BookingToReturn), Booking);
+            mock.VerifyAll();
+            Assert.AreEqual(new BookingStateInfoModel(bookingToReturn), booking);
         }
 
         [TestMethod]
         public void TestPutBookingOk()
         {
-            Booking BookingToReturn = new Booking()
+            var bookingToReturn = new Booking
             {
                 Code = _bookingCode2,
                 Tourist = _tourist,
@@ -140,31 +138,30 @@ namespace UnitTests.Web
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
             };
-            BookingUpdateInfoModel UpdateInfoBooking = new BookingUpdateInfoModel()
+            var updateInfoBooking = new BookingUpdateInfoModel
             {
                 State = _state2,
                 Description = _description2,
             };
-            Booking StateInfoBooking = new Booking()
+            var stateInfoBooking = new Booking
             {
                 Code = _bookingCode2,
                 State = _state2,
                 Description = _description2,
             };
+            var mock = new Mock<IBookingService>(MockBehavior.Strict);
+            mock.Setup(m => m.Update(stateInfoBooking));
+            mock.Setup(m => m.Get(_bookingCode2)).Returns(bookingToReturn);
+            var controller = new BookingController(mock.Object);
 
-            var Mock = new Mock<IBookingService>(MockBehavior.Strict);
-            Mock.Setup(m => m.Update(StateInfoBooking));
-            Mock.Setup(m => m.Get(_bookingCode2)).Returns(BookingToReturn);
-            var Controller = new BookingController(Mock.Object);
+            controller.Put(_bookingCode2, updateInfoBooking);
+            IActionResult result = controller.Get(_bookingCode2);
+            var okResult = result as OkObjectResult;
+            var booking = okResult.Value as BookingStateInfoModel;
 
-            Controller.Put(_bookingCode2, UpdateInfoBooking);
-            var Result = Controller.Get(_bookingCode2);
-            var OkResult = Result as OkObjectResult;
-            var Booking = OkResult.Value as BookingStateInfoModel;
-
-            Mock.VerifyAll();
-            Assert.AreEqual(StateInfoBooking.State, Booking.State);
-            Assert.AreEqual(StateInfoBooking.Description, Booking.Description);
+            mock.VerifyAll();
+            Assert.AreEqual(stateInfoBooking.State, booking.State);
+            Assert.AreEqual(stateInfoBooking.Description, booking.Description);
         }
     }
 }

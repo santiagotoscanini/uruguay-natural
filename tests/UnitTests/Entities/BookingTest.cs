@@ -7,7 +7,7 @@ namespace tests.UnitTests.Entities
     [TestClass]
     public class BookingTest
     {
-        private Tourist _tourist = new Tourist() { Id = 1 };
+        private Tourist _tourist = new Tourist { Id = 1 };
         private string _code = "XLR8";
         private BookingState _state = BookingState.CREATED;
         private string _description = "This is a dummy description.";
@@ -18,7 +18,7 @@ namespace tests.UnitTests.Entities
         [TestMethod]
         public void CreateEmptyBooking()
         {
-            Booking booking = new Booking();
+            var booking = new Booking();
 
             Assert.IsNull(booking.Tourist);
             Assert.IsNull(booking.Code);
@@ -32,7 +32,7 @@ namespace tests.UnitTests.Entities
         [TestMethod]
         public void CreateBookingWithData()
         {
-            Booking booking = new Booking
+            var booking = new Booking
             {
                 Tourist = _tourist,
                 Code = _code,
@@ -55,7 +55,7 @@ namespace tests.UnitTests.Entities
         [TestMethod]
         public void EqualsOk()
         {
-            Booking booking1 = new Booking
+            var booking1 = new Booking
             {
                 Tourist = _tourist,
                 Code = _code,
@@ -65,8 +65,7 @@ namespace tests.UnitTests.Entities
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
             };
-
-            Booking booking2 = new Booking
+            var booking2 = new Booking
             {
                 Tourist = _tourist,
                 Code = _code,
@@ -83,7 +82,7 @@ namespace tests.UnitTests.Entities
         [TestMethod]
         public void EqualsFails()
         {
-            Booking booking1 = new Booking
+            var booking1 = new Booking
             {
                 Tourist = _tourist,
                 Code = _code,
@@ -93,8 +92,7 @@ namespace tests.UnitTests.Entities
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
             };
-
-            Booking booking2 = new Booking
+            var booking2 = new Booking
             {
                 Tourist = _tourist,
                 Code = "another_code",
