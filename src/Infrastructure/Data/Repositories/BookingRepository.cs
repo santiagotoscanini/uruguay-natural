@@ -1,6 +1,7 @@
 ﻿using Entities;
 using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Models.BookingModels;
 using System.Collections.Generic;
 
 namespace Infrastructure.Data.Repositories
@@ -34,9 +35,14 @@ namespace Infrastructure.Data.Repositories
             return _bookings.Find(code);
         }
 
-        public void Update(Booking booking)
+        public void Update(BookingStateInfoModel updateBooking)
         {
-            _bookings.Update(booking);
+            var Booking = _bookings.Find(updateBooking.Code);
+
+            Booking.State = updateBooking.State;
+            Booking.Description = updateBooking.Description;
+            
+            _bookings.Update(Booking);
             _context.SaveChanges();
         }
     }

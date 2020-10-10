@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ApplicationCoreInterface.Services;
 using InfrastructureInterface.Data.Repositories;
+using Models.BookingModels;
 
 namespace ApplicationCore.Services
 {
@@ -29,7 +30,7 @@ namespace ApplicationCore.Services
             return _repository.Get(bookingCode);
         }
 
-        public void Update(Booking booking)
+        public void Update(BookingStateInfoModel booking)
         {
             _repository.Update(booking);
         }

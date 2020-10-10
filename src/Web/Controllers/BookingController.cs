@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ApplicationCoreInterface.Services;
-using System;
-using Web.Models;
+using Models.BookingModels;
+using System.Linq;
+using Entities;
 
 namespace Web.Controllers
 {
@@ -19,14 +20,28 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_bookingService.GetAll());
+            return Ok(_bookingService.GetAll().Select(b => new BookingModel(b)));
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]BookingModel bookingModel)
+        public IActionResult Post([FromBody]BookingCreatingInfoModel bookingModel)
         {
-            var booking = _bookingService.Add(bookingModel.ToEntity());
-            return CreatedAtRoute("GetName", new {id = booking.Code}, booking);
+            var Booking = _bookingService.Add(bookingModel.ToEntity());
+            return CreatedAtRoute("GetBooking", new { id = Booking.Code }, new BookingBaseCreateInfoModel(Booking));
+        }
+
+        [HttpGet("{id}", Name = "GetBooking")]
+        public IActionResult Get([FromRoute] string id)
+        {
+            var Booking = _bookingService.Get(id);
+            return Ok(new BookingStateInfoModel(Booking)); 
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put([FromRoute] string id, [FromBody] BookingUpdateInfoModel booking)
+        {
+            _bookingService.Update(booking.ToStateInfoModel(id));
+            return Ok();
         }
     }
 }

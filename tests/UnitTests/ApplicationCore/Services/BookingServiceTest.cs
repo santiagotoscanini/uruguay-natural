@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using InfrastructureInterface.Data.Repositories;
 using System.Linq;
 using ApplicationCore.Services;
+using Models.BookingModels;
 
 namespace UnitTests.ApplicationCore.Services
 {
@@ -70,20 +71,21 @@ namespace UnitTests.ApplicationCore.Services
         }
 
         [TestMethod]
-        public void TestSaveModifiedBooking()
+        public void TestUpdateBooking()
         {
-            Booking modifiedBooking = new Booking() { Code = _bookingCode1, State = BookingState.ACCEPTED };
+            var Booking = new Booking { Code = _bookingCode1, State = BookingState.EXPIRED };
+            BookingStateInfoModel UpdateStateInfoModel = new BookingStateInfoModel() { Code = _bookingCode1, State = BookingState.EXPIRED };
 
-            var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
-            mock.Setup(r => r.Update(modifiedBooking));
-            mock.Setup(r => r.Get(_bookingCode1)).Returns(modifiedBooking);
-            var bookingService = new BookingService(mock.Object);
+            var Mock = new Mock<IBookingRepository>(MockBehavior.Strict);
+            Mock.Setup(r => r.Update(UpdateStateInfoModel));
+            Mock.Setup(r => r.Get(_bookingCode1)).Returns(Booking);
+            var BookingService = new BookingService(Mock.Object);
 
-            bookingService.Update(modifiedBooking);
-            Booking modifiedBookingGetted = bookingService.Get(_bookingCode1);
+            BookingService.Update(UpdateStateInfoModel);
+            var modifiedBookingGetted = BookingService.Get(_bookingCode1);
 
-            mock.VerifyAll();
-            Assert.AreEqual(modifiedBooking, modifiedBookingGetted);
+            Mock.VerifyAll();
+            Assert.AreEqual(UpdateStateInfoModel.State, modifiedBookingGetted.State);
         }
     }
 }

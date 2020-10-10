@@ -6,6 +6,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
+using Models.BookingModels;
 
 namespace IntegrationTests.Infrastructure.Data.Repositories
 {
@@ -17,6 +18,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
 
         private readonly string _code = "test_code123";
         private readonly string _code_2 = "test_code456";
+        private readonly string _description = "This is a dummy description";
 
         [TestInitialize]
         public void Setup()
@@ -71,13 +73,19 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         [TestMethod]
         public void UpdateBookingTest()
         {
-            Booking booking = new Booking() { Code = _code, State = BookingState.CREATED };
+            Booking Booking = new Booking() { Code = _code, State = BookingState.CREATED };
+            BookingStateInfoModel BookingStateInfo = new BookingStateInfoModel()
+            {
+                Code = _code,
+                State = BookingState.EXPIRED,
+                Description = _description,
+            };
 
-            Booking bookingSaved = _bookingRepository.Add(booking);
-            bookingSaved.State = BookingState.EXPIRED;
-            _bookingRepository.Update(bookingSaved);
+            _bookingRepository.Add(Booking);
+            _bookingRepository.Update(BookingStateInfo);
 
-            Assert.AreEqual(bookingSaved.State, _bookingRepository.Get(_code).State);
+            Assert.AreEqual(BookingStateInfo.State, _bookingRepository.Get(_code).State);
+            Assert.AreEqual(BookingStateInfo.Description, _bookingRepository.Get(_code).Description);
         }
     }
 }

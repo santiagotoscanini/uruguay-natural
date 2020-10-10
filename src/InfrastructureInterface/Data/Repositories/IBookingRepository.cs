@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Models.BookingModels;
 using System.Collections.Generic;
 
 namespace InfrastructureInterface.Data.Repositories
@@ -11,6 +12,6 @@ namespace InfrastructureInterface.Data.Repositories
 
         Booking Get(string code);
 
-        void Update(Booking booking);
+        void Update(BookingStateInfoModel booking);
     }
 }
