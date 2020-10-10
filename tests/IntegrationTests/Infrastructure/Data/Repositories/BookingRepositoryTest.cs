@@ -6,7 +6,6 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
-using Models.BookingModels;
 
 namespace IntegrationTests.Infrastructure.Data.Repositories
 {
@@ -17,7 +16,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         private DbContext _context;
 
         private readonly string _code = "test_code123";
-        private readonly string _code_2 = "test_code456";
+        private readonly string _code2 = "test_code456";
         private readonly string _description = "This is a dummy description";
 
         [TestInitialize]
@@ -39,13 +38,31 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         {
             List<Booking> bookings = new List<Booking>() { 
                 new Booking() { Code = _code },
-                new Booking() { Code = _code_2 }
+                new Booking() { Code = _code2 }
             };
 
             bookings.ForEach(b => _bookingRepository.Add(b));
             var bookingsSaved = _bookingRepository.GetAll();
 
             Assert.IsTrue(bookings.SequenceEqual(bookingsSaved));
+        }
+
+        [TestMethod]
+        public void GetAllBookingsWithTourists()
+        {
+            Tourist tourist1 = new Tourist() { Id = 1 };
+            Tourist tourist2 = new Tourist() { Id = 2 };
+
+            List<Booking> bookings = new List<Booking>() {
+                new Booking() { Code = _code, Tourist = tourist1 },
+                new Booking() { Code = _code2, Tourist = tourist2 },
+            };
+
+            bookings.ForEach(b => _bookingRepository.Add(b));
+            var bookingsSaved = _bookingRepository.GetAll();
+            
+            Assert.AreEqual(tourist1, bookingsSaved.First().Tourist);
+            Assert.AreEqual(tourist2, bookingsSaved.Last().Tourist);
         }
 
         [TestMethod]
@@ -56,25 +73,33 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             _bookingRepository.Add(booking);
             Booking bookingSaved = _bookingRepository.GetAll().First();
 
-            Assert.IsTrue(bookingSaved.Equals(booking));
+            Assert.AreEqual(booking, bookingSaved);
         }
 
         [TestMethod]
         public void GetBookingTest()
         {
-            Booking booking = new Booking() { Code = _code };
+            Tourist tourist = new Tourist() { Id = 1 };
+
+            Booking booking = new Booking()
+            {
+                Code = _code,
+                Tourist = tourist,
+            };
+
 
             _bookingRepository.Add(booking);
             Booking bookingGetted = _bookingRepository.Get(_code);
 
-            Assert.IsTrue(bookingGetted.Equals(booking));
+            Assert.AreEqual(tourist, bookingGetted.Tourist);
+            Assert.AreEqual(booking, bookingGetted);
         }
 
         [TestMethod]
         public void UpdateBookingTest()
         {
             Booking Booking = new Booking() { Code = _code, State = BookingState.CREATED };
-            BookingStateInfoModel BookingStateInfo = new BookingStateInfoModel()
+            Booking BookingStateInfo = new Booking
             {
                 Code = _code,
                 State = BookingState.EXPIRED,

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using InfrastructureInterface.Data.Repositories;
 using System.Linq;
 using ApplicationCore.Services;
-using Models.BookingModels;
 
 namespace UnitTests.ApplicationCore.Services
 {
@@ -74,7 +73,7 @@ namespace UnitTests.ApplicationCore.Services
         public void TestUpdateBooking()
         {
             var Booking = new Booking { Code = _bookingCode1, State = BookingState.EXPIRED };
-            BookingStateInfoModel UpdateStateInfoModel = new BookingStateInfoModel() { Code = _bookingCode1, State = BookingState.EXPIRED };
+            Booking UpdateStateInfoModel = new Booking() { Code = _bookingCode1, State = BookingState.EXPIRED };
 
             var Mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             Mock.Setup(r => r.Update(UpdateStateInfoModel));

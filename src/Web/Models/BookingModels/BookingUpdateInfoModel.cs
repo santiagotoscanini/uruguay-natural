@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace Models.BookingModels
+namespace Web.Models.BookingModels
 {
     public class BookingUpdateInfoModel
     {

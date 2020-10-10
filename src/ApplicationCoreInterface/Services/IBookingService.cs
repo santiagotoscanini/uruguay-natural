@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Entities;
-using Models.BookingModels;
 
 namespace ApplicationCoreInterface.Services
 {
@@ -9,6 +8,6 @@ namespace ApplicationCoreInterface.Services
         Booking Add(Booking booking);
         IEnumerable<Booking> GetAll();
         Booking Get(string bookingCode);
-        void Update(BookingStateInfoModel booking);
+        void Update(Booking booking);
     }
 }

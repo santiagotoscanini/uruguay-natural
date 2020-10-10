@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Web.Controllers;
-using Models.BookingModels;
+using Web.Models.BookingModels;
 
 namespace UnitTests.Web
 {
@@ -145,7 +145,7 @@ namespace UnitTests.Web
                 State = _state2,
                 Description = _description2,
             };
-            BookingStateInfoModel StateInfoBooking = new BookingStateInfoModel()
+            Booking StateInfoBooking = new Booking()
             {
                 Code = _bookingCode2,
                 State = _state2,
@@ -163,7 +163,8 @@ namespace UnitTests.Web
             var Booking = OkResult.Value as BookingStateInfoModel;
 
             Mock.VerifyAll();
-            Assert.AreEqual(StateInfoBooking, Booking);
+            Assert.AreEqual(StateInfoBooking.State, Booking.State);
+            Assert.AreEqual(StateInfoBooking.Description, Booking.Description);
         }
     }
 }

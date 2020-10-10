@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ApplicationCoreInterface.Services;
-using Models.BookingModels;
+using Web.Models.BookingModels;
 using System.Linq;
 using Entities;
 
@@ -40,7 +40,7 @@ namespace Web.Controllers
         [HttpPut("{id}")]
         public IActionResult Put([FromRoute] string id, [FromBody] BookingUpdateInfoModel booking)
         {
-            _bookingService.Update(booking.ToStateInfoModel(id));
+            _bookingService.Update(booking.ToEntity(id));
             return Ok();
         }
     }
