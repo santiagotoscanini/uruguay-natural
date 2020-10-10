@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ApplicationCoreInterface.Services;
-using System;
-using Web.Models;
+using Web.Models.BookingModels;
+using System.Linq;
 
 namespace Web.Controllers
 {
@@ -17,16 +17,30 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAllBookings()
         {
-            return Ok(_bookingService.GetAll());
+            return Ok(_bookingService.GetAll().Select(b => new BookingModel(b)));
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]BookingModel bookingModel)
+        public IActionResult CreateBooking([FromBody]BookingCreatingInfoModel bookingModel)
         {
             var booking = _bookingService.Add(bookingModel.ToEntity());
-            return CreatedAtRoute("GetName", new {id = booking.Code}, booking);
+            return CreatedAtRoute("GetBooking", new { id = booking.Code }, new BookingBaseCreateInfoModel(booking));
+        }
+
+        [HttpGet("{id}", Name = "GetBooking")]
+        public IActionResult GetBookingById([FromRoute] string id)
+        {
+            var booking = _bookingService.Get(id);
+            return Ok(new BookingStateInfoModel(booking)); 
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateBooking([FromRoute] string id, [FromBody] BookingUpdateInfoModel booking)
+        {
+            _bookingService.Update(booking.ToEntity(id));
+            return Ok();
         }
     }
 }

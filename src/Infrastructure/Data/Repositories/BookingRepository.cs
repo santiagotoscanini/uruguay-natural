@@ -2,6 +2,7 @@
 using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -19,7 +20,7 @@ namespace Infrastructure.Data.Repositories
 
         public IEnumerable<Booking> GetAll()
         {
-            return _bookings;
+            return _bookings.Include(b => b.Tourist);
         }
 
         public Booking Add(Booking booking)
@@ -31,12 +32,17 @@ namespace Infrastructure.Data.Repositories
 
         public Booking Get(string code)
         {
-            return _bookings.Find(code);
+            return _bookings.Include(b => b.Tourist).First(b => b.Code == code);
         }
 
-        public void Update(Booking booking)
+        public void Update(Booking updateBooking)
         {
-            _bookings.Update(booking);
+            var Booking = _bookings.Find(updateBooking.Code);
+
+            Booking.State = updateBooking.State;
+            Booking.Description = updateBooking.Description;
+            
+            _bookings.Update(Booking);
             _context.SaveChanges();
         }
     }

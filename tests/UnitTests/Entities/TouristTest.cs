@@ -13,8 +13,9 @@ namespace tests.UnitTests.Entities
         [TestMethod]
         public void CreateEmptyTourist()
         {
-            Tourist tourist = new Tourist();
+            var tourist = new Tourist();
 
+            Assert.AreEqual(0, tourist.Id);
             Assert.IsNull(tourist.Name);
             Assert.IsNull(tourist.Surname);
             Assert.IsNull(tourist.Email);
@@ -23,7 +24,7 @@ namespace tests.UnitTests.Entities
         [TestMethod]
         public void CreateTouristWithData()
         {
-            Tourist tourist = new Tourist {
+            var tourist = new Tourist {
                 Name = _name,
                 Surname = _surname,
                 Email = _email,
@@ -32,6 +33,42 @@ namespace tests.UnitTests.Entities
             Assert.AreEqual(tourist.Name, _name);
             Assert.AreEqual(tourist.Surname, _surname);
             Assert.AreEqual(tourist.Email, _email);
+        }
+
+        [TestMethod]
+        public void EqualsOk()
+        {
+            var tourist1 = new Tourist
+            {
+                Id = 1,
+                Name = _name,
+                Surname = _surname,
+                Email = _email,
+            };
+            var tourist2 = new Tourist
+            {
+                Id = 1
+            };
+
+            Assert.AreEqual(tourist1, tourist2);
+        }
+
+        [TestMethod]
+        public void EqualsFail()
+        {
+            var tourist1 = new Tourist
+            {
+                Id = 1,
+                Name = _name,
+                Surname = _surname,
+                Email = _email,
+            };
+            var tourist2 = new Tourist
+            {
+                Id = 2
+            };
+
+            Assert.AreNotEqual(tourist1, tourist2);
         }
     }
 }

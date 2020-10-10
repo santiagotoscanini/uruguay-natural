@@ -17,18 +17,17 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void TestGetAllOk()
         {
-            IEnumerable<Booking> bookingsToReturn = new List<Booking>()
+            var bookingsToReturn = new List<Booking>
             {
-                new Booking()
+                new Booking
                 {
                     Code = _bookingCode1,
                 },
-                new Booking()
+                new Booking
                 {
                     Code = _bookingCode2,
-                }
+                },
             };
-
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.GetAll()).Returns(bookingsToReturn);
             var bookingService = new BookingService(mock.Object);
@@ -42,8 +41,7 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void TestAddBooking()
         {
-            Booking bookingToAdd = new Booking() { Code = _bookingCode1 };
-
+            var bookingToAdd = new Booking { Code = _bookingCode1 };
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.Add(bookingToAdd)).Returns(bookingToAdd);
             var bookingService = new BookingService(mock.Object);
@@ -57,8 +55,7 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void TestGetBooking()
         {
-            Booking bookingToGet = new Booking() { Code = _bookingCode1 };
-
+            var bookingToGet = new Booking { Code = _bookingCode1 };
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.Get(_bookingCode1)).Returns(bookingToGet);
             var bookingService = new BookingService(mock.Object);
@@ -70,20 +67,20 @@ namespace UnitTests.ApplicationCore.Services
         }
 
         [TestMethod]
-        public void TestSaveModifiedBooking()
+        public void TestUpdateBooking()
         {
-            Booking modifiedBooking = new Booking() { Code = _bookingCode1, State = BookingState.ACCEPTED };
-
+            var booking = new Booking { Code = _bookingCode1, State = BookingState.EXPIRED };
+            var updateStateInfoModel = new Booking { Code = _bookingCode1, State = BookingState.EXPIRED };
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
-            mock.Setup(r => r.Update(modifiedBooking));
-            mock.Setup(r => r.Get(_bookingCode1)).Returns(modifiedBooking);
+            mock.Setup(r => r.Update(updateStateInfoModel));
+            mock.Setup(r => r.Get(_bookingCode1)).Returns(booking);
             var bookingService = new BookingService(mock.Object);
 
-            bookingService.Update(modifiedBooking);
-            Booking modifiedBookingGetted = bookingService.Get(_bookingCode1);
+            bookingService.Update(updateStateInfoModel);
+            var modifiedBookingGetted = bookingService.Get(_bookingCode1);
 
             mock.VerifyAll();
-            Assert.AreEqual(modifiedBooking, modifiedBookingGetted);
+            Assert.AreEqual(updateStateInfoModel.State, modifiedBookingGetted.State);
         }
     }
 }
