@@ -58,7 +58,7 @@ namespace UnitTests.Web
             mock.Setup(m => m.GetAll()).Returns(bookingsToReturn);
             var controller = new BookingController(mock.Object);
 
-            IActionResult result = controller.Get();
+            IActionResult result = controller.GetAllBookings();
             var okResult = result as OkObjectResult;
             var bookings = okResult.Value as IEnumerable<BookingModel>;
 
@@ -92,7 +92,7 @@ namespace UnitTests.Web
             mock.Setup(m => m.Add(It.IsAny<Booking>())).Returns(bookingToReturn);
             var controller = new BookingController(mock.Object);
 
-            IActionResult result = controller.Post(bookingModel);
+            IActionResult result = controller.CreateBooking(bookingModel);
             var status = result as CreatedAtRouteResult;
             var content = status.Value as BookingBaseCreateInfoModel;
 
@@ -117,7 +117,7 @@ namespace UnitTests.Web
             mock.Setup(m => m.Get(_bookingCode2)).Returns(bookingToReturn);
             var controller = new BookingController(mock.Object);
 
-            IActionResult result = controller.Get(_bookingCode2);
+            IActionResult result = controller.GetBookingById(_bookingCode2);
             var okResult = result as OkObjectResult;
             var booking = okResult.Value as BookingStateInfoModel;
 
@@ -154,8 +154,8 @@ namespace UnitTests.Web
             mock.Setup(m => m.Get(_bookingCode2)).Returns(bookingToReturn);
             var controller = new BookingController(mock.Object);
 
-            controller.Put(_bookingCode2, updateInfoBooking);
-            IActionResult result = controller.Get(_bookingCode2);
+            controller.UpdateBooking(_bookingCode2, updateInfoBooking);
+            IActionResult result = controller.GetBookingById(_bookingCode2);
             var okResult = result as OkObjectResult;
             var booking = okResult.Value as BookingStateInfoModel;
 
