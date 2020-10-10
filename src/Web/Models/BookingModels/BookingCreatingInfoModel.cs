@@ -11,7 +11,7 @@ namespace Web.Models.BookingModels
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
         public int NumberOfGuests { get; set; }
-        private readonly string DefoultDescription = "";
+        private readonly string DefaultDescription = "";
 
         public Booking ToEntity()
         {
@@ -23,9 +23,8 @@ namespace Web.Models.BookingModels
                     Surname = TouristSurname,
                     Email = TouristEmail,
                 },
-                Code = Guid.NewGuid().ToString(),
                 State = BookingState.CREATED,
-                Description = DefoultDescription,
+                Description = DefaultDescription,
                 CheckInDate = CheckInDate,
                 CheckOutDate = CheckOutDate,
                 NumberOfGuests = NumberOfGuests,

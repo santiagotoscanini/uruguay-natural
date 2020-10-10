@@ -12,9 +12,9 @@ namespace Web.Models.BookingModels
 
         public BookingStateInfoModel(Booking booking)
         {
-            this.Code = booking.Code;
-            this.State = booking.State;
-            this.Description = booking.Description;
+            Code = booking.Code;
+            State = booking.State;
+            Description = booking.Description;
         }
 
         public override bool Equals(object obj)

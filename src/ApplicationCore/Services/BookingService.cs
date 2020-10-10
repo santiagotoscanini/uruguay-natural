@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ApplicationCoreInterface.Services;
 using InfrastructureInterface.Data.Repositories;
+using System;
 
 namespace ApplicationCore.Services
 {
@@ -15,6 +16,7 @@ namespace ApplicationCore.Services
         }
         public Booking Add(Booking booking)
         {
+            booking.Code = Guid.NewGuid().ToString();
            return _repository.Add(booking);
         }
 

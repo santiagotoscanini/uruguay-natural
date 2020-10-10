@@ -15,13 +15,13 @@ namespace Web.Models.BookingModels
 
         public BookingModel(Booking booking)
         {
-            this.Tourist = booking.Tourist;
-            this.Code = booking.Code;
-            this.State = booking.State;
-            this.Description = booking.Description;
-            this.CheckInDate = booking.CheckInDate;
-            this.CheckOutDate = booking.CheckOutDate;
-            this.NumberOfGuests = booking.NumberOfGuests;
+            Tourist = booking.Tourist;
+            Code = booking.Code;
+            State = booking.State;
+            Description = booking.Description;
+            CheckInDate = booking.CheckInDate;
+            CheckOutDate = booking.CheckOutDate;
+            NumberOfGuests = booking.NumberOfGuests;
         }
 
         public override bool Equals(object obj)
