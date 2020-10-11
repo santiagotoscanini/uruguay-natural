@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Entities\Entities.csproj" />
+    <ProjectReference Include="..\SessionInterface\SessionInterface.csproj" />
   </ItemGroup>
 
 </Project>
+

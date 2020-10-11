@@ -102,15 +102,17 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
                 Code = _code,
                 State = BookingState.CREATED,
             };
-            Booking bookingStateInfo = new Booking
+            var bookingStateInfo = new Booking
             {
                 Code = _code,
                 State = BookingState.EXPIRED,
                 Description = _description,
             };
             _bookingRepository.Add(booking);
-            
+
+
             _bookingRepository.Update(bookingStateInfo);
+
 
             Assert.AreEqual(bookingStateInfo.State, _bookingRepository.Get(_code).State);
             Assert.AreEqual(bookingStateInfo.Description, _bookingRepository.Get(_code).Description);

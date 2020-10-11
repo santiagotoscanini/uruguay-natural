@@ -9,7 +9,7 @@ using System.Linq;
 using Web.Controllers;
 using Web.Models.BookingModels;
 
-namespace UnitTests.Web
+namespace UnitTests.Web.Controllers
 {
     [TestClass]
     public class BookingControllerTest

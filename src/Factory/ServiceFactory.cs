@@ -5,7 +5,8 @@ using ApplicationCore.Services;
 using ApplicationCoreInterface.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+using SessionInterface;
+using Session;
 
 namespace Factory
 {
@@ -21,6 +22,7 @@ namespace Factory
         {
             _services.AddScoped<IBookingRepository, BookingRepository>();
             _services.AddScoped<IBookingService, BookingService>();
+            _services.AddScoped<ISessionService, SessionService>();
         }
 
         public void AddDbContextService()

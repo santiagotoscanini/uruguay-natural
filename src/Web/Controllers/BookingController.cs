@@ -2,13 +2,13 @@
 using ApplicationCoreInterface.Services;
 using Web.Models.BookingModels;
 using System.Linq;
+using Web.Filters;
 
 namespace Web.Controllers
 {
     [Route("api/bookings")]
     public class BookingController : ControllerBase
     {
-
         private IBookingService _bookingService;
 
         public BookingController(IBookingService bookingService)
@@ -17,6 +17,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult GetAllBookings()
         {
             return Ok(_bookingService.GetAll().Select(b => new BookingModel(b)));
@@ -37,6 +38,7 @@ namespace Web.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult UpdateBooking([FromRoute] string id, [FromBody] BookingUpdateInfoModel booking)
         {
             _bookingService.Update(booking.ToEntity(id));
