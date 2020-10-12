@@ -24,10 +24,10 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBooking([FromBody]BookingCreatingInfoModel bookingModel)
+        public IActionResult CreateBooking([FromBody]BookingCreatingModel bookingModel)
         {
             var booking = _bookingService.Add(bookingModel.ToEntity());
-            return CreatedAtRoute("GetBooking", new { id = booking.Code }, new BookingBaseCreateInfoModel(booking));
+            return CreatedAtRoute("GetBooking", new { id = booking.Code }, new BookingBaseCreateModel(booking));
         }
 
         [HttpGet("{id}", Name = "GetBooking")]

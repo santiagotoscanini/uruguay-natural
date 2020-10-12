@@ -3,7 +3,7 @@ using System;
 
 namespace Web.Models.BookingModels
 {
-    public class BookingCreatingInfoModel
+    public class BookingCreatingModel
     {
         public string TouristName { get; set; }
         public string TouristSurname { get; set; }

@@ -21,7 +21,6 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\InfrastructureInterface\InfrastructureInterface.csproj" />
     <ProjectReference Include="..\SessionInterface\SessionInterface.csproj" />
-    <ProjectReference Include="..\Session\Session.csproj" />
   </ItemGroup>
 
 </Project>

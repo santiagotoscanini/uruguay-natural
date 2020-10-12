@@ -2,11 +2,11 @@
 
 namespace Web.Models.BookingModels
 {
-    public class BookingBaseCreateInfoModel
+    public class BookingBaseCreateModel
     {
         public string Code { get; set; }
 
-        public BookingBaseCreateInfoModel(Booking booking)
+        public BookingBaseCreateModel(Booking booking)
         {
             Code = booking.Code;
         }
@@ -15,7 +15,7 @@ namespace Web.Models.BookingModels
         {
             var Result = false;
 
-            if (obj is BookingBaseCreateInfoModel Booking)
+            if (obj is BookingBaseCreateModel Booking)
             {
                 Result = this.Code == Booking.Code;
             }

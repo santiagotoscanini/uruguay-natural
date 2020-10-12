@@ -17,7 +17,7 @@ namespace ApplicationCore.Services
         public Booking Add(Booking booking)
         {
             booking.Code = Guid.NewGuid().ToString();
-           return _repository.Add(booking);
+            return _repository.Add(booking);
         }
 
         public IEnumerable<Booking> GetAll()

@@ -25,9 +25,9 @@ namespace Infrastructure.Data.Repositories
 
         public Booking Add(Booking booking)
         {
-            _bookings.Add(booking);
+            Booking bookingToReturn =_bookings.Add(booking).Entity;
             _context.SaveChanges();
-            return Get(booking.Code);
+            return bookingToReturn;
         }
 
         public Booking Get(string code)

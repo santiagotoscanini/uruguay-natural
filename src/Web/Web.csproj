@@ -17,7 +17,6 @@
     <ProjectReference Include="..\Factory\Factory.csproj" />
     <ProjectReference Include="..\ApplicationCoreInterface\ApplicationCoreInterface.csproj" />
     <ProjectReference Include="..\SessionInterface\SessionInterface.csproj" />
-    <ProjectReference Include="..\Session\Session.csproj" />
   </ItemGroup>
 
 </Project>

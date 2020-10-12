@@ -22,7 +22,9 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         [TestInitialize]
         public void Setup()
         {
-            DbContextOptions<TourismContext> options = new DbContextOptionsBuilder<TourismContext>().UseInMemoryDatabase(databaseName: "database_test").Options;
+            DbContextOptions<TourismContext> options = new DbContextOptionsBuilder<TourismContext>()
+            .UseInMemoryDatabase(databaseName: "database_test")
+            .Options;
             _context = new TourismContext(options);
             _bookingRepository = new BookingRepository(_context);
         }
@@ -70,9 +72,8 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         public void SaveBookingTest()
         {
             var booking = new Booking { Code = _code };
-            _bookingRepository.Add(booking);
 
-            Booking bookingSaved = _bookingRepository.GetAll().First();
+            var bookingSaved = _bookingRepository.Add(booking);
 
             Assert.AreEqual(booking, bookingSaved);
         }

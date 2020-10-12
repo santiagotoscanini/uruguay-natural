@@ -69,7 +69,7 @@ namespace UnitTests.Web.Controllers
         [TestMethod]
         public void TestPostMovieOk()
         {
-            var bookingModel = new BookingCreatingInfoModel
+            var bookingModel = new BookingCreatingModel
             {
                 TouristName = _touristName,
                 TouristSurname = _touristSurname,
@@ -94,10 +94,10 @@ namespace UnitTests.Web.Controllers
 
             IActionResult result = controller.CreateBooking(bookingModel);
             var status = result as CreatedAtRouteResult;
-            var content = status.Value as BookingBaseCreateInfoModel;
+            var content = status.Value as BookingBaseCreateModel;
 
             mock.VerifyAll();
-            Assert.AreEqual(content, new BookingBaseCreateInfoModel(bookingToReturn));
+            Assert.AreEqual(content, new BookingBaseCreateModel(bookingToReturn));
         }
 
         [TestMethod]

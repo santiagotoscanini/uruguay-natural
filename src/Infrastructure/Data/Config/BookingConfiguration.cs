@@ -8,7 +8,7 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
-            builder.HasKey(x => x.Code);
+            builder.HasKey(b => b.Code);
         }
     }
 }

@@ -6,7 +6,6 @@ using ApplicationCoreInterface.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SessionInterface;
-using Session;
 
 namespace Factory
 {
@@ -21,7 +20,9 @@ namespace Factory
         public void AddCustomServices()
         {
             _services.AddScoped<IBookingRepository, BookingRepository>();
+            _services.AddScoped<IAdministratorRepository, AdministratorRepository>();
             _services.AddScoped<IBookingService, BookingService>();
+            _services.AddScoped<IAdministratorService, AdministratorService>();
             _services.AddScoped<ISessionService, SessionService>();
         }
 
