@@ -1,4 +1,5 @@
 using Entities;
+using Exceptions;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using InfrastructureInterface.Data.Repositories;
@@ -63,6 +64,16 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
 
             Assert.AreEqual(admin1, bookingsSaved.First());
             Assert.AreEqual(admin2, bookingsSaved.Last());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ObjectAlreadyExistException))]
+        public void AddAlreadyExistBooking()
+        {
+            var admin1 = new Administrator { Name = _name, Email = _email, Password = _pass };
+            var admin2 = new Administrator { Name = _name, Email = _email , Password = _pass };
+            _administratorRepository.Add(admin1);
+            _administratorRepository.Add(admin2);
         }
     }
 }

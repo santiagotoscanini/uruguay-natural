@@ -6,6 +6,8 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
+using Exceptions;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace IntegrationTests.Infrastructure.Data.Repositories
 {
@@ -117,6 +119,37 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
 
             Assert.AreEqual(bookingStateInfo.State, _bookingRepository.Get(_code).State);
             Assert.AreEqual(bookingStateInfo.Description, _bookingRepository.Get(_code).Description);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
+        public void GetBookingFailTest()
+        {
+            _bookingRepository.Get(_code);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
+        public void UpdateBookingFailTest()
+        {
+            var bookingStateInfo = new Booking
+            {
+                Code = _code,
+                State = BookingState.EXPIRED,
+                Description = _description,
+            };
+
+            _bookingRepository.Update(bookingStateInfo);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof (ObjectAlreadyExistException))]
+        public void AddAlreadyExistBooking()
+        {
+            var booking = new Booking { Code = _code };
+            var booking2 = new Booking { Code = _code };
+            _bookingRepository.Add(booking);
+            _bookingRepository.Add(booking2);
         }
     }
 }

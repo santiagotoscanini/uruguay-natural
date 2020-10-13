@@ -1,6 +1,8 @@
 ﻿using Entities;
+using Exceptions;
 using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace Infrastructure.Data.Repositories
@@ -10,6 +12,8 @@ namespace Infrastructure.Data.Repositories
         private readonly DbContext _context;
         private readonly DbSet<Administrator> _administrators;
 
+        private const string AdministratorAlreadyExistMessage = "There is already a administrator registered with that email: ";
+
         public AdministratorRepository(DbContext context)
         {
             _context = context;
@@ -18,9 +22,16 @@ namespace Infrastructure.Data.Repositories
 
         public Administrator Add(Administrator administrator)
         {
-            Administrator adminToReturn = _administrators.Add(administrator).Entity;
-            _context.SaveChanges();
-            return adminToReturn;
+            try
+            {
+                Administrator adminToReturn = _administrators.Add(administrator).Entity;
+                _context.SaveChanges();
+                return adminToReturn;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new ObjectAlreadyExistException(AdministratorAlreadyExistMessage + administrator.Email);
+            }
         }
 
         public IEnumerable<Administrator> GetAll()

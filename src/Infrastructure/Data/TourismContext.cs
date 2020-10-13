@@ -12,7 +12,7 @@ namespace Infrastructure.Data
         public DbSet<Booking> Booking { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
 
-        public TourismContext() { }
+        public TourismContext() {}
 
         public TourismContext(DbContextOptions<TourismContext> options) : base(options) { }
 

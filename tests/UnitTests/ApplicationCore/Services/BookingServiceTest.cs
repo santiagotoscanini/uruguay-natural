@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using InfrastructureInterface.Data.Repositories;
 using System.Linq;
 using ApplicationCore.Services;
+using System.IO;
+using System;
+using Exceptions;
 
 namespace UnitTests.ApplicationCore.Services
 {
@@ -13,6 +16,10 @@ namespace UnitTests.ApplicationCore.Services
     {
         private string _bookingCode1 = "booking_code_1";
         private string _bookingCode2 = "booking_code_2";
+        private DateTime _bookingCheckin = new DateTime(2020, 11, 02);
+        private DateTime _bookingCheckin2 = new DateTime(2020, 12, 05);
+        private DateTime _bookingCheckout = new DateTime(2020, 12, 02);
+
 
         [TestMethod]
         public void TestGetAllOk()
@@ -41,7 +48,13 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void TestAddBooking()
         {
-            var bookingToAdd = new Booking { Code = _bookingCode1 };
+            var bookingToAdd = new Booking 
+            { 
+                Code = _bookingCode1,
+                CheckInDate = _bookingCheckin,
+                CheckOutDate = _bookingCheckout,
+            };
+
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.Add(bookingToAdd)).Returns(bookingToAdd);
             var bookingService = new BookingService(mock.Object);
@@ -81,6 +94,23 @@ namespace UnitTests.ApplicationCore.Services
 
             mock.VerifyAll();
             Assert.AreEqual(updateStateInfoModel.State, modifiedBookingGetted.State);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidAttributeValuesException))]
+        public void TestAddBookingWithWrongDates()
+        {
+            var bookingToAdd = new Booking 
+            { 
+                Code = _bookingCode1,
+                CheckInDate = _bookingCheckin2,
+                CheckOutDate = _bookingCheckout,
+            };
+            var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.Add(bookingToAdd)).Returns(bookingToAdd);
+            var bookingService = new BookingService(mock.Object);
+
+            Booking bookingSaved = bookingService.Add(bookingToAdd);
         }
     }
 }

@@ -8,8 +8,6 @@ namespace Web.Models.BookingModels
         public BookingState State { get; set; }
         public string Description { get; set; }
 
-        public BookingStateInfoModel() { }
-
         public BookingStateInfoModel(Booking booking)
         {
             Code = booking.Code;

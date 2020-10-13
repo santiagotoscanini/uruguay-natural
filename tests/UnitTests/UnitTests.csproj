@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Exceptions\Exceptions.csproj" />
     <ProjectReference Include="..\..\src\Entities\Entities.csproj" />
+    <ProjectReference Include="..\..\src\Exceptions\Exceptions.csproj" />
     <ProjectReference Include="..\..\src\InfrastructureInterface\InfrastructureInterface.csproj" />
     <ProjectReference Include="..\..\src\ApplicationCoreInterface\ApplicationCoreInterface.csproj" />
     <ProjectReference Include="..\..\src\ApplicationCore\ApplicationCore.csproj" />
