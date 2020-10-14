@@ -1,4 +1,7 @@
 ﻿using Entities;
+using Exceptions;
+using Infrastructure.Data;
+using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,10 +19,10 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         [TestInitialize]
         public void Setup()
         {
-            DbContextOptions<TouristsPointCategoryContext> options = new DbContextOptionsBuilder<TouritsPointCategoryContext>()
+            DbContextOptions<TourismContext> options = new DbContextOptionsBuilder<TourismContext>()
             .UseInMemoryDatabase(databaseName: "database_test")
             .Options;
-            _context = new TouritsPointCategoryContext(options);
+            _context = new TourismContext(options);
             _touristPointCategoryRepository = new TouristPointCategoryRepository(_context);
         }
 
@@ -42,6 +45,27 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             TouristPointCategory touristPointCategory = _touristPointCategoryRepository.Add(touristPointCategoryToAdd);
 
             Assert.AreEqual(touristPointCategoryToAdd, touristPointCategory);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ObjectAlreadyExistException))]
+        public void AddTouristPointCategoryFailTest()
+        {
+            var touristPointCategoryToAdd = new TouristPointCategory
+            {
+                Category = _category,
+                TouristPoint = _touristPoint,
+                Id = 1
+            };
+            var touristPointCategoryToAdd2 = new TouristPointCategory
+            {
+                Category = _category,
+                TouristPoint = _touristPoint,
+                Id = 1
+            };
+
+            _touristPointCategoryRepository.Add(touristPointCategoryToAdd);
+            _touristPointCategoryRepository.Add(touristPointCategoryToAdd2);
         }
     }
 }
