@@ -104,7 +104,8 @@ namespace tests.UnitTests.Web.Filters
             exceptionFilter.OnException(exceptionContext);
 
             var contentResult = exceptionContext.Result as ContentResult;
-            Assert.AreEqual((int)HttpStatusCode.Conflict, contentResult.StatusCode);
+
+            Assert.AreEqual((int)HttpStatusCode.BadRequest, contentResult.StatusCode);
         }
     }
 }

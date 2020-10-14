@@ -13,8 +13,9 @@ namespace Infrastructure.Data.Repositories
 
         private readonly DbContext _context;
         private readonly DbSet<Booking> _bookings;
-        private const string BookingNotFoundMessage = "There is no booking with the given code: ";
-        private const string BookingAlreadyExistMessage = "There is already a booking registered with that code: ";
+
+        private const string BookingNotFoundMessage = "There is no booking with the code ";
+        private const string BookingAlreadyExistMessage = "There is already a booking registered with the code: ";
 
         public BookingRepository(DbContext context)
         {

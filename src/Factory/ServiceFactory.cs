@@ -21,9 +21,13 @@ namespace Factory
         {
             _services.AddScoped<IBookingRepository, BookingRepository>();
             _services.AddScoped<IAdministratorRepository, AdministratorRepository>();
+            _services.AddScoped<IRegionRepository, RegionRepository>();
+            _services.AddScoped<ICategoryRepository, CategoryRepository>();
             _services.AddScoped<IBookingService, BookingService>();
             _services.AddScoped<IAdministratorService, AdministratorService>();
             _services.AddScoped<ISessionService, SessionService>();
+            _services.AddScoped<IRegionService, RegionService>();
+            _services.AddScoped<ICategoryService, CategoryService>();
         }
 
         public void AddDbContextService()

@@ -23,7 +23,7 @@ namespace Web.Filters
             }
             catch (ObjectAlreadyExistException exception)
             {
-                var statusCode = (int)HttpStatusCode.Conflict;
+                var statusCode = (int)HttpStatusCode.BadRequest;
                 var errorResponse = new ErrorResponse
                 {
                     Status = statusCode,

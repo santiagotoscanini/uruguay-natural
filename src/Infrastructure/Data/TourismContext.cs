@@ -16,7 +16,6 @@ namespace Infrastructure.Data
 
         public TourismContext(DbContextOptions<TourismContext> options) : base(options) { }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
