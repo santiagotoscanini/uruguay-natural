@@ -4,7 +4,7 @@ namespace Entities
 {
     public class TouristPoint
     {
-        public ICollection<Category> Categories { get; set; }
+        public ICollection<TouristPointCategory> TouristPointCategories { get; set; }
         public Region Region { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

@@ -1,6 +1,8 @@
-﻿
-using Entities;
+﻿using Entities;
+using Exceptions;
 using Infrastructure.Data;
+using Infrastructure.Data.Repositories;
+using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -14,15 +16,15 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         private ITouristPointRepository _touristPointRepository;
         private DbContext _context;
 
-        private ICollection<Category> _categories = new List<Category>
+        private ICollection<TouristPointCategory> _touristPointCategories = new List<TouristPointCategory>
         {
-            new Category
+            new TouristPointCategory
             {
-                Name = "Beach"
+                Id = 1,
             },
-            new Category
+            new TouristPointCategory
             {
-                Name = "History"
+                Id = 2,
             }
         };
 
@@ -60,7 +62,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             {
                 new TouristPoint
                 {
-                    Categories = _categories,
+                    TouristPointCategories = _touristPointCategories,
                     Region = _region,
                     Name = _name,
                     Description = _description,
@@ -69,7 +71,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
                 },
                 new TouristPoint
                 {
-                    Categories = _categories,
+                    TouristPointCategories = _touristPointCategories,
                     Region = _region,
                     Name = _name,
                     Description = _description,
@@ -79,11 +81,45 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
 
             };
 
-            touritsPoints.ForEach(b => _touritsPointRepository.Add(b));
+            touritsPoints.ForEach(b => _touristPointRepository.Add(b));
 
-            var touristPointsSaved = _touritsPointRepository.GetAll();
+            var touristPointsSaved = _touristPointRepository.GetAll();
 
-            Assert.IsTrue(touritsPoints.SequenceEqual(touritsPointsSaved));
+            Assert.IsTrue(touritsPoints.SequenceEqual(touristPointsSaved));
+        }
+
+        [TestMethod]
+        public void SaveTouristPointTest()
+        {
+            var touristPoint = new TouristPoint
+            {
+                TouristPointCategories = _touristPointCategories,
+                Region = _region,
+                Name = _name,
+                Description = _description,
+                Image = _image,
+                Id = _id
+            };
+
+            var touristPointSaved = _touristPointRepository.Add(touristPoint);
+
+            Assert.AreEqual(touristPoint, touristPointSaved);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ObjectAlreadyExistException))]
+        public void AddAlreadyExistTouristPoint()
+        {
+            var touristPoint = new TouristPoint 
+            { 
+                Id = _id 
+            };
+            var touristPoint2 = new TouristPoint 
+            { 
+                Id = _id 
+            };
+            _touristPointRepository.Add(touristPoint);
+            _touristPointRepository.Add(touristPoint2);
         }
     }
 }

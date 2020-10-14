@@ -8,15 +8,15 @@ namespace UnitTests.Entities
     [TestClass]
     public class TouristPointTest
     {
-        private ICollection<Category> _categories = new List<Category>
+        private ICollection<TouristPointCategory> _touristPointCategories = new List<TouristPointCategory>
         {
-            new Category
+            new TouristPointCategory
             {
-                Name = "Beach"
+                Id = 1
             },
-            new Category
+            new TouristPointCategory
             {
-                Name = "History"
+                Id = 2
             }
         };
 
@@ -36,7 +36,7 @@ namespace UnitTests.Entities
         {
             var touristPoint = new TouristPoint();
 
-            Assert.IsNull(touristPoint.Categories);
+            Assert.IsNull(touristPoint.TouristPointCategories);
             Assert.IsNull(touristPoint.Region);
             Assert.IsNull(touristPoint.Name);
             Assert.IsNull(touristPoint.Description);
@@ -49,7 +49,7 @@ namespace UnitTests.Entities
         {
             var touristPoint = new TouristPoint
             {
-                Categories = _categories,
+                TouristPointCategories = _touristPointCategories,
                 Region = _region,
                 Name = _name,
                 Description = _description,
@@ -57,7 +57,7 @@ namespace UnitTests.Entities
                 Id = _id
             };
 
-            Assert.AreEqual(touristPoint.Categories, _categories);
+            Assert.AreEqual(touristPoint.TouristPointCategories, _touristPointCategories);
             Assert.AreEqual(touristPoint.Region, _region);
             Assert.AreEqual(touristPoint.Name, _name);
             Assert.AreEqual(touristPoint.Description, _description);
@@ -70,7 +70,7 @@ namespace UnitTests.Entities
         {
             var touristPoint1 = new TouristPoint
             {
-                Categories = _categories,
+                TouristPointCategories = _touristPointCategories,
                 Region = _region,
                 Name = _name,
                 Description = _description,
@@ -79,7 +79,7 @@ namespace UnitTests.Entities
             };
             var touristPoint2 = new TouristPoint
             {
-                Categories = _categories,
+                TouristPointCategories = _touristPointCategories,
                 Region = _region,
                 Name = _name,
                 Description = _description,
@@ -95,7 +95,7 @@ namespace UnitTests.Entities
         {
             var touristPoint1 = new TouristPoint
             {
-                Categories = _categories,
+                TouristPointCategories = _touristPointCategories,
                 Region = _region,
                 Name = _name,
                 Description = _description,
@@ -104,7 +104,7 @@ namespace UnitTests.Entities
             };
             var touristPoint2 = new TouristPoint
             {
-                Categories = _categories,
+                TouristPointCategories = _touristPointCategories,
                 Region = _region,
                 Name = _name,
                 Description = _description,
