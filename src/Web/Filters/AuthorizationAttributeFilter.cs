@@ -4,14 +4,14 @@ using Newtonsoft.Json;
 using SessionInterface;
 using System;
 using System.Net;
+using System.Net.Mime;
 
 namespace Web.Filters
 {
     public class AuthorizationAttributeFilter : Attribute, IAuthorizationFilter
     {
         private readonly ISessionService _sessions;
-
-        private const string ContentTypeJson = "application/json";
+        
         private const string UnautorizedTitleResponse = "The requested resource requires authentication";
         private const string UnautorizedDescriptionResponse = "Send a token";
         private const string ForbiddenTitleResponse = "The requested resource is forbidden";
@@ -25,7 +25,6 @@ namespace Web.Filters
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             string token = context.HttpContext.Request.Headers["Authorization"];
-
             if(string.IsNullOrEmpty(token))
             {
                 var statusCode = (int)HttpStatusCode.Unauthorized;
@@ -38,7 +37,7 @@ namespace Web.Filters
                 context.Result = new ContentResult
                 {
                     StatusCode = statusCode,
-                    ContentType = ContentTypeJson,
+                    ContentType = MediaTypeNames.Application.Json,
                     Content = JsonConvert.SerializeObject(errorResponse),
                 };
             }
@@ -56,7 +55,7 @@ namespace Web.Filters
                     context.Result = new ContentResult
                     {
                         StatusCode = statusCode,
-                        ContentType = ContentTypeJson,
+                        ContentType = MediaTypeNames.Application.Json,
                         Content = JsonConvert.SerializeObject(errorResponse),
                     };
                 }

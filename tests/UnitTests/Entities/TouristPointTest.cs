@@ -1,4 +1,4 @@
-﻿
+﻿using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Entities
@@ -20,7 +20,7 @@ namespace UnitTests.Entities
             Assert.IsNull(touristPoint.Name);
             Assert.IsNull(touristPoint.Description);
             Assert.IsNull(touristPoint.Image);
-            Assert.IsNull(touristPoint.Id);
+            Assert.AreEqual(0, touristPoint.Id);
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace UnitTests.Entities
                 Id = _id2
             };
 
-            Assert.AreEqual(touristPoint1, touristPoint2);
+            Assert.AreNotEqual(touristPoint1, touristPoint2);
         }
     }
 }
