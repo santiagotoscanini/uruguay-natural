@@ -67,7 +67,7 @@ namespace UnitTests.Web.Controllers
         }
 
         [TestMethod]
-        public void TestPostMovieOk()
+        public void TestPostBookingOk()
         {
             var bookingModel = new BookingCreatingModel
             {

@@ -12,7 +12,7 @@ namespace Infrastructure.Data.Repositories
         private readonly DbContext _context;
         private readonly DbSet<Administrator> _administrators;
 
-        private const string AdministratorAlreadyExistMessage = "There is already a administrator registered with that email: ";
+        private const string AdministratorAlreadyExistMessage = "There is already a administrator registered with the email ";
 
         public AdministratorRepository(DbContext context)
         {

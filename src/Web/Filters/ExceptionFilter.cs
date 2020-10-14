@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using System;
 using System.Net;
+using System.Net.Mime;
 
 namespace Web.Filters
 {
     public class ExceptionFilter : Attribute, IExceptionFilter
     {
-        private const string ContentTypeJson = "application/json";
         private const string AlreadyExistTitleResponse = "Request conflict with current state of the target resource";
         private const string NotFoundTitleResponse = "The requested object was not found";
         private const string InvalidAttributeValuesTitleResponse = "Server is unable to process the request";
@@ -23,7 +23,7 @@ namespace Web.Filters
             }
             catch (ObjectAlreadyExistException exception)
             {
-                var statusCode = (int)HttpStatusCode.Conflict;
+                var statusCode = (int)HttpStatusCode.BadRequest;
                 var errorResponse = new ErrorResponse
                 {
                     Status = statusCode,
@@ -34,7 +34,7 @@ namespace Web.Filters
                 context.Result = new ContentResult()
                 {
                     StatusCode = statusCode,
-                    ContentType = ContentTypeJson,
+                    ContentType = MediaTypeNames.Application.Json,
                     Content = JsonConvert.SerializeObject(errorResponse),
                 };
             }
@@ -51,7 +51,7 @@ namespace Web.Filters
                 context.Result = new ContentResult()
                 {
                     StatusCode = statusCode,
-                    ContentType = ContentTypeJson,
+                    ContentType = MediaTypeNames.Application.Json,
                     Content = JsonConvert.SerializeObject(errorResponse),
                 };
             }
@@ -68,7 +68,7 @@ namespace Web.Filters
                 context.Result = new ContentResult()
                 {
                     StatusCode = statusCode,
-                    ContentType = ContentTypeJson,
+                    ContentType = MediaTypeNames.Application.Json,
                     Content = JsonConvert.SerializeObject(errorResponse),
                 };
             }
@@ -84,7 +84,7 @@ namespace Web.Filters
                 context.Result = new ContentResult()
                 {
                     StatusCode = statusCode,
-                    ContentType = ContentTypeJson,
+                    ContentType = MediaTypeNames.Application.Json,
                     Content = JsonConvert.SerializeObject(errorResponse),
                 };
             }
