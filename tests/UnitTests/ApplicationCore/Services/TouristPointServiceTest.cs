@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using ApplicationCore.Services;
+using Entities;
 using InfrastructureInterface.Data.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -28,7 +29,7 @@ namespace UnitTests.ApplicationCore.Services
                 },
             };
             var mock = new Mock<ITouristPointRepository>(MockBehavior.Strict);
-            mock.Setup(r => r.GetAll()).Returns(touristPointToReturn);
+            mock.Setup(r => r.GetAll()).Returns(touristPointsToReturn);
             var touristPointService = new TouristPointService(mock.Object);
 
             IEnumerable<TouristPoint> touristPointsSaved = touristPointService.GetAll();
