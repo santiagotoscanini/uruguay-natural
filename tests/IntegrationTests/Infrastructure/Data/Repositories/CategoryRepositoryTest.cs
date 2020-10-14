@@ -69,5 +69,23 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             _categoryRepository.Add(category);
             _categoryRepository.Add(category2);
         }
+
+        [TestMethod]
+        public void GetCategoryByNameOk()
+        {
+            var category = new Category { Name = _name };
+
+            _categoryRepository.Add(category);
+            var categorySaved = _categoryRepository.GetByName(_name);
+
+            Assert.AreEqual(category, categorySaved);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
+        public void GetCategoryFailTest()
+        {
+            _categoryRepository.GetByName(_name);
+        }
     }
 }
