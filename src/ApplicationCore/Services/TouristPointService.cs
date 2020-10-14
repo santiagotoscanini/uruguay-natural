@@ -1,10 +1,11 @@
-﻿using Entities;
+﻿using ApplicationCoreInterface.Services;
+using Entities;
 using InfrastructureInterface.Data.Repositories;
 using System.Collections.Generic;
 
 namespace ApplicationCore.Services
 {
-    public class TouristPointService
+    public class TouristPointService : ITouristPointService
     {
         private readonly ITouristPointRepository _repository;
 
