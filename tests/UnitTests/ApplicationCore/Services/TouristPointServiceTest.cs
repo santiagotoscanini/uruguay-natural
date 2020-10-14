@@ -29,9 +29,11 @@ namespace UnitTests.ApplicationCore.Services
                     Id = _id2,
                 },
             };
+            var mockCategoryRepository = new Mock<ICategoryRepository>(MockBehavior.Strict);
+            var mockTouristPointCategoryRepository = new Mock<ITouristPointCategoryRepository>(MockBehavior.Strict);
             var mock = new Mock<ITouristPointRepository>(MockBehavior.Strict);
             mock.Setup(r => r.GetAll()).Returns(touristPointsToReturn);
-            var touristPointService = new TouristPointService(mock.Object);
+            var touristPointService = new TouristPointService(mock.Object, mockTouristPointCategoryRepository.Object, mockCategoryRepository.Object);
 
             IEnumerable<TouristPoint> touristPointsSaved = touristPointService.GetAll();
 
@@ -59,7 +61,7 @@ namespace UnitTests.ApplicationCore.Services
 
             var tourisPointCategoryToReturn = new TouristPointCategory
             {
-                Id = 1,
+                Id = 0,
                 Category = categoryToReturn,
                 TouristPoint = touristPointToAdd
             };
@@ -71,9 +73,9 @@ namespace UnitTests.ApplicationCore.Services
             mockCategoryRepository.Setup(r => r.GetByName(_category)).Returns(categoryToReturn);
 
             var mockTouristPointCategoryRepository = new Mock<ITouristPointCategoryRepository>(MockBehavior.Strict);
-            mockTouristPointCategoryRepository.Setup(r => r.Add(touristPointToAdd, categoryToReturn)).Returns(tourisPointCategoryToReturn);
+            mockTouristPointCategoryRepository.Setup(r => r.Add(tourisPointCategoryToReturn)).Returns(tourisPointCategoryToReturn);
 
-            var touristPointService = new TouristPointService(mockTouristPointRepository.Object);
+            var touristPointService = new TouristPointService(mockTouristPointRepository.Object, mockTouristPointCategoryRepository.Object, mockCategoryRepository.Object);
 
             TouristPoint touristPointSaved = touristPointService.Add(touristPointToAdd, categoriesNames);
 

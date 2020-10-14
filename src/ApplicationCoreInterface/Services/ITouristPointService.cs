@@ -5,7 +5,7 @@ namespace ApplicationCoreInterface.Services
 {
     public interface ITouristPointService
     {
-        TouristPoint Add(TouristPoint touristPoint);
+        TouristPoint Add(TouristPoint touristPoint, ICollection<string> categories);
         IEnumerable<TouristPoint> GetAll();
     }
 }
