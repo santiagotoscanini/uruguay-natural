@@ -18,7 +18,7 @@ namespace ApplicationCore.Services
         }
         public Booking Add(Booking booking)
         {
-            ValidateDates(booking.CheckInDate, booking.CheckOutDate);
+            validateDates(booking.CheckInDate, booking.CheckOutDate);
             booking.Code = Guid.NewGuid().ToString();
             return _repository.Add(booking);
         }
@@ -38,7 +38,7 @@ namespace ApplicationCore.Services
             _repository.Update(booking);
         }
 
-        private void ValidateDates(DateTime checkIn, DateTime checkOut)
+        private void validateDates(DateTime checkIn, DateTime checkOut)
         {
             if (checkIn >= checkOut) {
                 throw new InvalidAttributeValuesException(InvalidDateErrorMessage);
