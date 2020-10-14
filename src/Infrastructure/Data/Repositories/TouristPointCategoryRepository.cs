@@ -1,14 +1,17 @@
 ﻿using Entities;
 using Exceptions;
+using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Infrastructure.Data.Repositories
 {
-    public class TouristPointCategoryRepository
+    public class TouristPointCategoryRepository : ITouristPointCategoryRepository
     {
         private readonly DbContext _context;
         private readonly DbSet<TouristPointCategory> _touristPointCategories;
+
+        private const string TouristPointAlreadyExists = "There is already a Tourist Point - Category relation with the id: ";
 
         public TouristPointCategoryRepository(DbContext context)
         {
@@ -26,7 +29,7 @@ namespace Infrastructure.Data.Repositories
             }
             catch (InvalidOperationException)
             {
-                throw new ObjectAlreadyExistException("There is already a Tourist Point - Category relation with the id: " + touristPointCategory.Id);
+                throw new ObjectAlreadyExistException(TouristPointAlreadyExists + touristPointCategory.Id);
             }
         }
     }
