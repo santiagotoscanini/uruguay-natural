@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTests.Entities
 {
@@ -36,7 +37,7 @@ namespace UnitTests.Entities
         {
             var touristPoint = new TouristPoint();
 
-            Assert.IsNull(touristPoint.TouristPointCategories);
+            Assert.IsTrue(touristPoint.TouristPointCategories.SequenceEqual(new List<TouristPointCategory>()));
             Assert.IsNull(touristPoint.Region);
             Assert.IsNull(touristPoint.Name);
             Assert.IsNull(touristPoint.Description);
