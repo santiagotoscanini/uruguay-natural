@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using InfrastructureInterface.Data.Repositories;
 using System.Linq;
 using ApplicationCore.Services;
-using System.IO;
 using System;
 using Exceptions;
 
@@ -19,7 +18,6 @@ namespace UnitTests.ApplicationCore.Services
         private DateTime _bookingCheckin = new DateTime(2020, 11, 02);
         private DateTime _bookingCheckin2 = new DateTime(2020, 12, 05);
         private DateTime _bookingCheckout = new DateTime(2020, 12, 02);
-
 
         [TestMethod]
         public void TestGetAllOk()
