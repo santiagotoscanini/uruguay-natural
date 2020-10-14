@@ -1,8 +1,11 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace Entities
 {
     public class TouristPoint
     {
+        public ICollection<Category> Categories { get; set; }
+        public Region Region { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }

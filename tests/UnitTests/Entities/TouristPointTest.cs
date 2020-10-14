@@ -49,7 +49,7 @@ namespace UnitTests.Entities
         {
             var touristPoint = new TouristPoint
             {
-                Ctegories = _categories,
+                Categories = _categories,
                 Region = _region,
                 Name = _name,
                 Description = _description,
