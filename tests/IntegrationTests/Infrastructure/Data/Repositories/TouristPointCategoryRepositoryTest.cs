@@ -2,6 +2,7 @@
 using Exceptions;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
+using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,7 +11,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
     [TestClass]
     public class TouristPointCategoryRepositoryTest
     {
-        private TouristPointCategoryRepository _touristPointCategoryRepository;
+        private ITouristPointCategoryRepository _touristPointCategoryRepository;
         private DbContext _context;
 
         private readonly TouristPoint _touristPoint = new TouristPoint { Id = 1 };

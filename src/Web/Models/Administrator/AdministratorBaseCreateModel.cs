@@ -12,5 +12,17 @@ namespace Web.Models.AdministratorModels
             this.Name = admin.Name;
             this.Email = admin.Email;
         }
+
+        public override bool Equals(object obj)
+        {
+            var Result = false;
+
+            if (obj is AdministratorBaseCreateModel AdministratorModel)
+            {
+                Result = this.Email == AdministratorModel.Email;
+            }
+
+            return Result;
+        }
     }
 }
