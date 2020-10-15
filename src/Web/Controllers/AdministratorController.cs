@@ -1,6 +1,7 @@
 ﻿using ApplicationCoreInterface.Services;
 using Microsoft.AspNetCore.Mvc;
 using Web.Filters;
+using Web.Models.AdministratorModel;
 using Web.Models.AdministratorModels;
 
 namespace Web.Controllers
@@ -21,6 +22,20 @@ namespace Web.Controllers
         {
             var adminToReturn = new AdministratorBaseCreateModel(_administratorService.Add(administratorModel.ToEntity()));
             return Ok(adminToReturn);
+        }
+
+        [HttpDelete("{email}")]
+        public IActionResult DeleteAdministrator([FromRoute] string email)
+        {
+            _administratorService.DeleteAdministrator(email);
+            return NoContent();
+        }
+
+        [HttpPut("{email}")]
+        public IActionResult UpdateAdministrator([FromRoute] string email, [FromBody] AdministratorUpdatingModel administratorUpdatingModel)
+        {
+            _administratorService.UpdateAdministrator(administratorUpdatingModel.ToEntity(email));
+            return NoContent();
         }
     }
 }

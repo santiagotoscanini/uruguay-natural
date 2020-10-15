@@ -7,5 +7,7 @@ namespace ApplicationCoreInterface.Services
     {
         Administrator Add(Administrator admin);
         IEnumerable<Administrator> GetAll();
+        void DeleteAdministrator(string email);
+        void UpdateAdministrator(Administrator admin);
     }
 }

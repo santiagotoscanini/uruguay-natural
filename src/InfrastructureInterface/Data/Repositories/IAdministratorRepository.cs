@@ -7,5 +7,7 @@ namespace InfrastructureInterface.Data.Repositories
     {
         Administrator Add(Administrator administrator);
         IEnumerable<Administrator> GetAll();
+        void DeleteAdministrator(string email);
+        Administrator UpdateAdministrator(Administrator admin);
     }
 }

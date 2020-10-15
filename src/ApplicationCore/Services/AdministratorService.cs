@@ -23,5 +23,15 @@ namespace ApplicationCore.Services
         {
             return _repository.GetAll();
         }
+
+        public void DeleteAdministrator(string email)
+        {
+            _repository.DeleteAdministrator(email);
+        }
+
+        public void UpdateAdministrator(Administrator admin)
+        {
+            _repository.UpdateAdministrator(admin);
+        }
     }
 }
