@@ -23,19 +23,18 @@ namespace Web.Controllers
             {
                 return BadRequest("Invalid email or password.");
             }
-            return Ok(token);
+            return Ok(new LoginOutModel { Token = token });
         }
 
         [HttpPost("logout")]
         [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult Logout([FromBody] LogoutModel model)
         {
-
             if (!_sessions.Logout(model.Token))
             {
                 return BadRequest("Invalid logout, user was not logged.");
             }
-            return Ok();
+            return Ok(new LogoutOutModel());
         }
     }
 }

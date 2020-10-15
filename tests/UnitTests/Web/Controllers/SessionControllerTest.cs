@@ -30,10 +30,10 @@ namespace UnitTests.Web.Controllers
 
             IActionResult result = sessionController.Login(loginModel);
             var status = result as OkObjectResult;
-            var generatedToken = status.Value as string;
+            var loginOutModel = status.Value as LoginOutModel;
 
             mock.VerifyAll();
-            Assert.AreEqual(_token, generatedToken);
+            Assert.AreEqual(_token, loginOutModel.Token);
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace UnitTests.Web.Controllers
             var sessionController = new SessionController(mock.Object);
 
             IActionResult result = sessionController.Logout(logoutModel);
-            var status = result as OkResult;
+            var status = result as OkObjectResult;
 
             mock.VerifyAll();
             Assert.AreEqual(200, status.StatusCode);
