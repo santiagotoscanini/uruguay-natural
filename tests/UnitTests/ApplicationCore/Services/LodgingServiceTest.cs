@@ -1,4 +1,5 @@
-﻿using Castle.Core.Internal;
+﻿using ApplicationCore.Services;
+using Castle.Core.Internal;
 using Entities;
 using InfrastructureInterface.Data.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -55,7 +56,7 @@ namespace UnitTests.ApplicationCore.Services
             mock.Setup(r => r.GetById(_id)).Returns(lodgingToGet);
             var lodgingService = new LodgingService(mock.Object);
 
-            Lodging lodgingGetted = lodgingService.Get(_id);
+            Lodging lodgingGetted = lodgingService.GetById(_id);
 
             mock.VerifyAll();
             Assert.AreEqual(lodgingToGet, lodgingGetted);
@@ -71,12 +72,10 @@ namespace UnitTests.ApplicationCore.Services
             };
 
             var mock = new Mock<ILodgingRepository>(MockBehavior.Strict);
-            mock.Setup(r => r.Update(lodgingInfo));
-            mock.Setup(r => r.GetById(_id)).Returns(lodgingInfo);
+            mock.Setup(r => r.Update(lodgingInfo)).Returns(lodgingInfo);
             var lodgingService = new LodgingService(mock.Object);
 
-            lodgingService.Update(lodgingInfo);
-            var modifiedLodgingGetted = lodgingService.Get(_id);
+            var modifiedLodgingGetted = lodgingService.Update(lodgingInfo);
 
             mock.VerifyAll();
             Assert.AreEqual(lodgingInfo.CurrentlyOccupiedPlaces, modifiedLodgingGetted.CurrentlyOccupiedPlaces);
@@ -98,7 +97,7 @@ namespace UnitTests.ApplicationCore.Services
 
             Lodging lodgingSaved = lodgingService.Add(lodging);
             lodgingService.Delete(lodging.Id);
-            ICollection<Lodging> lodgings = lodgingService.GetAll();
+            IEnumerable<Lodging> lodgings = lodgingService.GetAll();
 
             mock.VerifyAll();
             Assert.IsTrue(lodgings.IsNullOrEmpty());

@@ -7,14 +7,14 @@ namespace ApplicationCore.Services
 {
     public class TouristPointService : ITouristPointService
     {
-        private readonly ITouristPointRepository _TouristPointRepository;
+        private readonly ITouristPointRepository _touristPointRepository;
 
         private readonly ICategoryService _categoryService;
         private readonly IRegionService _regionService;
 
         public TouristPointService(ITouristPointRepository repository, ICategoryService categoryService, IRegionService regionService)
         {
-            _TouristPointRepository = repository;
+            _touristPointRepository = repository;
             _categoryService = categoryService;
             _regionService = regionService;
         }
@@ -25,7 +25,7 @@ namespace ApplicationCore.Services
 
             CreateTouristPointCategories(categories, touristPoint);
 
-            return _TouristPointRepository.Add(touristPoint);
+            return _touristPointRepository.Add(touristPoint);
         }
 
         private void CreateTouristPointCategories(ICollection<string> categories, TouristPoint touristPoint)
@@ -54,7 +54,7 @@ namespace ApplicationCore.Services
 
         public IEnumerable<TouristPoint> GetAll()
         {
-            return _TouristPointRepository.GetAll();
+            return _touristPointRepository.GetAll();
         }
     }
 }
