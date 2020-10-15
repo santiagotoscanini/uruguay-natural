@@ -24,14 +24,19 @@ namespace Infrastructure.Data.Repositories
         {
             try
             {
-                Administrator adminToReturn = _administrators.Add(administrator).Entity;
-                _context.SaveChanges();
-                return adminToReturn;
+                return AddAndReturnAdmin(administrator);
             }
             catch (InvalidOperationException)
             {
                 throw new ObjectAlreadyExistException(AdministratorAlreadyExistMessage + administrator.Email);
             }
+        }
+
+        private Administrator AddAndReturnAdmin(Administrator admin)
+        {
+            Administrator adminToReturn = _administrators.Add(admin).Entity;
+            _context.SaveChanges();
+            return adminToReturn;
         }
 
         public IEnumerable<Administrator> GetAll()

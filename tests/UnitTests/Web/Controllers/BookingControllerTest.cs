@@ -92,7 +92,7 @@ namespace UnitTests.Web.Controllers
             mock.Setup(m => m.Add(It.IsAny<Booking>())).Returns(bookingToReturn);
             var controller = new BookingController(mock.Object);
 
-            IActionResult result = controller.CreateBooking(bookingModel);
+            IActionResult result = controller.AddBooking(bookingModel);
             var status = result as CreatedAtRouteResult;
             var content = status.Value as BookingBaseCreateModel;
 

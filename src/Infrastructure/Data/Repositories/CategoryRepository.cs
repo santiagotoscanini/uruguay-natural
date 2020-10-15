@@ -31,14 +31,19 @@ namespace Infrastructure.Data.Repositories
         {
             try
             {
-                Category categoryToReturn = _categories.Add(category).Entity;
-                _context.SaveChanges();
-                return categoryToReturn;
+                return AddAndReturnCategory(category);
             }
             catch (InvalidOperationException)
             {
                 throw new ObjectAlreadyExistException(CategoryAlreadyExistMessage + category.Name);
             }
+        }
+
+        private Category AddAndReturnCategory(Category category)
+        {
+            Category categoryToReturn = _categories.Add(category).Entity;
+            _context.SaveChanges();
+            return categoryToReturn;
         }
 
         public Category GetByName(string name)

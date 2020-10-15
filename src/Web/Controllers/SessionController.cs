@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SessionInterface;
+using Web.Filters;
 using Web.Models.Session;
 
 namespace Web.Controllers
 {
-    [Route("api/sessions")]
+    [Route("api/v1/sessions")]
     public class SessionController : Controller
     {
         private ISessionService _sessions;
@@ -25,7 +26,8 @@ namespace Web.Controllers
             return Ok(token);
         }
 
-        [HttpPost("Logout")]
+        [HttpPost("logout")]
+        [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult Logout([FromBody] LogoutModel model)
         {
 

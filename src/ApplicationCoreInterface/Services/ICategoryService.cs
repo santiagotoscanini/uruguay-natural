@@ -1,5 +1,4 @@
-﻿
-using Entities;
+﻿using Entities;
 using System.Collections.Generic;
 
 namespace ApplicationCoreInterface.Services
@@ -7,5 +6,6 @@ namespace ApplicationCoreInterface.Services
     public interface ICategoryService
     {
         IEnumerable<Category> GetAll();
+        Category GetCategoryByName(string name);
     }
 }

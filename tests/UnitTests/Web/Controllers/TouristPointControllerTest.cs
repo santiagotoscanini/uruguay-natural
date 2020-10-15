@@ -11,7 +11,7 @@ using Web.Models.TouristPointModels;
 namespace UnitTests.Web.Controllers
 {
     [TestClass]
-    public class ToruistPointControllerTest
+    public class TouristPointControllerTest
     {
         private ICollection<TouristPointCategory> _touristPointCategories = new List<TouristPointCategory>
         {

@@ -28,14 +28,19 @@ namespace Infrastructure.Data.Repositories
         {
             try
             {
-                Region regionToReturn = _regions.Add(region).Entity;
-                _context.SaveChanges();
-                return regionToReturn;
+                return AddAndReturnRegion(region);
             }
             catch (InvalidOperationException)
             {
                 throw new ObjectAlreadyExistException(RegionAlreadyExistMessage + region.Name);
             }
+        }
+
+        private Region AddAndReturnRegion(Region region)
+        {
+            Region regionToReturn = _regions.Add(region).Entity;
+            _context.SaveChanges();
+            return regionToReturn;
         }
     }
 }

@@ -5,7 +5,7 @@ using Web.Models.CategoryModels;
 
 namespace Web.Controllers
 {
-    [Route("api/categories")]
+    [Route("api/v1/categories")]
     public class CategoryController : Controller
     {
         private ICategoryService _categoryService;

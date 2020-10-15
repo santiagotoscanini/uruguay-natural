@@ -29,7 +29,7 @@ namespace UnitTests.Web.Controllers
             mock.Setup(m => m.Add(It.IsAny<Administrator>())).Returns(administratorModel.ToEntity());
             var controller = new AdministratorController(mock.Object);
 
-            IActionResult result = controller.CreateAdministrator(administratorModel);
+            IActionResult result = controller.AddAdministrator(administratorModel);
             var status = result as OkObjectResult;
             var content = status.Value as AdministratorBaseCreateModel;
 

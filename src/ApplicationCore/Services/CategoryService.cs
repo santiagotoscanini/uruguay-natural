@@ -18,5 +18,10 @@ namespace ApplicationCore.Services
         {
             return _repository.GetAll();
         }
+
+        public Category GetCategoryByName(string name)
+        {
+            return _repository.GetByName(name);
+        }
     }
 }

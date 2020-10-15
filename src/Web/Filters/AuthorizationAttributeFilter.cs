@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
 using SessionInterface;
 using System;
 using System.Net;
-using System.Net.Mime;
 
 namespace Web.Filters
 {
@@ -27,37 +24,13 @@ namespace Web.Filters
             string token = context.HttpContext.Request.Headers["Authorization"];
             if(string.IsNullOrEmpty(token))
             {
-                var statusCode = (int)HttpStatusCode.Unauthorized;
-                var errorResponse = new ErrorResponse
-                {
-                    Status = statusCode,
-                    Title = UnautorizedTitleResponse,
-                    Description = UnautorizedDescriptionResponse,
-                };
-                context.Result = new ContentResult
-                {
-                    StatusCode = statusCode,
-                    ContentType = MediaTypeNames.Application.Json,
-                    Content = JsonConvert.SerializeObject(errorResponse),
-                };
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.Unauthorized, UnautorizedTitleResponse, UnautorizedDescriptionResponse);
             }
             else
             {
                 if (!_sessions.IsCorrectToken(token))
                 {
-                    var statusCode = (int)HttpStatusCode.Forbidden;
-                    var errorResponse = new ErrorResponse
-                    {
-                        Status = statusCode,
-                        Title = ForbiddenTitleResponse,
-                        Description = ForbiddenDescriptionResponse,
-                    };
-                    context.Result = new ContentResult
-                    {
-                        StatusCode = statusCode,
-                        ContentType = MediaTypeNames.Application.Json,
-                        Content = JsonConvert.SerializeObject(errorResponse),
-                    };
+                    context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.Forbidden, ForbiddenTitleResponse, ForbiddenDescriptionResponse);
                 }
             }
         }

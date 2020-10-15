@@ -32,9 +32,7 @@ namespace Infrastructure.Data.Repositories
         {
             try
             {
-                Booking bookingToReturn = _bookings.Add(booking).Entity;
-                _context.SaveChanges();
-                return bookingToReturn;
+                return AddAndReturnBooking(booking);
             }
             catch (InvalidOperationException)
             {
@@ -42,17 +40,28 @@ namespace Infrastructure.Data.Repositories
             }    
         }
 
+        private Booking AddAndReturnBooking(Booking booking)
+        {
+            Booking bookingToReturn = _bookings.Add(booking).Entity;
+            _context.SaveChanges();
+            return bookingToReturn;
+        }
+
         public Booking Get(string code)
         {
             try
             {
-                var booking = _bookings.Include(b => b.Tourist).First(b => b.Code == code);
-                return _bookings.Include(b => b.Tourist).First(b => b.Code == code);
+                return GetBookingByCodeIncludingTourist(code);
             }
             catch(InvalidOperationException)
             {
                 throw new NotFoundException(BookingNotFoundMessage+code);
             }
+        }
+
+        private Booking GetBookingByCodeIncludingTourist(string code)
+        {
+            return _bookings.Include(b => b.Tourist).First(b => b.Code == code);
         }
 
         public void Update(Booking updateBooking)
@@ -70,7 +79,10 @@ namespace Infrastructure.Data.Repositories
         {
             var booking = _bookings.Find(code);
             if(booking == null)
-                throw new NotFoundException(BookingNotFoundMessage+code);
+            {
+                throw new NotFoundException(BookingNotFoundMessage + code);
+            }
+
             return booking;
         }
     }

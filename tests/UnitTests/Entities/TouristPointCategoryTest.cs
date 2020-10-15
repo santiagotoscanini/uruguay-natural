@@ -1,5 +1,4 @@
-﻿
-using Entities;
+﻿using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Entities

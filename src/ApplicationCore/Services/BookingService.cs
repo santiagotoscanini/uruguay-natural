@@ -10,6 +10,7 @@ namespace ApplicationCore.Services
     public class BookingService : IBookingService
     {
         private readonly IBookingRepository _repository;
+
         private const string InvalidDateErrorMessage = "Error, the Check-out date must be greater than the Check-in date.";
 
         public BookingService(IBookingRepository repository)
@@ -18,7 +19,7 @@ namespace ApplicationCore.Services
         }
         public Booking Add(Booking booking)
         {
-            validateDates(booking.CheckInDate, booking.CheckOutDate);
+            ValidateDates(booking.CheckInDate, booking.CheckOutDate);
             booking.Code = Guid.NewGuid().ToString();
             return _repository.Add(booking);
         }
@@ -38,7 +39,7 @@ namespace ApplicationCore.Services
             _repository.Update(booking);
         }
 
-        private void validateDates(DateTime checkIn, DateTime checkOut)
+        private void ValidateDates(DateTime checkIn, DateTime checkOut)
         {
             if (checkIn >= checkOut) {
                 throw new InvalidAttributeValuesException(InvalidDateErrorMessage);

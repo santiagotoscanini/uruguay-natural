@@ -17,6 +17,7 @@ namespace Factory
         {
             _services = services;
         }
+
         public void AddCustomServices()
         {
             _services.AddScoped<IBookingRepository, BookingRepository>();
@@ -25,6 +26,7 @@ namespace Factory
             _services.AddScoped<ICategoryRepository, CategoryRepository>();
             _services.AddScoped<ITouristPointCategoryRepository, TouristPointCategoryRepository>();
             _services.AddScoped<ITouristPointRepository, TouristPointRepository>();
+
             _services.AddScoped<IBookingService, BookingService>();
             _services.AddScoped<IAdministratorService, AdministratorService>();
             _services.AddScoped<ISessionService, SessionService>();
@@ -37,6 +39,5 @@ namespace Factory
         {
             _services.AddDbContext<DbContext, TourismContext>();
         }
-
     }
 }

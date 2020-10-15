@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
 using Exceptions;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace IntegrationTests.Infrastructure.Data.Repositories
 {

@@ -1,5 +1,4 @@
-﻿
-namespace Web.Filters
+﻿namespace Web.Filters
 {
     public class ErrorResponse
     {

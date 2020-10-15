@@ -6,7 +6,7 @@ using Web.Models.TouristPointModels;
 
 namespace Web.Controllers
 {
-    [Route("api/tourist-points")]
+    [Route("api/v1/tourist-points")]
     public class TouristPointController : Controller
     {
         private ITouristPointService _touristPointService;

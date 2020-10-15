@@ -3,11 +3,10 @@ using ApplicationCoreInterface.Services;
 using Web.Models.BookingModels;
 using System.Linq;
 using Web.Filters;
-using System;
 
 namespace Web.Controllers
 {
-    [Route("api/bookings")]
+    [Route("api/v1/bookings")]
     public class BookingController : ControllerBase
     {
         private IBookingService _bookingService;
@@ -25,7 +24,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBooking([FromBody]BookingCreatingModel bookingModel)
+        public IActionResult AddBooking([FromBody]BookingCreatingModel bookingModel)
         {
             var booking = _bookingService.Add(bookingModel.ToEntity());
             return CreatedAtRoute("GetBooking", new { id = booking.Code }, new BookingBaseCreateModel(booking));

@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Infrastructure.Data.Config;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;

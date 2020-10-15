@@ -5,7 +5,7 @@ using Web.Models.RegionModels;
 
 namespace Web.Controllers
 {
-    [Route("api/regions")]
+    [Route("api/v1/regions")]
     public class RegionController : Controller
     {
         private IRegionService _regionService;

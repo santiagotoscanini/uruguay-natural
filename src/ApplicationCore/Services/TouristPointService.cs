@@ -2,52 +2,54 @@
 using Entities;
 using InfrastructureInterface.Data.Repositories;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ApplicationCore.Services
 {
     public class TouristPointService : ITouristPointService
     {
         private readonly ITouristPointRepository _TouristPointRepository;
-        private readonly ITouristPointCategoryRepository _touristPointCategoryRepository;
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IRegionRepository _regionRepository;
 
-        public TouristPointService(ITouristPointRepository repository, ITouristPointCategoryRepository touristPointCategoryRepository, ICategoryRepository categoryRepository, IRegionRepository regionRepository)
+        private readonly ICategoryService _categoryService;
+        private readonly IRegionService _regionService;
+
+        public TouristPointService(ITouristPointRepository repository, ICategoryService categoryService, IRegionService regionService)
         {
             _TouristPointRepository = repository;
-            _touristPointCategoryRepository = touristPointCategoryRepository;
-            _categoryRepository = categoryRepository;
-            _regionRepository = regionRepository;
+            _categoryService = categoryService;
+            _regionService = regionService;
         }
 
         public TouristPoint Add(TouristPoint touristPoint, ICollection<string> categories)
         {
-            touristPoint.Region = _regionRepository.GetAll().First(r => r.Name == touristPoint.Region.Name);
+            touristPoint.Region = _regionService.GetRegionByName(touristPoint.Region.Name);
 
+            CreateTouristPointCategories(categories, touristPoint);
+
+            return _TouristPointRepository.Add(touristPoint);
+        }
+
+        private void CreateTouristPointCategories(ICollection<string> categories, TouristPoint touristPoint)
+        {
             foreach (string categoryName in categories)
             {
-                Category category = getCategory(categoryName);
-                TouristPointCategory touristPointCategory = createTouristPointCategory(touristPoint, category);
-                touristPoint.TouristPointCategories.Add(touristPointCategory);
+                AddTouristPointCategory(touristPoint, categoryName);
             }
-            TouristPoint touristPointSaved = _TouristPointRepository.Add(touristPoint);
-            return touristPointSaved;
         }
 
-        private Category getCategory(string categoryName)
+        private void AddTouristPointCategory(TouristPoint touristPoint, string categoryName)
         {
-            return _categoryRepository.GetByName(categoryName);
+            Category category = _categoryService.GetCategoryByName(categoryName);
+            TouristPointCategory touristPointCategory = CreateTouristPointCategory(touristPoint, category);
+            touristPoint.TouristPointCategories.Add(touristPointCategory);
         }
 
-        private TouristPointCategory createTouristPointCategory(TouristPoint touristPoint, Category category)
+        private TouristPointCategory CreateTouristPointCategory(TouristPoint touristPoint, Category category)
         {
-            var touristPointCategory = new TouristPointCategory
+            return new TouristPointCategory
             {
                 Category = category,
                 TouristPoint = touristPoint
             };
-            return touristPointCategory;
         }
 
         public IEnumerable<TouristPoint> GetAll()

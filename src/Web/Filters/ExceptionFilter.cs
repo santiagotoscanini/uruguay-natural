@@ -1,10 +1,7 @@
 ﻿using Exceptions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
 using System;
 using System.Net;
-using System.Net.Mime;
 
 namespace Web.Filters
 {
@@ -23,70 +20,19 @@ namespace Web.Filters
             }
             catch (ObjectAlreadyExistException exception)
             {
-                var statusCode = (int)HttpStatusCode.BadRequest;
-                var errorResponse = new ErrorResponse
-                {
-                    Status = statusCode,
-                    Title = AlreadyExistTitleResponse,
-                    Description = exception.Message,
-                };
-
-                context.Result = new ContentResult()
-                {
-                    StatusCode = statusCode,
-                    ContentType = MediaTypeNames.Application.Json,
-                    Content = JsonConvert.SerializeObject(errorResponse),
-                };
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.BadRequest, AlreadyExistTitleResponse, exception.Message);
             }
             catch (NotFoundException exception)
             {
-                var statusCode = (int) HttpStatusCode.NotFound;
-                var errorResponse = new ErrorResponse
-                {
-                    Status = statusCode,
-                    Title = NotFoundTitleResponse,
-                    Description = exception.Message,
-                };
-
-                context.Result = new ContentResult()
-                {
-                    StatusCode = statusCode,
-                    ContentType = MediaTypeNames.Application.Json,
-                    Content = JsonConvert.SerializeObject(errorResponse),
-                };
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.NotFound, NotFoundTitleResponse, exception.Message);
             }
             catch (InvalidAttributeValuesException exception)
             {
-                var statusCode = (int) HttpStatusCode.BadRequest;
-                var errorResponse = new ErrorResponse
-                {
-                    Status = statusCode,
-                    Title = InvalidAttributeValuesTitleResponse,
-                    Description = exception.Message,
-                };
-
-                context.Result = new ContentResult()
-                {
-                    StatusCode = statusCode,
-                    ContentType = MediaTypeNames.Application.Json,
-                    Content = JsonConvert.SerializeObject(errorResponse),
-                };
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.BadRequest, InvalidAttributeValuesTitleResponse, exception.Message);
             }
             catch (Exception)
             {
-                var statusCode = (int)HttpStatusCode.InternalServerError;
-                var errorResponse = new ErrorResponse
-                {
-                    Status = statusCode,
-                    Title = ServerErrorResponse,
-                    Description = ServerErrorResponse,
-                };
-                context.Result = new ContentResult()
-                {
-                    StatusCode = statusCode,
-                    ContentType = MediaTypeNames.Application.Json,
-                    Content = JsonConvert.SerializeObject(errorResponse),
-                };
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.InternalServerError, ServerErrorResponse, ServerErrorResponse);
             }
         }
     }

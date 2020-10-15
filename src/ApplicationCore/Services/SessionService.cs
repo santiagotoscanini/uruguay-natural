@@ -1,4 +1,5 @@
-﻿using InfrastructureInterface.Data.Repositories;
+﻿using Entities;
+using InfrastructureInterface.Data.Repositories;
 using SessionInterface;
 using System;
 using System.Collections.Generic;
@@ -27,13 +28,22 @@ namespace ApplicationCore.Services
 
         public string Login(string email, string password)
         {
-            var admins = _repository.GetAll();
-            var admin = admins.FirstOrDefault(x => x.Email == email && x.Password == password);
+            Administrator admin = GetAdmin(email, password);
             if (admin == null)
             {
                 return null;
             }
+            return GenerateAndInsertToken(admin);
+        }
 
+        private Administrator GetAdmin(string email, string password)
+        {
+            IEnumerable<Administrator> admins = _repository.GetAll();
+            return admins.FirstOrDefault(x => x.Email == email && x.Password == password);
+        }
+
+        private string GenerateAndInsertToken(Administrator admin)
+        {
             var token = Guid.NewGuid().ToString();
             _tokenRepository.Add(token, admin.Email);
             return token;

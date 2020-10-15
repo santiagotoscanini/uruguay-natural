@@ -1,5 +1,4 @@
-﻿
-using Entities;
+﻿using Entities;
 using InfrastructureInterface.Data.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

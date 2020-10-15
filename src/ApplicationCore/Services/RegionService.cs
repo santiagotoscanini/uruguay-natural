@@ -1,8 +1,8 @@
-﻿
-using ApplicationCoreInterface.Services;
+﻿using ApplicationCoreInterface.Services;
 using Entities;
 using InfrastructureInterface.Data.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ApplicationCore.Services
 {
@@ -18,6 +18,11 @@ namespace ApplicationCore.Services
         public IEnumerable<Region> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        public Region GetRegionByName(string name)
+        {
+            return GetAll().First(r => r.Name == name);
         }
     }
 }

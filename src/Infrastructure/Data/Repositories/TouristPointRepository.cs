@@ -30,15 +30,19 @@ namespace Infrastructure.Data.Repositories
         {
             try
             {
-                TouristPoint touristPointToReturn = _touristPoints.Add(touristPoint).Entity;
-              //  _context.Attach(touristPointToReturn.Region);
-                _context.SaveChanges();
-                return touristPointToReturn;
+                return AddAndReturnTouristPoint(touristPoint);
             }
             catch (InvalidOperationException)
             {
                 throw new ObjectAlreadyExistException(TouristPointAlreadyExistMessage + touristPoint.Id);
             }
+        }
+
+        private TouristPoint AddAndReturnTouristPoint(TouristPoint touristPoint)
+        {
+            TouristPoint touristPointToReturn = _touristPoints.Add(touristPoint).Entity;
+            _context.SaveChanges();
+            return touristPointToReturn;
         }
     }
 }
