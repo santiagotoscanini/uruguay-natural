@@ -2,6 +2,7 @@ using Castle.Core.Internal;
 using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTests.Entities
 {
@@ -50,13 +51,14 @@ namespace UnitTests.Entities
             Assert.AreEqual(0, emptyLodging.Id);
             Assert.AreEqual(0, emptyLodging.MaximumSize);
             Assert.AreEqual(0, emptyLodging.CurrentlyOccupiedPlaces);
+            Assert.IsTrue(new List<Booking>().SequenceEqual(emptyLodging.Bookings));
         }
 
         [TestMethod]
         public void CreateLodging()
         {
             var lodging = new Lodging
-            { 
+            {
                 Name = _name,
                 NumberOfStars = _numberOfStars,
                 TouristPoint = _touristPoint,
@@ -68,7 +70,8 @@ namespace UnitTests.Entities
                 DescriptionForBookings = _descriptionForBookings,
                 Id = _id,
                 MaximumSize = _maximumSize,
-                CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces
+                CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces,
+                Bookings = new List<Booking>(),
             };
 
             Assert.AreEqual(_name, lodging.Name);
@@ -83,6 +86,7 @@ namespace UnitTests.Entities
             Assert.AreEqual(_id, lodging.Id);
             Assert.AreEqual(_maximumSize, lodging.MaximumSize);
             Assert.AreEqual(_currentlyOccupiedPlaces, lodging.CurrentlyOccupiedPlaces);
+            Assert.IsTrue(new List<Booking>().SequenceEqual(lodging.Bookings));
         }
     }
 }
