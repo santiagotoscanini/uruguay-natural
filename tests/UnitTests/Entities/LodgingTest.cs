@@ -1,3 +1,5 @@
+using Castle.Core.Internal;
+using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Entities
@@ -14,14 +16,14 @@ namespace UnitTests.Entities
             Assert.AreEqual(0, emptyLodging.NumberOfStars);
             Assert.IsNull(emptyLodging.TouristPoint);
             Assert.IsNull(emptyLodging.Address);
-            Assert.AreEqual(0, emptyLodging.Images.Size());
+            Assert.IsTrue(emptyLodging.Images.IsNullOrEmpty());
             Assert.AreEqual(0, emptyLodging.CostPerNight);
             Assert.IsNull(emptyLodging.Description);
             Assert.IsNull(emptyLodging.ContactNumber);
             Assert.IsNull(emptyLodging.DescriptionForBookings);
             Assert.AreEqual(0, emptyLodging.Id);
             Assert.AreEqual(0, emptyLodging.MaximumSize);
-            Assert.AreEqual(0, emptyLodging.ActualSize);
+            Assert.AreEqual(0, emptyLodging.CurrentlyOccupiedPlaces);
         }
     }
 }

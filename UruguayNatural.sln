@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfrastructureInterface", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SessionInterface", "src\SessionInterface\SessionInterface.csproj", "{EE6FB65E-F08F-444B-BC0A-96A1204456A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exceptions", "src\Exceptions\Exceptions.csproj", "{4172F0E1-0459-4A15-BE95-E19E45DD790F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exceptions", "src\Exceptions\Exceptions.csproj", "{4172F0E1-0459-4A15-BE95-E19E45DD790F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,6 +159,18 @@ Global
 		{EE6FB65E-F08F-444B-BC0A-96A1204456A6}.Release|x64.Build.0 = Release|Any CPU
 		{EE6FB65E-F08F-444B-BC0A-96A1204456A6}.Release|x86.ActiveCfg = Release|Any CPU
 		{EE6FB65E-F08F-444B-BC0A-96A1204456A6}.Release|x86.Build.0 = Release|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Debug|x64.Build.0 = Debug|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Debug|x86.Build.0 = Debug|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Release|x64.ActiveCfg = Release|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Release|x64.Build.0 = Release|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Release|x86.ActiveCfg = Release|Any CPU
+		{4172F0E1-0459-4A15-BE95-E19E45DD790F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
