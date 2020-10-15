@@ -28,7 +28,7 @@ namespace tests.UnitTests.Entities
             Assert.AreEqual(new DateTime(), booking.CheckInDate);
             Assert.AreEqual(new DateTime(), booking.CheckOutDate);
             Assert.AreEqual(0, booking.NumberOfGuests);
-            Assert.IsNull(booking.Lodging);
+            //Assert.IsNull(booking.Lodging);
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace tests.UnitTests.Entities
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
-                Lodging = _lodging,
+                //Lodging = _lodging,
             };
 
             Assert.AreEqual(booking.Tourist, _tourist);
@@ -53,7 +53,7 @@ namespace tests.UnitTests.Entities
             Assert.AreEqual(booking.CheckInDate, _checkInDate);
             Assert.AreEqual(booking.CheckOutDate, _checkOutDate);
             Assert.AreEqual(booking.NumberOfGuests, _numberOfGuests);
-            Assert.AreEqual(booking.Lodging, _lodging);
+            //Assert.AreEqual(booking.Lodging, _lodging);
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace tests.UnitTests.Entities
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
-                Lodging = _lodging,
+                //Lodging = _lodging,
             };
             var booking2 = new Booking
             {
@@ -79,7 +79,7 @@ namespace tests.UnitTests.Entities
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
-                Lodging = _lodging,
+                //Lodging = _lodging,
             };
 
             Assert.AreEqual(booking1, booking2);
@@ -97,7 +97,7 @@ namespace tests.UnitTests.Entities
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
-                Lodging = _lodging,
+                //Lodging = _lodging,
             };
             var booking2 = new Booking
             {
@@ -108,7 +108,7 @@ namespace tests.UnitTests.Entities
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
                 NumberOfGuests = _numberOfGuests,
-                Lodging = _lodging,
+                //Lodging = _lodging,
             };
 
             Assert.AreNotEqual(booking1, booking2);

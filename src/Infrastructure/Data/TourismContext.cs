@@ -8,8 +8,10 @@ namespace Infrastructure.Data
 {
     public class TourismContext : DbContext
     {
-        public DbSet<Booking> Booking { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<TouristPoint> TouristPoints { get; set; }
+        public DbSet<Lodging> Lodgings { get; set; }
 
         public TourismContext() {}
 

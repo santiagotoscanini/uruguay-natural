@@ -1,10 +1,13 @@
 ﻿using Entities;
 using Exceptions;
 using Infrastructure.Data;
+using Infrastructure.Data.Repositories;
+using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace IntegrationTests.Infrastructure.Data.Repositories
@@ -77,10 +80,11 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             var Lodging = new Lodging
             {
                 Id = _id,
+                TouristPoint = _touristPoint
             };
             _lodgingRepository.Add(Lodging);
 
-            Lodging LodgingGetted = _lodgingRepository.Get(_id);
+            Lodging LodgingGetted = _lodgingRepository.GetById(_id);
 
             Assert.AreEqual(Lodging.TouristPoint, _touristPoint);
             Assert.AreEqual(Lodging, LodgingGetted);
@@ -93,13 +97,11 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             {
                 Id = _id,
                 CurrentlyOccupiedPlaces = 0,
-                MaximumSize = 2,
             };
             var lodgingInfo = new Lodging
             {
                 Id = _id,
                 CurrentlyOccupiedPlaces = 2,
-                MaximumSize = 2,
             };
 
 
@@ -108,11 +110,11 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             _lodgingRepository.Update(lodgingInfo);
 
 
-            Assert.AreEqual(lodgingInfo.CurrentlyOccupiedPlaces, _lodgingRepository.Get(_id).CurrentlyOccupiedPlaces);
-            Assert.AreEqual(lodgingInfo.MaximumSize, _lodgingRepository.Get(_id).MaximumSize);
+            Assert.AreEqual(lodgingInfo.CurrentlyOccupiedPlaces, _lodgingRepository.GetById(_id).CurrentlyOccupiedPlaces);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
         public void DeleteLodging()
         {
             var lodging = new Lodging
@@ -123,16 +125,16 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             };
 
             Lodging savedLodging = _lodgingRepository.Add(lodging);
-            bool wasDeleted = _lodgingRepository.Delete(savedLodging.Id);
+            _lodgingRepository.Delete(savedLodging.Id);
 
-            Assert.IsTrue(wasDeleted);
+            _lodgingRepository.GetById(_id);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotFoundException))]
         public void GetLodgingFailTest()
         {
-            _lodgingRepository.Get(_id);
+            _lodgingRepository.GetById(_id);
         }
 
         [TestMethod]

@@ -23,7 +23,7 @@ namespace UnitTests.Entities
             Id = 2,
          };
         private string _address = "Av. Rio 123";
-        private IEnumerable<string> _images = new List<string>{"1234jnj"};
+        private ICollection<string> _images = new List<string>{"1234jnj"};
         private double _costPerNight = 200.0;
         private string _description = "Good place";
         private string _contactNumber = "23346789";
