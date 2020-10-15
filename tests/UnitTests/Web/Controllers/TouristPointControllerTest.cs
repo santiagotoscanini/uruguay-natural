@@ -65,10 +65,10 @@ namespace UnitTests.Web.Controllers
                 }
             };
             var mock = new Mock<ITouristPointService>(MockBehavior.Strict);
-            mock.Setup(m => m.GetAll()).Returns(touristPointsToReturn);
+            mock.Setup(m => m.GetAllFilteredByRegionAndCategory(null, null)).Returns(touristPointsToReturn);
             var controller = new TouristPointController(mock.Object);
 
-            IActionResult result = controller.GetAllTouristPoints();
+            IActionResult result = controller.GetTouristPointFiltered(null, null);
             var okResult = result as OkObjectResult;
             var touristPoints = okResult.Value as IEnumerable<TouristPointModel>;
 

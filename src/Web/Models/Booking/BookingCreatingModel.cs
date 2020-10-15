@@ -24,6 +24,8 @@ namespace Web.Models.BookingModels
 
         [Required]
         public int NumberOfGuests { get; set; }
+        [Required]
+        public int LodgingId { get; set; }
 
         public Booking ToEntity()
         {
@@ -40,6 +42,7 @@ namespace Web.Models.BookingModels
                 CheckInDate = CheckInDate,
                 CheckOutDate = CheckOutDate,
                 NumberOfGuests = NumberOfGuests,
+                Lodging = new Lodging { Id = LodgingId }
         };
         }
     }

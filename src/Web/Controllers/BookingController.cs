@@ -17,8 +17,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [ServiceFilter(typeof(AuthorizationAttributeFilter))]
-        public IActionResult GetAllBookings()
+        public IActionResult GetAllBookings([FromQuery(Name = "tourist-point")] string touristPoint)
         {
             return Ok(_bookingService.GetAll().Select(b => new BookingModel(b)));
         }

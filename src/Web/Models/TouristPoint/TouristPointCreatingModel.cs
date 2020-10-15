@@ -6,11 +6,16 @@ namespace Web.Models.TouristPointModels
 {
     public class TouristPointCreatingModel
     {
+        [Required]
         public ICollection<string> Categories { get; set; }
+        [Required]
         public string RegionName { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         [StringLength(2000)]
         public string Description { get; set; }
+        [Required]
         public string Image { get; set; }
 
         public TouristPoint ToEntity()

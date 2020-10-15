@@ -2,6 +2,7 @@
 using Entities;
 using InfrastructureInterface.Data.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ApplicationCore.Services
 {
@@ -55,6 +56,11 @@ namespace ApplicationCore.Services
         public IEnumerable<TouristPoint> GetAll()
         {
             return _touristPointRepository.GetAll();
+        }
+
+        public IEnumerable<TouristPoint> GetAllFilteredByRegionAndCategory(string region, string category)
+        {
+            return _touristPointRepository.GetFilteredByRegionAndCategory(region, category);
         }
     }
 }

@@ -16,17 +16,17 @@ namespace Web.Controllers
             _touristPointService = touristPointService;
         }
 
-        [HttpGet]
-        public IActionResult GetAllTouristPoints()
-        {
-            return Ok(_touristPointService.GetAll().Select(t => new TouristPointModel(t)));
-        }
-
         [HttpPost]
         public IActionResult AddTouristPoint([FromBody] TouristPointCreatingModel touristPointModel)
         {
             var touristPoint = _touristPointService.Add(touristPointModel.ToEntity(), touristPointModel.Categories);
             return StatusCode((int) HttpStatusCode.Created, new TouristPointModel(touristPoint));
+        }
+
+        [HttpGet]
+        public IActionResult GetTouristPointFiltered([FromQuery(Name = "region")] string region, [FromQuery(Name = "category")] string category)
+        {
+            return Ok(_touristPointService.GetAllFilteredByRegionAndCategory(region, category).Select(t => new TouristPointModel(t)));
         }
     }
 }
