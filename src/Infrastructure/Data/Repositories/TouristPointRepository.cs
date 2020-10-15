@@ -44,5 +44,21 @@ namespace Infrastructure.Data.Repositories
             _context.SaveChanges();
             return touristPointToReturn;
         }
+
+        public IEnumerable<TouristPoint> GetFilteredByRegionAndCategory(string region, string category)
+        {
+            IEnumerable<TouristPoint> touristPointsToReturn = _touristPoints.Include(tp => tp.Region).Include(tp => tp.TouristPointCategories).ThenInclude(tpc => tpc.Category);
+
+            if (region != null)
+            {
+                touristPointsToReturn = touristPointsToReturn.Where(tp => tp.Region.Name == region);
+            }
+            if (category != null)
+            {
+                touristPointsToReturn = touristPointsToReturn.Where(tp => tp.TouristPointCategories.Where(c => c.Category.Name == category).Any());
+            }
+
+            return touristPointsToReturn;
+        }
     }
 }

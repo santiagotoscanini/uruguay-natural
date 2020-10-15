@@ -10,17 +10,20 @@ namespace ApplicationCore.Services
     public class BookingService : IBookingService
     {
         private readonly IBookingRepository _repository;
+        private readonly ILodgingService _lodgingService;
 
         private const string InvalidDateErrorMessage = "Error, the Check-out date must be greater than the Check-in date.";
 
-        public BookingService(IBookingRepository repository)
+        public BookingService(IBookingRepository repository, ILodgingService lodgingService)
         {
            _repository = repository;
+            _lodgingService = lodgingService;
         }
         public Booking Add(Booking booking)
         {
             ValidateDates(booking.CheckInDate, booking.CheckOutDate);
             booking.Code = Guid.NewGuid().ToString();
+            booking.Lodging = _lodgingService.GetById(booking.Lodging.Id);
             return _repository.Add(booking);
         }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using ApplicationCore.Services;
 using System;
 using Exceptions;
+using ApplicationCoreInterface.Services;
 
 namespace UnitTests.ApplicationCore.Services
 {
@@ -35,7 +36,9 @@ namespace UnitTests.ApplicationCore.Services
             };
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.GetAll()).Returns(bookingsToReturn);
-            var bookingService = new BookingService(mock.Object);
+            var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
+            mockLodgingService.Setup(r => r.GetById(0)).Returns(new Lodging());
+            var bookingService = new BookingService(mock.Object, mockLodgingService.Object);
 
             IEnumerable<Booking> bookingsSaved = bookingService.GetAll();
 
@@ -55,7 +58,9 @@ namespace UnitTests.ApplicationCore.Services
 
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.Add(bookingToAdd)).Returns(bookingToAdd);
-            var bookingService = new BookingService(mock.Object);
+            var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
+            mockLodgingService.Setup(r => r.GetById(0)).Returns(new Lodging());
+            var bookingService = new BookingService(mock.Object, mockLodgingService.Object);
 
             Booking bookingSaved = bookingService.Add(bookingToAdd);
 
@@ -69,7 +74,9 @@ namespace UnitTests.ApplicationCore.Services
             var bookingToGet = new Booking { Code = _bookingCode1 };
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.Get(_bookingCode1)).Returns(bookingToGet);
-            var bookingService = new BookingService(mock.Object);
+            var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
+            mockLodgingService.Setup(r => r.GetById(0)).Returns(new Lodging());
+            var bookingService = new BookingService(mock.Object, mockLodgingService.Object);
 
             Booking bookingGetted = bookingService.Get(_bookingCode1);
 
@@ -85,7 +92,9 @@ namespace UnitTests.ApplicationCore.Services
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.Update(updateStateInfoModel));
             mock.Setup(r => r.Get(_bookingCode1)).Returns(booking);
-            var bookingService = new BookingService(mock.Object);
+            var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
+            mockLodgingService.Setup(r => r.GetById(0)).Returns(new Lodging());
+            var bookingService = new BookingService(mock.Object, mockLodgingService.Object);
 
             bookingService.Update(updateStateInfoModel);
             var modifiedBookingGetted = bookingService.Get(_bookingCode1);
@@ -106,7 +115,9 @@ namespace UnitTests.ApplicationCore.Services
             };
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.Add(bookingToAdd)).Returns(bookingToAdd);
-            var bookingService = new BookingService(mock.Object);
+            var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
+            mockLodgingService.Setup(r => r.GetById(0)).Returns(new Lodging());
+            var bookingService = new BookingService(mock.Object, mockLodgingService.Object);
 
             Booking bookingSaved = bookingService.Add(bookingToAdd);
         }

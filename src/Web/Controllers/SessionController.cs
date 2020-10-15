@@ -15,6 +15,12 @@ namespace Web.Controllers
             _sessions = sessions;
         }
 
+        /// <summary>
+        /// Ingresa a su cuenta un administrador.
+        /// </summary>
+        /// <response code="200">Ingreso exitosamente</response>
+        /// <response code="400">Hay datos incorrectos</response>
+        /// <response code="500">Ocurrio un error en el servidor</response>
         [HttpPost]
         public IActionResult Login([FromBody] LoginModel model)
         {
@@ -26,6 +32,14 @@ namespace Web.Controllers
             return Ok(new LoginOutModel { Token = token });
         }
 
+        /// <summary>
+        /// Cierra sesion un administrador.
+        /// </summary>
+        /// <response code="200">Se cerro sesion existosamente.</response>
+        /// <response code="400">El usuario no estaba loggeado.</response>
+        ///<response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+        /// <response code="500">Ocurrio un error en el servidor</response>
         [HttpPost("logout")]
         [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult Logout([FromBody] LogoutModel model)

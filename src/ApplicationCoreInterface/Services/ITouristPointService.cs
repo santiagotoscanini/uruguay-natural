@@ -7,5 +7,6 @@ namespace ApplicationCoreInterface.Services
     {
         TouristPoint Add(TouristPoint touristPoint, ICollection<string> categories);
         IEnumerable<TouristPoint> GetAll();
+        IEnumerable<TouristPoint> GetAllFilteredByRegionAndCategory(string region, string category);
     }
 }
