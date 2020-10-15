@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Web</name>
+    </assembly>
+    <members>
+        <member name="M:Web.Controllers.AdministratorController.AddAdministrator(Web.Models.AdministratorModels.AdministratorCreatingModel)">
+            <summary>
+            Crea un nuevo Administrador.
+            </summary>
+            <response code="201">Se creo exitosamente</response>
+            <response code="400">Ya hay un administrador registrado con ese email</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+            <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+            <response code="500">Ocrrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.AdministratorController.DeleteAdministrator(System.String)">
+            <summary>
+            Elimina un Administrador.
+            </summary>
+            <response code="204">Se elimino exitosamente</response>
+            <response code="404">No existe el administrador con ese email</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+            <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+            <response code="500">Ocrrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.AdministratorController.UpdateAdministrator(System.String,Web.Models.AdministratorModel.AdministratorUpdatingModel)">
+            <summary>
+            Actualiza los datos de un Administrador.
+            </summary>
+            <response code="204">Se actualizo exitosamente</response>
+            <response code="404">No existe el administrador con ese email</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+            <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+            <response code="500">Ocrrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.GetAllBookings(System.String)">
+            <summary>
+            Obtiene las reservas.
+            </summary>
+            <response code="200">Se obtuvieron exitosamente</response>
+            <response code="500">Ocrrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.AddBooking(Web.Models.BookingModels.BookingCreatingModel)">
+            <summary>
+            Se crea una nueva reserva.
+            </summary>
+            <response code="201">Se creo exitosamente</response>
+            <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.GetBookingById(System.String)">
+            <summary>
+            Se obtiene una reserva por su codigo.
+            </summary>
+            <response code="200">Se obtuvo existosamente</response>
+            <response code="404">No existe una reserva con ese codigo</response>
+            <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.UpdateBooking(System.String,Web.Models.BookingModels.BookingUpdateInfoModel)">
+             <summary>
+             Se actualiza el estado de una reserva.
+             </summary>
+             <response code="204">Se modifico existosamente</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+             <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+             <response code="404">No existe una reserva con ese codigo</response>
+             <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.CategoryController.GetAllCategories">
+            <summary>
+            Se obtienen las categorias.
+            </summary>
+            <response code="200">Se obtuvo existosamente</response>
+            <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.LodgingController.UpdateLodging(System.Int32,Web.Models.LodgingModels.LodgingUpdateCapacityModel)">
+             <summary>
+             Se actualiza la capacidad actual de un hospedaje.
+             </summary>
+             <response code="204">Se actualizo existosamente</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+             <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+             <response code="404">No existe un hospedaje con ese id</response>
+             <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.LodgingController.DeleteLodging(System.Int32)">
+             <summary>
+             Se elimina el hospedaje.
+             </summary>
+             <response code="204">Se elimino existosamente</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+             <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+             <response code="404">No existe un hospedaje con ese id</response>
+             <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.LodgingController.AddLodging(Web.Models.LodgingModels.LodgingCreatingModel)">
+             <summary>
+             Se agrega un hospedaje.
+             </summary>
+             <response code="201">Se creo exitosamente</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+             <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+             <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.RegionController.GetAllRegions">
+            <summary>
+            Obtener las regiones.
+            </summary>
+            <response code="200">Se obtuvieron exitosamente</response>
+            <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.SessionController.Login(Web.Models.Session.LoginModel)">
+            <summary>
+            Ingresa a su cuenta un administrador.
+            </summary>
+            <response code="200">Ingreso exitosamente</response>
+            <response code="400">Hay datos incorrectos</response>
+            <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.SessionController.Logout(Web.Models.Session.LogoutModel)">
+             <summary>
+             Cierra sesion un administrador.
+             </summary>
+             <response code="200">Se cerro sesion existosamente.</response>
+             <response code="400">El usuario no estaba loggeado.</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+             <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+             <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.TouristPointController.AddTouristPoint(Web.Models.TouristPointModels.TouristPointCreatingModel)">
+             <summary>
+             Se agrega un punto turistico.
+             </summary>
+             <response code="201">Se creo exitosamente</response>
+            <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
+             <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
+             <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+        <member name="M:Web.Controllers.TouristPointController.GetTouristPointFiltered(System.String,System.String)">
+            <summary>
+            Se obtienen los puntos turisticos filtrados por region y por categoria.
+            </summary>
+            <response code="200">Se obtuvieron exitosamente</response>
+            <response code="500">Ocurrio un error en el servidor</response>
+        </member>
+    </members>
+</doc>

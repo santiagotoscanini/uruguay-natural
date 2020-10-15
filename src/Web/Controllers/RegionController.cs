@@ -15,6 +15,11 @@ namespace Web.Controllers
             _regionService = regionService;
         }
 
+        /// <summary>
+        /// Obtener las regiones.
+        /// </summary>
+        /// <response code="200">Se obtuvieron exitosamente</response>
+        /// <response code="500">Ocurrio un error en el servidor</response>
         [HttpGet]
         public IActionResult GetAllRegions()
         {

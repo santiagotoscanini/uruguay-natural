@@ -15,6 +15,11 @@ namespace Web.Controllers
             _categoryService = categoryService;
         }
 
+        /// <summary>
+        /// Se obtienen las categorias.
+        /// </summary>
+        /// <response code="200">Se obtuvo existosamente</response>
+        /// <response code="500">Ocurrio un error en el servidor</response>
         [HttpGet]
         public IActionResult GetAllCategories()
         {
