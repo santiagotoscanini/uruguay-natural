@@ -7,9 +7,10 @@ namespace Entities
         public ICollection<TouristPointCategory> TouristPointCategories { get; set; } = new List<TouristPointCategory>();
         public Region Region { get; set; }
         public string Name { get; set; }
+        public ICollection<Lodging> Lodgings { get; set; } = new List<Lodging>();
         public string Description { get; set; }
         public string Image { get; set; }
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public override bool Equals(object obj)
         {

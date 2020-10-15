@@ -41,7 +41,8 @@ namespace UnitTests.Entities
             Assert.IsNull(touristPoint.Name);
             Assert.IsNull(touristPoint.Description);
             Assert.IsNull(touristPoint.Image);
-            Assert.IsNull(touristPoint.Id);
+            Assert.AreEqual(0, touristPoint.Id);
+            Assert.IsTrue(new List<Lodging>().SequenceEqual(touristPoint.Lodgings));
         }
 
         [TestMethod]
@@ -54,7 +55,8 @@ namespace UnitTests.Entities
                 Name = _name,
                 Description = _description,
                 Image = _image,
-                Id = _id
+                Id = _id,
+                Lodgings = new List<Lodging>(),
             };
 
             Assert.AreEqual(touristPoint.TouristPointCategories, _touristPointCategories);
@@ -63,6 +65,7 @@ namespace UnitTests.Entities
             Assert.AreEqual(touristPoint.Description, _description);
             Assert.AreEqual(touristPoint.Image, _image);
             Assert.AreEqual(touristPoint.Id, _id);
+            Assert.IsTrue(new List<Lodging>().SequenceEqual(touristPoint.Lodgings));
         }
 
         [TestMethod]

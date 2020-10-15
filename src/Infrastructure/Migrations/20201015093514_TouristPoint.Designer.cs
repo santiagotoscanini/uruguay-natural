@@ -4,14 +4,16 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TourismContext))]
-    partial class TourismContextModelSnapshot : ModelSnapshot
+    [Migration("20201015093514_TouristPoint")]
+    partial class TouristPoint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,9 +51,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LodgingId")
-                        .HasColumnType("int");
-
                     b.Property<int>("NumberOfGuests")
                         .HasColumnType("int");
 
@@ -63,11 +62,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Code");
 
-                    b.HasIndex("LodgingId");
-
                     b.HasIndex("TouristId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Booking");
                 });
 
             modelBuilder.Entity("Entities.Category", b =>
@@ -78,53 +75,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("Entities.Lodging", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("CostPerNight")
-                        .HasColumnType("float");
-
-                    b.Property<int>("CurrentlyOccupiedPlaces")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescriptionForBookings")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Images")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MaximumSize")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfStars")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TouristPointId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TouristPointId");
-
-                    b.ToTable("Lodgings");
                 });
 
             modelBuilder.Entity("Entities.Region", b =>
@@ -181,7 +131,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RegionName");
 
-                    b.ToTable("TouristPoints");
+                    b.ToTable("TouristPoint");
                 });
 
             modelBuilder.Entity("Entities.TouristPointCategory", b =>
@@ -208,20 +158,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Entities.Booking", b =>
                 {
-                    b.HasOne("Entities.Lodging", "Lodging")
-                        .WithMany("Bookings")
-                        .HasForeignKey("LodgingId");
-
                     b.HasOne("Entities.Tourist", "Tourist")
                         .WithMany()
                         .HasForeignKey("TouristId");
-                });
-
-            modelBuilder.Entity("Entities.Lodging", b =>
-                {
-                    b.HasOne("Entities.TouristPoint", "TouristPoint")
-                        .WithMany("Lodgings")
-                        .HasForeignKey("TouristPointId");
                 });
 
             modelBuilder.Entity("Entities.TouristPoint", b =>

@@ -1,5 +1,4 @@
 ﻿using Entities;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models.AdministratorModels

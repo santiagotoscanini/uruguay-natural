@@ -19,7 +19,7 @@ namespace Web.Models.TouristPointModels
             Name = touristPoint.Name;
             Description = touristPoint.Description;
             Image = touristPoint.Description;
-            Id = touristPoint.Id ?? default(int);
+            Id = touristPoint.Id;
         }
 
         public override bool Equals(object obj)
