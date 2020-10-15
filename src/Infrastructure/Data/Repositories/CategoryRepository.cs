@@ -4,6 +4,7 @@ using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -11,7 +12,9 @@ namespace Infrastructure.Data.Repositories
     {
         private readonly DbContext _context;
         private readonly DbSet<Category> _categories;
+
         private const string CategoryAlreadyExistMessage = "There is already a category registered with the name: ";
+        private const string CategoryNotFoundMessage = "There is no category with the name: ";
 
         public CategoryRepository(DbContext context)
         {
@@ -23,6 +26,7 @@ namespace Infrastructure.Data.Repositories
         {
             return _categories;
         }
+
         public Category Add(Category category)
         {
             try
@@ -34,6 +38,19 @@ namespace Infrastructure.Data.Repositories
             catch (InvalidOperationException)
             {
                 throw new ObjectAlreadyExistException(CategoryAlreadyExistMessage + category.Name);
+            }
+        }
+
+        public Category GetByName(string name)
+        {
+            try
+            {
+                var category = _categories.First(c => c.Name == name);
+                return category;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new NotFoundException(CategoryNotFoundMessage + name);
             }
         }
     }

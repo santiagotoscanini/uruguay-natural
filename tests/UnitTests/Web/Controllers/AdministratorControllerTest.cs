@@ -9,7 +9,7 @@ using Web.Models.AdministratorModels;
 namespace UnitTests.Web.Controllers
 {
     [TestClass]
-    class AdministratorControllerTest
+    public class AdministratorControllerTest
     {
         private string _name = "test";
         private string _email = "stm@imm.com";
@@ -30,7 +30,7 @@ namespace UnitTests.Web.Controllers
             var controller = new AdministratorController(mock.Object);
 
             IActionResult result = controller.CreateAdministrator(administratorModel);
-            var status = result as CreatedAtRouteResult;
+            var status = result as OkObjectResult;
             var content = status.Value as AdministratorBaseCreateModel;
 
             mock.VerifyAll();

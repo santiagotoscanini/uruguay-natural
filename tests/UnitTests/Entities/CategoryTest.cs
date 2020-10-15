@@ -1,5 +1,7 @@
 ﻿using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTests.Entities
 {
@@ -8,6 +10,18 @@ namespace UnitTests.Entities
     {
         private string _name = "City";
         private string _name2 = "Beach";
+        private ICollection<TouristPointCategory> _categoryTouristPoints = new List<TouristPointCategory>
+        {
+            new TouristPointCategory
+            {
+                Id = 1
+            },
+            new TouristPointCategory
+            {
+                Id = 2
+            }
+        };
+
 
         [TestMethod]
         public void CreateEmptyCategory()
@@ -15,6 +29,7 @@ namespace UnitTests.Entities
             var category = new Category();
 
             Assert.IsNull(category.Name);
+            Assert.IsTrue(category.CategoryTouristPoints.SequenceEqual(new List<TouristPointCategory>()));
         }
 
         [TestMethod]
@@ -23,9 +38,11 @@ namespace UnitTests.Entities
             var category = new Category
             {
                 Name = _name,
+                CategoryTouristPoints = _categoryTouristPoints
             };
 
-            Assert.AreEqual(category.Name, _name);
+            Assert.AreEqual(_name, category.Name);
+            Assert.IsTrue(_categoryTouristPoints.SequenceEqual(category.CategoryTouristPoints));
         }
 
         [TestMethod]
