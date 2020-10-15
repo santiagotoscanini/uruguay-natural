@@ -42,7 +42,7 @@ namespace UnitTests.Entities
             Assert.IsNull(touristPoint.Name);
             Assert.IsNull(touristPoint.Description);
             Assert.IsNull(touristPoint.Image);
-            Assert.AreEqual(0, touristPoint.Id);
+            Assert.IsNull(touristPoint.Id);
         }
 
         [TestMethod]

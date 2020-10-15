@@ -3,6 +3,7 @@ using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTests.Entities
 {
@@ -29,7 +30,7 @@ namespace UnitTests.Entities
             var region = new Region();
 
             Assert.IsNull(region.Name);
-            Assert.IsNull(region.TouristPoints);
+            Assert.IsTrue(new List<TouristPoint>().SequenceEqual(region.TouristPoints));
         }
 
         [TestMethod]
