@@ -10,12 +10,11 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Lodging> builder)
         {
-            builder.HasKey(l => l.Id);
-
             builder.Property(l => l.Images)
                 .HasConversion(
                 i => JsonConvert.SerializeObject(i),
                 i => JsonConvert.DeserializeObject<IEnumerable<string>>(i));
+            builder.HasOne(l => l.TouristPoint).WithMany(tp => tp.Lodgings);
         }
     }
 }

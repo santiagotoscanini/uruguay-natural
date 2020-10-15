@@ -9,6 +9,8 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
             builder.HasKey(b => b.Code);
+            builder.HasOne(b => b.Lodging)
+                .WithMany(l => l.Bookings);
         }
     }
 }

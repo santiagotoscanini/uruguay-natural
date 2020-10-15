@@ -36,8 +36,8 @@ namespace UnitTests.Web.Controllers
         private string _name = "Maldonado";
         private string _description = "Dummy description";
         private string _image = "image";
-        private int? _id = 1;
-        private int? _id2 = 2;
+        private int _id = 1;
+        private int _id2 = 2;
 
         [TestMethod]
         public void TestGetAllTouristPointOk()

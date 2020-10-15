@@ -25,8 +25,6 @@ namespace Web.Models.BookingModels
         [Required]
         public int NumberOfGuests { get; set; }
 
-        private readonly string DefaultDescription = "";
-
         public Booking ToEntity()
         {
             return new Booking()
@@ -38,7 +36,7 @@ namespace Web.Models.BookingModels
                     Email = TouristEmail,
                 },
                 State = BookingState.CREATED,
-                Description = DefaultDescription,
+                Description = "",
                 CheckInDate = CheckInDate,
                 CheckOutDate = CheckOutDate,
                 NumberOfGuests = NumberOfGuests,
