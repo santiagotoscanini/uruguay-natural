@@ -125,7 +125,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             };
 
             Lodging savedLodging = _lodgingRepository.Add(lodging);
-            _lodgingRepository.Delete(savedLodging.Id);
+            _lodgingRepository.Delete((int)savedLodging.Id);
 
             _lodgingRepository.GetById(_id);
         }
