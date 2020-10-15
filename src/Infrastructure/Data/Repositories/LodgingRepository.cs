@@ -56,9 +56,10 @@ namespace Infrastructure.Data.Repositories
 
         public Lodging Update(Lodging lodging)
         {
-            Lodging lodgingSaved = GetById(lodging.Id);
+            Lodging lodgingSaved = GetById((int)lodging.Id);
             lodgingSaved.CurrentlyOccupiedPlaces = lodging.CurrentlyOccupiedPlaces;
             Lodging lodgingUpdated = _lodgings.Update(lodgingSaved).Entity;
+            _context.SaveChanges();
             return lodgingUpdated;
         }
 
