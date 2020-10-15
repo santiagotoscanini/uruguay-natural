@@ -1,12 +1,12 @@
 ﻿using ApplicationCoreInterface.Services;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Web.Controllers;
+using Web.Models.TouristPointModels;
 
 namespace UnitTests.Web.Controllers
 {
@@ -101,12 +101,12 @@ namespace UnitTests.Web.Controllers
             mock.Setup(m => m.Add(It.IsAny<TouristPoint>(), _categoriesNames)).Returns(touristPointToReturn);
             var controller = new TouristPointController(mock.Object);
 
-            IActionResult result = controller.CreateTouristPoint(touristPointModel);
-            var status = result as CreatedAtRouteResult;
-            var content = status.Value as TouristPointCreatingModel;
+            IActionResult result = controller.AddTouristPoint(touristPointModel);
+            var status = result as ObjectResult;
+            var content = status.Value as TouristPointModel;
 
             mock.VerifyAll();
-            Assert.AreEqual(content, new TouristPointCreatingModel(touristPointToReturn));
+            Assert.AreEqual(content, new TouristPointModel(touristPointToReturn));
         }
     }
 }

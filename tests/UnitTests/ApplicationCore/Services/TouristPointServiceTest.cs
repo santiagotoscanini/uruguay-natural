@@ -29,15 +29,16 @@ namespace UnitTests.ApplicationCore.Services
                     Id = _id2,
                 },
             };
-            var mockCategoryRepository = new Mock<ICategoryRepository>(MockBehavior.Strict);
-            var mockTouristPointCategoryRepository = new Mock<ITouristPointCategoryRepository>(MockBehavior.Strict);
-            var mock = new Mock<ITouristPointRepository>(MockBehavior.Strict);
-            mock.Setup(r => r.GetAll()).Returns(touristPointsToReturn);
-            var touristPointService = new TouristPointService(mock.Object, mockTouristPointCategoryRepository.Object, mockCategoryRepository.Object);
+            var mockCategoryRepository = new Mock<ICategoryRepository>(MockBehavior.Strict).Object;
+            var mockTouristPointCategoryRepository = new Mock<ITouristPointCategoryRepository>(MockBehavior.Strict).Object;
+            var mockRegionRepository = new Mock<IRegionRepository>(MockBehavior.Strict).Object;
+            var mockTouristPointRepository = new Mock<ITouristPointRepository>(MockBehavior.Strict);
+            mockTouristPointRepository.Setup(r => r.GetAll()).Returns(touristPointsToReturn);
+            var touristPointService = new TouristPointService(mockTouristPointRepository.Object, mockTouristPointCategoryRepository, mockCategoryRepository, mockRegionRepository);
 
             IEnumerable<TouristPoint> touristPointsSaved = touristPointService.GetAll();
 
-            mock.VerifyAll();
+            mockTouristPointRepository.VerifyAll();
             Assert.IsTrue(touristPointsSaved.SequenceEqual(touristPointsToReturn));
         }
 
@@ -66,6 +67,14 @@ namespace UnitTests.ApplicationCore.Services
                 TouristPoint = touristPointToAdd
             };
 
+            var regionsToReturn = new List<Region> 
+            {
+               new Region
+               {
+                   Name = "Norte"
+               }
+            };
+
             var mockTouristPointRepository = new Mock<ITouristPointRepository>(MockBehavior.Strict);
             mockTouristPointRepository.Setup(r => r.Add(touristPointToAdd)).Returns(touristPointToAdd);
 
@@ -75,13 +84,17 @@ namespace UnitTests.ApplicationCore.Services
             var mockTouristPointCategoryRepository = new Mock<ITouristPointCategoryRepository>(MockBehavior.Strict);
             mockTouristPointCategoryRepository.Setup(r => r.Add(tourisPointCategoryToReturn)).Returns(tourisPointCategoryToReturn);
 
-            var touristPointService = new TouristPointService(mockTouristPointRepository.Object, mockTouristPointCategoryRepository.Object, mockCategoryRepository.Object);
+            var mockRegionRepository = new Mock<IRegionRepository>(MockBehavior.Strict);
+            mockRegionRepository.Setup(r => r.GetAll()).Returns(regionsToReturn);
+
+            var touristPointService = new TouristPointService(mockTouristPointRepository.Object, mockTouristPointCategoryRepository.Object, mockCategoryRepository.Object, mockRegionRepository.Object);
 
             TouristPoint touristPointSaved = touristPointService.Add(touristPointToAdd, categoriesNames);
 
             mockTouristPointRepository.VerifyAll();
             mockCategoryRepository.VerifyAll();
             mockTouristPointCategoryRepository.VerifyAll();
+            mockRegionRepository.VerifyAll();
 
             Assert.AreEqual(touristPointToAdd, touristPointSaved);
             Assert.AreEqual(tourisPointCategoryToReturn, touristPointSaved.TouristPointCategories.First());

@@ -4,6 +4,7 @@ using InfrastructureInterface.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -22,7 +23,7 @@ namespace Infrastructure.Data.Repositories
 
         public IEnumerable<TouristPoint> GetAll()
         {
-            return _touristPoints.Include(r => r.Region).Include(c => c.TouristPointCategories);
+            return _touristPoints.Include(r => r.Region).Include(c => c.TouristPointCategories).ThenInclude(tp => tp.Category);
         }
 
         public TouristPoint Add(TouristPoint touristPoint)
@@ -30,6 +31,7 @@ namespace Infrastructure.Data.Repositories
             try
             {
                 TouristPoint touristPointToReturn = _touristPoints.Add(touristPoint).Entity;
+              //  _context.Attach(touristPointToReturn.Region);
                 _context.SaveChanges();
                 return touristPointToReturn;
             }

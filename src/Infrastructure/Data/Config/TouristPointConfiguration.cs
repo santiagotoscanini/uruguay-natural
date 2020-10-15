@@ -9,6 +9,9 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<TouristPoint> builder)
         {
             builder.HasKey(t => t.Id);
+
+            builder.HasOne(t => t.Region)
+                .WithMany(c => c.TouristPoints);
         }
     }
 }
