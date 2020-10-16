@@ -63,19 +63,5 @@ namespace Web.Controllers
             _administratorService.UpdateAdministrator(administratorUpdatingModel.ToEntity(email));
             return NoContent();
         }
-
-        [HttpDelete("{email}")]
-        public IActionResult DeleteAdministrator([FromRoute] string email)
-        {
-            _administratorService.DeleteAdministrator(email);
-            return NoContent();
-        }
-
-        [HttpPut("{email}")]
-        public IActionResult UpdateAdministrator([FromRoute] string email, [FromBody] AdministratorUpdatingModel administratorUpdatingModel)
-        {
-            _administratorService.UpdateAdministrator(administratorUpdatingModel.ToEntity(email));
-            return NoContent();
-        }
     }
 }
