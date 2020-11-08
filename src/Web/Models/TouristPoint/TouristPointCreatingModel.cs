@@ -13,7 +13,7 @@ namespace Web.Models.TouristPointModels
         [Required]
         public string Name { get; set; }
         [Required]
-        [StringLength(2000)]
+        [StringLength(2000, ErrorMessage = "The descriptionExceeds the limit of 2000 characters.")]
         public string Description { get; set; }
         [Required]
         public string Image { get; set; }

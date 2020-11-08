@@ -1,4 +1,6 @@
-﻿using ApplicationCoreInterface.Services;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ApplicationCoreInterface.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Web.Models.LodgingModels;
@@ -6,7 +8,6 @@ using Web.Models.LodgingModels;
 namespace Web.Controllers
 {
     [Route("api/v1/lodgings")]
-    [ServiceFilter(typeof(Filters.AuthorizationAttributeFilter))]
     public class LodgingController : Controller
     {
         private ILodgingService _lodgingService;
@@ -17,29 +18,32 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Se actualiza la capacidad actual de un hospedaje.
+        /// Update Lodging capacity
         /// </summary>
-        /// <response code="204">Se actualizo existosamente</response>
-        ///<response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
-        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
-        /// <response code="404">No existe un hospedaje con ese id</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="204">Updated successfully.</response>
+        /// <response code="401">User does not send a token, not Authenticated.</response>
+        /// <response code="403">Not enough permissions, not Authorized.</response>
+        /// <response code="404">Doesn't exist a lodging with that id.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpPut("{id}")]
-        public IActionResult UpdateLodging([FromRoute] int id, [FromBody] LodgingUpdateCapacityModel lodgingUpdateCapacityModel)
+        [ServiceFilter(typeof(Filters.AuthorizationAttributeFilter))]
+        public IActionResult UpdateLodging([FromRoute] int id,
+            [FromBody] LodgingUpdateCapacityModel lodgingUpdateCapacityModel)
         {
             _lodgingService.Update(lodgingUpdateCapacityModel.ToEntity(id));
             return NoContent();
         }
 
         /// <summary>
-        /// Se elimina el hospedaje.
+        /// Delete a Lodging
         /// </summary>
-        /// <response code="204">Se elimino existosamente</response>
-        ///<response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
-        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
-        /// <response code="404">No existe un hospedaje con ese id</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="204">Deleted successfully.</response>
+        ///<response code="401">User does not send a token, not Authenticated.</response>
+        /// <response code="403">Not enough permissions, not Authorized.</response>
+        /// <response code="404">Doesn't exist a lodging with that id.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(Filters.AuthorizationAttributeFilter))]
         public IActionResult DeleteLodging([FromRoute] int id)
         {
             _lodgingService.Delete(id);
@@ -47,17 +51,33 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Se agrega un hospedaje.
+        /// Create a Lodging
         /// </summary>
-        /// <response code="201">Se creo exitosamente</response>
-        ///<response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
-        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="201">Created successfully.</response>
+        ///<response code="401">User does not send a token, not Authenticated.</response>
+        /// <response code="403">Not enough permissions, not Authorized.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpPost]
+        [ServiceFilter(typeof(Filters.AuthorizationAttributeFilter))]
         public IActionResult AddLodging([FromBody] LodgingCreatingModel lodgingCreatingModel)
         {
             var lodging = _lodgingService.Add(lodgingCreatingModel.ToEntity(), lodgingCreatingModel.TouristPointId);
             return StatusCode((int) HttpStatusCode.Created, new LodgingModelOut(lodging));
+        }
+
+        /// <summary>
+        /// Get Lodgings Filtered
+        /// </summary>
+        /// <response code="200">Obtained successfully.</response>
+        /// <response code="400">Bad Request, the number of guests cannot be less than zero.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [HttpGet]
+        public IActionResult GetLodgingsFiltered([FromQuery] LodgingFilterModel lodgingFilterModel)
+        {
+            var lodgingsAndPrices = _lodgingService.FilterLodgings(lodgingFilterModel.ToEntity());
+            IEnumerable<LodgingFilteredModel> lodgingsToReturn =
+                lodgingsAndPrices.Select(l => new LodgingFilteredModel(l.Key, l.Value)).ToList().AsEnumerable();
+            return Ok(lodgingsToReturn);
         }
     }
 }

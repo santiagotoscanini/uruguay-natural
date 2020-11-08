@@ -16,10 +16,10 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Obtener las regiones.
+        /// Get regions
         /// </summary>
-        /// <response code="200">Se obtuvieron exitosamente</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="200">They were successfully obtained.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpGet]
         public IActionResult GetAllRegions()
         {

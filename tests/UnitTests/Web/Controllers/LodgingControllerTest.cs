@@ -1,264 +1,118 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using ApplicationCoreInterface.Services;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Any;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
 using Web.Controllers;
 using Web.Models.LodgingModels;
 
 namespace UnitTests.Web.Controllers
 {
-    [TestsClass]
+    [TestClass]
     public class LodgingControllerTest
     {
-        //    private string _name = "Moon";
-        //    private int _numberOfStars = 3;
-        //    private TouristPoint _touristPoint = new TouristPoint
-        //    {
-        //        TouristPointCategories = new List<TouristPointCategory>(),
-        //        Region = new Region
-        //        {
-        //            Name = "Norte",
-        //        },
-        //        Name = "Rocha",
-        //        Description = "Good place",
-        //        Image = "sfafg222",
-        //        Id = 2,
-        //    };
-        //    private string _address = "Av. Rio 123";
-        //    private ICollection<string> _images = new List<string> { "1234jnj" };
-        //    private double _costPerNight = 200.0;
-        //    private string _description = "Good place";
-        //    private string _contactNumber = "23346789";
-        //    private string _descriptionForBookings = "Call this number";
-        //    private int _id = 1;
-        //    private int _id2 = 2;
-        //    private int _maximumSize = 300;
-        //    private int _currentlyOccupiedPlaces = 0;
+        private int _id = 1;
+        private int _actualCapacity = 2;
+        private int _touristPointId = 1;
+        private DateTime _checkInDate = DateTime.Now;
+        private DateTime _checkOutDate = DateTime.Now;
 
-        //    [TestMethod]
-        //    public void TestGetAllLodgingsOk()
-        //    {
-        //        var lodgingsToReturn = new List<Lodging>
-        //        {
-        //            new Lodging
-        //            {
-        //                Name = _name,
-        //                NumberOfStars = _numberOfStars,
-        //                TouristPoint = _touristPoint,
-        //                Address = _address,
-        //                Images = _images,
-        //                CostPerNight = _costPerNight,
-        //                ContactNumber = _contactNumber,
-        //                Description = _description,
-        //                DescriptionForBookings = _descriptionForBookings,
-        //                Id = _id,
-        //                MaximumSize = _maximumSize,
-        //                CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces
-        //            },
-        //            new Lodging
-        //            {
-        //                Name = _name,
-        //                NumberOfStars = _numberOfStars,
-        //                TouristPoint = _touristPoint,
-        //                Address = _address,
-        //                Images = _images,
-        //                CostPerNight = _costPerNight,
-        //                ContactNumber = _contactNumber,
-        //                Description = _description,
-        //                DescriptionForBookings = _descriptionForBookings,
-        //                Id = _id2,
-        //                MaximumSize = _maximumSize,
-        //                CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces
-        //            },
-        //        };
-        //        var mock = new Mock<ILodgingService>(MockBehavior.Strict);
-        //        mock.Setup(m => m.GetAll()).Returns(lodgingsToReturn);
-        //        var controller = new LodgingController(mock.Object);
+        [TestMethod]
+        public void UpdateLodgingTest()
+        {
+            var lodgingModel = new LodgingUpdateCapacityModel {ActualCapacity = _actualCapacity};
+            Lodging lodging = lodgingModel.ToEntity(_id);
 
-        //        IActionResult result = controller.GetAllLodgings();
-        //        var okResult = result as OkObjectResult;
-        //        var lodgings = okResult.Value as IEnumerable<LodgingModel>;
+            var mockLodgingService = new Mock<ILodgingService>();
+            mockLodgingService.Setup(l => l.Update(It.IsAny<Lodging>())).Returns(lodging);
+            var lodgingController = new LodgingController(mockLodgingService.Object);
 
-        //        mock.VerifyAll();
-        //        Assert.IsTrue(lodgingsToReturn.Select(b => new LodgingModel(b)).SequenceEqual(lodgings));
-        //    }
+            var result = lodgingController.UpdateLodging(_id, lodgingModel);
+            var status = result as NoContentResult;
 
-        //    [TestMethod]
-        //    public void TestPostLodgingOk()
-        //    {
-        //        var lodgingModel = new LodgingCreatingModel
-        //        {
-        //            Name = _name,
-        //            NumberOfStars = _numberOfStars,
-        //            TouristPointId = (int)_touristPoint.Id,
-        //            Address = _address,
-        //            Images = _images,
-        //            CostPerNight = _costPerNight,
-        //            ContactNumber = _contactNumber,
-        //            Description = _description,
-        //            DescriptionForBookings = _descriptionForBookings,
-        //            MaximumSize = _maximumSize
-        //        };
-        //        var lodgingToReturn = new Lodging
-        //        {
-        //            Name = _name,
-        //            NumberOfStars = _numberOfStars,
-        //            TouristPoint = _touristPoint,
-        //            Address = _address,
-        //            Images = _images,
-        //            CostPerNight = _costPerNight,
-        //            ContactNumber = _contactNumber,
-        //            Description = _description,
-        //            DescriptionForBookings = _descriptionForBookings,
-        //            Id = _id2,
-        //            MaximumSize = _maximumSize,
-        //            CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces
-        //        };
+            mockLodgingService.VerifyAll();
+            Assert.AreEqual(204, status.StatusCode);
+        }
 
-        //        var mock = new Mock<ILodgingService>();
-        //        mock.Setup(m => m.Add(It.IsAny<Lodging>(), lodgingModel.BookingCodes, lodgingModel.TouristPointId)).Returns(lodgingToReturn);
-        //        var controller = new LodgingController(mock.Object);
+        [TestMethod]
+        public void DeleteLodgingTest()
+        {
+            var mockLodgingService = new Mock<ILodgingService>();
+            mockLodgingService.Setup(l => l.Delete(_id));
+            var lodgingController = new LodgingController(mockLodgingService.Object);
 
-        //        IActionResult result = controller.AddLodging(lodgingModel);
-        //        var status = result as CreatedAtRouteResult;
-        //        var content = status.Value as LodgingBaseCreateModel;
+            var result = lodgingController.DeleteLodging(_id);
+            var status = result as NoContentResult;
 
-        //        mock.VerifyAll();
-        //        Assert.AreEqual(content, new LodgingBaseCreateModel(lodgingToReturn));
-        //    }
+            mockLodgingService.VerifyAll();
+            Assert.AreEqual(204, status.StatusCode);
+        }
 
-        //    [TestMethod]
-        //    public void TestGetLodgingOk()
-        //    {
-        //        var lodgingToReturn = new Lodging
-        //        {
-        //            Name = _name,
-        //            NumberOfStars = _numberOfStars,
-        //            TouristPoint = _touristPoint,
-        //            Address = _address,
-        //            Images = _images,
-        //            CostPerNight = _costPerNight,
-        //            ContactNumber = _contactNumber,
-        //            Description = _description,
-        //            DescriptionForBookings = _descriptionForBookings,
-        //            Id = _id2,
-        //            MaximumSize = _maximumSize,
-        //            CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces
-        //        };
+        [TestMethod]
+        public void AddLodgingTest()
+        {
+            var touristPoint = new TouristPoint {Id = _touristPointId};
+            var lodgingModel = new LodgingCreatingModel
+            {
+                Name = "Lod1",
+                TouristPointId = _touristPointId
+            };
+            var lodging = new Lodging
+            {
+                Name = "Lod1",
+                TouristPoint = touristPoint,
+                Id = _id,
+            };
 
-        //        var mock = new Mock<ILodgingService>(MockBehavior.Strict);
-        //        mock.Setup(m => m.GetById(_id)).Returns(lodgingToReturn);
-        //        var controller = new LodgingController(mock.Object);
+            var mockLodgingService = new Mock<ILodgingService>();
+            mockLodgingService.Setup(l => l.Add(It.IsAny<Lodging>(), _touristPointId)).Returns(lodging);
+            var lodgingController = new LodgingController(mockLodgingService.Object);
 
-        //        IActionResult result = controller.GetLodgingById(_id);
-        //        var okResult = result as OkObjectResult;
-        //        var lodging = okResult.Value as LodgingStateInfoModel;
+            var result = lodgingController.AddLodging(lodgingModel);
+            var status = result as ObjectResult;
+            var lodgingSaved = status.Value as LodgingModelOut;
 
-        //        mock.VerifyAll();
-        //        Assert.AreEqual(new LodgingStateInfoModel(lodgingToReturn), lodging);
-        //    }
+            Assert.AreEqual(201, status.StatusCode);
+            Assert.AreEqual(_id, lodgingSaved.Id);
+        }
 
-        //    [TestMethod]
-        //    public void TestPutLodgingOk()
-        //    {
-        //        var lodgingToReturn = new Lodging
-        //        {
-        //            Name = _name,
-        //            NumberOfStars = _numberOfStars,
-        //            TouristPoint = _touristPoint,
-        //            Address = _address,
-        //            Images = _images,
-        //            CostPerNight = _costPerNight,
-        //            ContactNumber = _contactNumber,
-        //            Description = _description,
-        //            DescriptionForBookings = _descriptionForBookings,
-        //            Id = _id2,
-        //            MaximumSize = _maximumSize,
-        //            CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces
-        //        };
-        //        var updateInfoLodging = new LodgingUpdateInfoModel
-        //        {
-        //            Id = _id2,
-        //            CurrentlyOccupiedPlaces = _maximumSize
+        [TestMethod]
+        public void GetLodgingsFilteredTest()
+        {
+            var lodgingFilterModel = new LodgingFilterModel
+            {
+                TouristPointId = _touristPointId,
+                CheckInDate = _checkInDate,
+                CheckOutDate = _checkOutDate,
+                NumberOfAdults = 1,
+                NumberOfBabies = 0,
+                NumberOfChildren = 0,
+            };
+            var lodging = new Lodging
+            {
+                Id = 1,
+                CostPerNight = 10.0
+            };
+            var lodgingsAndPrices = new Dictionary<Lodging, double>();
+            lodgingsAndPrices.Add(lodging, 10.0);
+            var lodgingFilteredModel = new LodgingFilteredModel(lodging, 10.0);
 
-        //        };
-        //        var stateInfoLodging = new Lodging
-        //        {
-        //            Name = _name,
-        //            NumberOfStars = _numberOfStars,
-        //            TouristPoint = _touristPoint,
-        //            Address = _address,
-        //            Images = _images,
-        //            CostPerNight = _costPerNight,
-        //            ContactNumber = _contactNumber,
-        //            Description = _description,
-        //            DescriptionForBookings = _descriptionForBookings,
-        //            Id = _id2,
-        //            MaximumSize = _maximumSize,
-        //            CurrentlyOccupiedPlaces = _maximumSize
-        //        };
+            var mockLodgingService = new Mock<ILodgingService>();
+            mockLodgingService.Setup(l => l.FilterLodgings(It.IsAny<LodgingToFilter>())).Returns(lodgingsAndPrices);
+            var lodgingController = new LodgingController(mockLodgingService.Object);
 
-        //        var mock = new Mock<ILodgingService>(MockBehavior.Strict);
-        //        mock.Setup(m => m.Update(updateInfoLodging)).Returns(stateInfoLodging);
-        //        var controller = new LodgingController(mock.Object);
+            IActionResult result = lodgingController.GetLodgingsFiltered(lodgingFilterModel);
+            var status = result as ObjectResult;
+            var lodgings = status.Value as IEnumerable<LodgingFilteredModel>;
 
-        //        IActionResult result = controller.UpdateLodging(lodgingToReturn);
-        //        var okResult = result as OkObjectResult;
-        //        var lodging = okResult.Value as LodgingModel;
-
-        //        mock.VerifyAll();
-        //        Assert.AreEqual(lodging.CurrentlyOccupiedPlaces, _maximumSize);
-        //    }
-
-        //    public void TestDeleteLodgingOk()
-        //    {
-        //        var lodgingModel = new LodgingCreatingModel
-        //        {
-        //            Name = _name,
-        //            NumberOfStars = _numberOfStars,
-        //            TouristPoint = _touristPoint,
-        //            Address = _address,
-        //            Images = _images,
-        //            CostPerNight = _costPerNight,
-        //            ContactNumber = _contactNumber,
-        //            Description = _description,
-        //            DescriptionForBookings = _descriptionForBookings,
-        //            MaximumSize = _maximumSize,
-        //            CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces
-        //        };
-        //        var lodgingToReturn = new Lodging
-        //        {
-        //            Name = _name,
-        //            NumberOfStars = _numberOfStars,
-        //            TouristPoint = _touristPoint,
-        //            Address = _address,
-        //            Images = _images,
-        //            CostPerNight = _costPerNight,
-        //            ContactNumber = _contactNumber,
-        //            Description = _description,
-        //            DescriptionForBookings = _descriptionForBookings,
-        //            Id = _id,
-        //            MaximumSize = _maximumSize,
-        //            CurrentlyOccupiedPlaces = _currentlyOccupiedPlaces
-        //        };
-        //        var mock = new Mock<ILodgingService>(MockBehavior.Strict);
-        //        mock.Setup(m => m.Delete(_id)); 
-        //        mock.Setup(m => m.Add(It.IsAny<Lodging>())).Returns(lodgingToReturn);
-        //        mock.Setup(m => m.GetAll()).Returns(new List<Lodging>());
-        //        var controller = new LodgingController(mock.Object);
-
-        //        controller.AddLoging(lodgingModel);
-        //        controller.DeleteLodging(_id);
-        //        IActionResult result = controller.getAll();
-        //        var okResult = result as OkObjectResult;
-        //        var lodgings = okResult.Value as IEnumerable<LodgingModel>;
-
-        //        mock.VerifyAll();
-        //        Assert.IsTrue(new List<LodgingModel>().SequenceEqual(lodgings));
-        //    }
+            Assert.AreEqual(200, status.StatusCode);
+            var lodgingsExpected = new List<LodgingFilteredModel> {lodgingFilteredModel};
+            Assert.IsTrue(lodgingsExpected.SequenceEqual(lodgings));
         }
     }
+}

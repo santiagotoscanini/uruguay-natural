@@ -27,6 +27,7 @@ namespace Factory
             _services.AddScoped<ITouristPointCategoryRepository, TouristPointCategoryRepository>();
             _services.AddScoped<ITouristPointRepository, TouristPointRepository>();
             _services.AddScoped<ILodgingRepository, LodgingRepository>();
+            _services.AddScoped<IGuestRepository, GuestRepository>();
 
             _services.AddScoped<IBookingService, BookingService>();
             _services.AddScoped<IAdministratorService, AdministratorService>();
@@ -35,6 +36,8 @@ namespace Factory
             _services.AddScoped<ICategoryService, CategoryService>();
             _services.AddScoped<ITouristPointService, TouristPointService>();
             _services.AddScoped<ILodgingService, LodgingService>();
+            _services.AddScoped<IGuestService, GuestService>();
+            _services.AddScoped<IPriceCalculatorService, PriceCalculatorService>();
         }
 
         public void AddDbContextService()

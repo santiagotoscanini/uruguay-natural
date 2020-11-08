@@ -42,5 +42,45 @@ namespace UnitTests.ApplicationCore.Services
             mock.VerifyAll();
             Assert.IsTrue(adminsSaved.SequenceEqual(adminsToReturn));
         }
+        
+        [TestMethod]
+        public void TestDeleteAdministrator()
+        {
+            var adminsToReturn = new List<Administrator>();
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.GetAll()).Returns(adminsToReturn);
+            mock.Setup(r => r.DeleteAdministrator("otro_mail@adinet.com.uy"));
+            var adminService = new AdministratorService(mock.Object);
+
+            adminService.DeleteAdministrator("otro_mail@adinet.com.uy");
+            IEnumerable<Administrator> adminsSaved = adminService.GetAll();
+
+            mock.VerifyAll();
+            Assert.IsTrue(adminsSaved.SequenceEqual(adminsToReturn));
+        }
+        
+        [TestMethod]
+        public void TestUpdateAdministrator()
+        {
+            var administrator = new Administrator
+            {
+                Email = "un_mail@adinet.com.uy",
+                Name = "Admin1"
+            };
+            var adminsToReturn = new List<Administrator>
+            {
+                administrator
+            };
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.GetAll()).Returns(adminsToReturn);
+            mock.Setup(r => r.UpdateAdministrator(administrator)).Returns(administrator);
+            var adminService = new AdministratorService(mock.Object);
+
+            adminService.UpdateAdministrator(administrator);
+            IEnumerable<Administrator> adminsSaved = adminService.GetAll();
+
+            mock.VerifyAll();
+            Assert.IsTrue(adminsSaved.SequenceEqual(adminsToReturn));
+        }
     }
 }

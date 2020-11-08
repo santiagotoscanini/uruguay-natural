@@ -52,10 +52,13 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("LodgingId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfGuests")
-                        .HasColumnType("int");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalNumberOfGuests")
                         .HasColumnType("int");
 
                     b.Property<int?>("TouristId")
@@ -80,9 +83,28 @@ namespace Infrastructure.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("Entities.Guest", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MaxRankAge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinRankAge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Percentage")
+                        .HasColumnType("int");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Guest");
+                });
+
             modelBuilder.Entity("Entities.Lodging", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -160,7 +182,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Entities.TouristPoint", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);

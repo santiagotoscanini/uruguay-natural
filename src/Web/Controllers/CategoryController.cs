@@ -16,10 +16,10 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Se obtienen las categorias.
+        /// Get categories
         /// </summary>
-        /// <response code="200">Se obtuvo existosamente</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="200">They were successfully obtained.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpGet]
         public IActionResult GetAllCategories()
         {

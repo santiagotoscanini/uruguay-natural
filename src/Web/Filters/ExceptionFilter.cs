@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Net;
+using System.Security.Authentication;
 
 namespace Web.Filters
 {
@@ -11,6 +12,7 @@ namespace Web.Filters
         private const string NotFoundTitleResponse = "The requested object was not found";
         private const string InvalidAttributeValuesTitleResponse = "Server is unable to process the request";
         private const string ServerErrorResponse = "Internal Server Error";
+        private const string InvalidCredentialsResponse = "Invalid credentials";
 
         public void OnException(ExceptionContext context)
         {
@@ -20,19 +22,29 @@ namespace Web.Filters
             }
             catch (ObjectAlreadyExistException exception)
             {
-                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.BadRequest, AlreadyExistTitleResponse, exception.Message);
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.BadRequest,
+                    AlreadyExistTitleResponse, exception.Message);
             }
             catch (NotFoundException exception)
             {
-                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.NotFound, NotFoundTitleResponse, exception.Message);
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.NotFound,
+                    NotFoundTitleResponse, exception.Message);
+            }
+            catch (InvalidCredentialException exception)
+            {
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.BadRequest,
+                    InvalidCredentialsResponse, exception.Message);
             }
             catch (InvalidAttributeValuesException exception)
             {
-                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.BadRequest, InvalidAttributeValuesTitleResponse, exception.Message);
+                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.BadRequest,
+                    InvalidAttributeValuesTitleResponse, exception.Message);
             }
             catch (Exception)
             {
-                context.Result = ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.InternalServerError, ServerErrorResponse, ServerErrorResponse);
+                context.Result =
+                    ContentResultForErrorsHelper.GetContentResultByStatus(HttpStatusCode.InternalServerError,
+                        ServerErrorResponse, ServerErrorResponse);
             }
         }
     }

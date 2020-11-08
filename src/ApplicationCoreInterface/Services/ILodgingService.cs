@@ -1,5 +1,4 @@
 ﻿using Entities;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace ApplicationCoreInterface.Services
@@ -11,5 +10,6 @@ namespace ApplicationCoreInterface.Services
         Lodging GetById(int lodgingId);
         Lodging Update(Lodging lodging);
         void Delete(int lodgingId);
+        Dictionary<Lodging, double> FilterLodgings(LodgingToFilter lodgingToFilter);
     }
 }

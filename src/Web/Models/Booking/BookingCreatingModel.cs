@@ -1,5 +1,6 @@
 ﻿using Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models.BookingModels
@@ -23,7 +24,18 @@ namespace Web.Models.BookingModels
         public DateTime CheckOutDate { get; set; }
 
         [Required]
-        public int NumberOfGuests { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
+        public int NumberOfAdults { get; set; }
+        
+        [Required]
+        
+        [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
+        public int NumberOfChildren { get; set; }
+        
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
+        public int NumberOfBabies { get; set; }
+        
         [Required]
         public int LodgingId { get; set; }
 
@@ -41,9 +53,20 @@ namespace Web.Models.BookingModels
                 Description = "",
                 CheckInDate = CheckInDate,
                 CheckOutDate = CheckOutDate,
-                NumberOfGuests = NumberOfGuests,
-                Lodging = new Lodging { Id = LodgingId }
-        };
+                Lodging = new Lodging { Id = LodgingId },
+                NumberOfGuests = new NumberOfGuests
+                {
+                    NumberOfAdults = this.NumberOfAdults,
+                    NumberOfChildren = this.NumberOfChildren,
+                    NumberOfBabies = this.NumberOfBabies
+                },
+                TotalNumberOfGuests = GetTotalCountOfGuests()
+            };
+        }
+
+        private int GetTotalCountOfGuests()
+        {
+            return NumberOfAdults + NumberOfChildren + NumberOfBabies;
         }
     }
 }

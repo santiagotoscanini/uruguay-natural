@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using System.Diagnostics.CodeAnalysis;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Reflection;
 
 namespace Infrastructure.Data
 {
+    [ExcludeFromCodeCoverage]
     public class TourismContext : DbContext
     {
         public DbSet<Booking> Bookings { get; set; }
@@ -21,6 +23,7 @@ namespace Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Ignore<NumberOfGuests>();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

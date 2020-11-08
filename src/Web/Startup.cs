@@ -42,7 +42,7 @@ namespace Web
                 {
                     Version = "v1",
                     Title = "UruguayNatural Swagger",
-                    Description = "Swagger documentation for API UruguayNatural",
+                    Description = "Swagger documentation for API UruguayNatural"
                 });
                 c.IncludeXmlComments(xmlPath);
             });
@@ -64,7 +64,7 @@ namespace Web
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "UruguayNatural API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "UruguayNatural API v1");
             });
 
             app.UseAuthorization();

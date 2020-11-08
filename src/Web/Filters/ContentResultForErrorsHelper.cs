@@ -23,7 +23,7 @@ namespace Web.Filters
 
         private static ErrorResponse GetErrorResponseFromStatusTitleAndDescription(int statusCode, string title, string description)
         {
-            return new ErrorResponse()
+            return new ErrorResponse
             {
                 Status = statusCode,
                 Title = title,

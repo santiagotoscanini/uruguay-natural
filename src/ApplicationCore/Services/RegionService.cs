@@ -22,7 +22,7 @@ namespace ApplicationCore.Services
 
         public Region GetRegionByName(string name)
         {
-            return GetAll().First(r => r.Name == name);
+            return _repository.GetByName(name);
         }
     }
 }

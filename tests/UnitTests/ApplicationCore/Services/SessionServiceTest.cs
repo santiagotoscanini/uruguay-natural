@@ -4,6 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ApplicationCore.Services;
 using System.Collections.Generic;
+using System.Security.Authentication;
+using ApplicationCoreInterface.Services;
 
 namespace UnitTests.ApplicationCore.Services
 {
@@ -22,12 +24,12 @@ namespace UnitTests.ApplicationCore.Services
             {
                 new Administrator
                 {
-                    Email = _email, 
-                    Password =_password,
+                    Email = _email,
+                    Password = _password,
                 },
             };
 
-            Mock<IAdministratorRepository> mock = new Mock<IAdministratorRepository>();
+            Mock<IAdministratorService> mock = new Mock<IAdministratorService>();
             mock.Setup(s => s.GetAll()).Returns(administrators);
             var sessionService = new SessionService(mock.Object);
 
@@ -41,7 +43,7 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void IsCorrectTokenFailTest()
         {
-            Mock<IAdministratorRepository> mock = new Mock<IAdministratorRepository>();
+            Mock<IAdministratorService> mock = new Mock<IAdministratorService>();
             var sessionService = new SessionService(mock.Object);
 
             var isCorrectToken = sessionService.IsCorrectToken(_token);
@@ -51,10 +53,11 @@ namespace UnitTests.ApplicationCore.Services
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidCredentialException))]
         public void LoginFailTest()
         {
             IList<Administrator> admins = new List<Administrator>();
-            Mock<IAdministratorRepository> mock = new Mock<IAdministratorRepository>();
+            Mock<IAdministratorService> mock = new Mock<IAdministratorService>();
             mock.Setup(s => s.GetAll()).Returns(admins);
             var sessionService = new SessionService(mock.Object);
 
@@ -77,7 +80,7 @@ namespace UnitTests.ApplicationCore.Services
                 },
             };
 
-            Mock<IAdministratorRepository> mock = new Mock<IAdministratorRepository>();
+            Mock<IAdministratorService> mock = new Mock<IAdministratorService>();
             mock.Setup(s => s.GetAll()).Returns(administrators);
             var sessionService = new SessionService(mock.Object);
 
@@ -92,7 +95,7 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void LogoutFailTest()
         {
-            Mock<IAdministratorRepository> mock = new Mock<IAdministratorRepository>();
+            Mock<IAdministratorService> mock = new Mock<IAdministratorService>();
             var sessionService = new SessionService(mock.Object);
 
             var isLoggedOut = sessionService.Logout(_token);

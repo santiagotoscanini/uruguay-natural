@@ -14,6 +14,7 @@ namespace Infrastructure.Data.Repositories
         private readonly DbSet<TouristPoint> _touristPoints;
 
         private const string TouristPointAlreadyExistMessage = "There is already a tourist point registered with the id: ";
+        private const string TouristPointNotFoundMessage = "There is no tourist point with the id: ";
 
         public TouristPointRepository(DbContext context)
         {
@@ -59,6 +60,19 @@ namespace Infrastructure.Data.Repositories
             }
 
             return touristPointsToReturn;
+        }
+
+        public TouristPoint GetById(int touristPointId)
+        {
+            try
+            {
+                var touristPoint = _touristPoints.First(tp => tp.Id == touristPointId);
+                return touristPoint;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new NotFoundException(TouristPointNotFoundMessage + touristPointId);
+            }
         }
     }
 }

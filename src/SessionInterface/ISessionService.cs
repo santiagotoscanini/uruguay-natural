@@ -7,4 +7,3 @@
         bool Logout(string token);
     }
 }
-

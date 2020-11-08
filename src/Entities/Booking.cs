@@ -10,8 +10,10 @@ namespace Entities
         public string Description { get; set; }
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
-        public int NumberOfGuests { get; set; }
+        public NumberOfGuests NumberOfGuests { get; set; }
+        public int TotalNumberOfGuests { get; set; }
         public Lodging Lodging { get; set; }
+        public double Price { get; set; }
 
         public override bool Equals(object obj)
         {

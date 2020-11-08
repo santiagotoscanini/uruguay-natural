@@ -7,5 +7,6 @@ namespace InfrastructureInterface.Data.Repositories
     {
         IEnumerable<Region> GetAll();
         Region Add(Region region);
+        Region GetByName(string regionName);
     }
 }

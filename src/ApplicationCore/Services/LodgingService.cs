@@ -11,23 +11,21 @@ namespace ApplicationCore.Services
         private readonly ILodgingRepository _repository;
 
         private ITouristPointService _touristPointService;
+        private IPriceCalculatorService _priceCalculatorService;
 
-        public LodgingService(ILodgingRepository repository, ITouristPointService touristPointService)
+        public LodgingService(ILodgingRepository repository, ITouristPointService touristPointService,
+            IPriceCalculatorService priceCalculatorService)
         {
             _repository = repository;
             _touristPointService = touristPointService;
+            _priceCalculatorService = priceCalculatorService;
         }
 
         public Lodging Add(Lodging lodging, int touristPointId)
         {
-            lodging.TouristPoint = GetTouristPoint(touristPointId);
-            
-            return _repository.Add(lodging);
-        }
+            lodging.TouristPoint = _touristPointService.GetTouristPointById(touristPointId);
 
-        private TouristPoint GetTouristPoint(int touristPointId)
-        {
-            return _touristPointService.GetAll().FirstOrDefault(tp => tp.Id == touristPointId);
+            return _repository.Add(lodging);
         }
 
         public void Delete(int lodgingId)
@@ -48,6 +46,30 @@ namespace ApplicationCore.Services
         public Lodging Update(Lodging lodging)
         {
             return _repository.Update(lodging);
+        }
+
+        public Dictionary<Lodging, double> FilterLodgings(LodgingToFilter lodgingToFilter)
+        {
+            var lodgingsToReturn = _repository.FilterLodgings(lodgingToFilter);
+            Dictionary<Lodging, double> lodgingWithPrices = UpdateCalculatedPrice(lodgingsToReturn, lodgingToFilter);
+            return lodgingWithPrices;
+        }
+
+        private Dictionary<Lodging, double> UpdateCalculatedPrice(IEnumerable<Lodging> lodgings,
+            LodgingToFilter lodgingToFilter)
+        {
+            var totalDays = (int) (lodgingToFilter.CheckOutDate - lodgingToFilter.CheckInDate).TotalDays;
+            
+            var lodgingsAndPrices = new Dictionary<Lodging, double>();
+            foreach (var lodging in lodgings)
+            {
+                double calculatedPrice =
+                    _priceCalculatorService.CalculatePrice(lodgingToFilter.NumberOfGuests, lodging.CostPerNight) *
+                    totalDays;
+                lodgingsAndPrices.Add(lodging, calculatedPrice);
+            }
+
+            return lodgingsAndPrices;
         }
     }
 }

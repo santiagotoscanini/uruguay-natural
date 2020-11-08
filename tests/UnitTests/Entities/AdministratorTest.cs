@@ -1,7 +1,7 @@
 using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace tests.UnitTests.Entities
+namespace UnitTests.Entities
 {
     [TestClass]
     public class AdministratorTest

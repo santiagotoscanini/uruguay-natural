@@ -15,14 +15,14 @@ namespace Web.Models.AdministratorModels
 
         public override bool Equals(object obj)
         {
-            var Result = false;
+            var result = false;
 
-            if (obj is AdministratorBaseCreateModel AdministratorModel)
+            if (obj is AdministratorBaseCreateModel administratorModel)
             {
-                Result = this.Email == AdministratorModel.Email;
+                result = this.Email == administratorModel.Email;
             }
 
-            return Result;
+            return result;
         }
     }
 }

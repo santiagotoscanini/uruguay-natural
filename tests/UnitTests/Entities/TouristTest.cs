@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Entities;
 
-namespace tests.UnitTests.Entities
+namespace UnitTests.Entities
 {
     [TestClass]
     public class TouristTest

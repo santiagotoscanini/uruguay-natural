@@ -12,5 +12,6 @@ namespace InfrastructureInterface.Data.Repositories
         void Delete(int lodgingId);
         Lodging Update(Lodging lodging);
         Lodging GetById(int lodgingId);
+        IEnumerable<Lodging> FilterLodgings(LodgingToFilter lodgingToFilter);
     }
 }

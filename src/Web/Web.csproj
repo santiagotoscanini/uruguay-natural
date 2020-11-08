@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\Sofi\Documents\semestre 6\Diseño de aplicaciones 2\Toscanini-Tejerina\src\Web\Web.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netcoreapp3.1\Web.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp3.1\Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

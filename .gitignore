@@ -344,3 +344,5 @@ ASALocalRun/
 healthchecksdb
 
 .vscode/*
+.idea/*
+UruguayNatural.sln.DotSettings.user

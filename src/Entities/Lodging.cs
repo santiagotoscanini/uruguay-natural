@@ -17,5 +17,17 @@ namespace Entities
         public string DescriptionForBookings { get; set; }
         public int MaximumSize { get; set; }
         public int CurrentlyOccupiedPlaces { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var result = false;
+
+            if (obj is Lodging lodging)
+            {
+                result = this.Id == lodging.Id;
+            }
+
+            return result;
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             new TouristPointCategory
             {
                 Id = 1,
+                Category = new Category { Name = "test" }
             },
             new TouristPointCategory
             {
@@ -43,8 +44,8 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         public void Setup()
         {
             DbContextOptions<TourismContext> options = new DbContextOptionsBuilder<TourismContext>()
-            .UseInMemoryDatabase(databaseName: "database_test")
-            .Options;
+                .UseInMemoryDatabase(databaseName: "database_test")
+                .Options;
             _context = new TourismContext(options);
             _touristPointRepository = new TouristPointRepository(_context);
         }
@@ -78,7 +79,6 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
                     Image = _image,
                     Id = _id2
                 },
-
             };
 
             touritsPoints.ForEach(b => _touristPointRepository.Add(b));
@@ -110,16 +110,70 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         [ExpectedException(typeof(ObjectAlreadyExistException))]
         public void AddAlreadyExistTouristPoint()
         {
-            var touristPoint = new TouristPoint 
-            { 
-                Id = _id 
+            var touristPoint = new TouristPoint
+            {
+                Id = _id
             };
-            var touristPoint2 = new TouristPoint 
-            { 
-                Id = _id 
+            var touristPoint2 = new TouristPoint
+            {
+                Id = _id
             };
             _touristPointRepository.Add(touristPoint);
             _touristPointRepository.Add(touristPoint2);
+        }
+
+        [TestMethod]
+        public void GetTouristPointFilteredByRegionAndCategory()
+        {
+            var touristPoint = new TouristPoint
+            {
+                Id = _id,
+                Region = _region
+            };
+            var touristPoint2 = new TouristPoint
+            {
+                Id = _id + 1,
+                TouristPointCategories = _touristPointCategories,
+                Region = new Region
+                {
+                    Name = _region.Name + "X"
+                }
+            };
+
+            _touristPointRepository.Add(touristPoint);
+            _touristPointRepository.Add(touristPoint2);
+
+            TouristPoint touristPointByRegion = _touristPointRepository.GetFilteredByRegionAndCategory(
+                _region.Name,
+                null
+                ).First();
+            TouristPoint touristPointByCategory = _touristPointRepository.GetFilteredByRegionAndCategory(
+                null,
+                touristPoint2.TouristPointCategories.First().Category.Name
+                ).First();
+            
+            Assert.AreEqual(touristPoint, touristPointByRegion);
+            Assert.AreEqual(touristPoint2, touristPointByCategory);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
+        public void GetTouristPointFailTest()
+        {
+            _touristPointRepository.GetById(_id);
+        }
+        
+        [TestMethod]
+        public void GetTouristPointTest()
+        {
+            var touristPoint = new TouristPoint
+            {
+                Id = _id
+            };
+            _touristPointRepository.Add(touristPoint);
+            TouristPoint touristPointSaved = _touristPointRepository.GetById(_id);
+            
+            Assert.AreEqual(touristPointSaved.Id, _id);
         }
     }
 }

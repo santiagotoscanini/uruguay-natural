@@ -11,7 +11,7 @@ using System.Net;
 using SessionInterface;
 using System;
 
-namespace tests.UnitTests.Web.Filters
+namespace UnitTests.Web.Filters
 {
     [TestClass]
     public class AuthorizationAttributeFilterTest

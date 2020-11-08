@@ -16,6 +16,11 @@ namespace UnitTests.ApplicationCore.Services
         private int _id2 = 2;
         private string _category = "Playa";
         private Region _region = new Region { Name = "Norte" };
+        private TouristPointCategory _touristPointCategory = new TouristPointCategory
+        {
+            Id = 1,
+            Category = new Category(){ Name = "Playa" }
+        };
 
         [TestMethod]
         public void TestGetAllOk()
@@ -45,7 +50,6 @@ namespace UnitTests.ApplicationCore.Services
         }
 
         [TestMethod]
-
         public void TestAddTouristPoint()
         {
             var mockRegionService = new Mock<IRegionService>(MockBehavior.Strict);
@@ -79,9 +83,51 @@ namespace UnitTests.ApplicationCore.Services
 
             mockRegionService.VerifyAll();
             mockCategoryService.VerifyAll();
+            mockTouristPointRepository.VerifyAll();
 
             Assert.AreEqual(touristPointToAdd, touristPointSaved);
             Assert.AreEqual(touristPointCategoryToReturn, touristPointSaved.TouristPointCategories.First());
+        }
+        
+        
+        [TestMethod]
+        public void TestGetFilteredByRegionAndCategoryTouristPoint()
+        {
+            var mockRegionService = new Mock<IRegionService>(MockBehavior.Strict).Object;
+            var mockCategoryService = new Mock<ICategoryService>(MockBehavior.Strict).Object;
+            var touristPointCategories = new List<TouristPointCategory> {_touristPointCategory};
+
+            var touristPoint = new TouristPoint
+            {
+                Id = 0,
+                Region = _region,
+                TouristPointCategories = touristPointCategories
+            };
+
+            var mockTouristPointRepository = new Mock<ITouristPointRepository>(MockBehavior.Strict);
+            mockTouristPointRepository.Setup(r => r.GetFilteredByRegionAndCategory(_region.Name, _category)).Returns(new List<TouristPoint>{ touristPoint});
+            var touristPointService = new TouristPointService(mockTouristPointRepository.Object, mockCategoryService, mockRegionService);
+
+            touristPointService.GetAllFilteredByRegionAndCategory(_region.Name, _category);
+
+            mockTouristPointRepository.VerifyAll();
+
+            Assert.AreEqual(touristPoint.Region, _region);
+            Assert.AreEqual(touristPoint.TouristPointCategories, touristPointCategories);
+        }
+        
+        [TestMethod]
+        public void TestGetTouristPoint()
+        {
+            var touristPointToGet = new TouristPoint { Id = _id };
+            var mock = new Mock<ITouristPointRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.GetById(_id)).Returns(touristPointToGet);
+            var touristPointService = new TouristPointService(mock.Object, new Mock<ICategoryService>().Object, new Mock<IRegionService>().Object);
+
+            TouristPoint touristPointSaved = touristPointService.GetTouristPointById(_id);
+
+            mock.VerifyAll();
+            Assert.AreEqual(touristPointToGet, touristPointSaved);
         }
     }
 }

@@ -18,12 +18,12 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Se agrega un punto turistico.
+        /// Create tourist point
         /// </summary>
-        /// <response code="201">Se creo exitosamente</response>
-        ///<response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
-        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="201">Created successfully.</response>
+        ///<response code="401">User does not send a token, not Authenticated.</response>
+        /// <response code="403">Not enough permissions, not Authorized.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpPost]
         [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult AddTouristPoint([FromBody] TouristPointCreatingModel touristPointModel)
@@ -33,10 +33,10 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Se obtienen los puntos turisticos filtrados por region y por categoria.
+        /// Get Tourist Point
         /// </summary>
-        /// <response code="200">Se obtuvieron exitosamente</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="200">They were successfully obtained.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpGet]
         public IActionResult GetTouristPointFiltered([FromQuery(Name = "region")] string region, [FromQuery(Name = "category")] string category)
         {

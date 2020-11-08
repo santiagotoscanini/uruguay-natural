@@ -24,7 +24,7 @@ namespace UnitTests.Web.Controllers
         private string _description = "This is a dummy description.";
         private DateTime _checkInDate = DateTime.Now;
         private DateTime _checkOutDate = DateTime.Now;
-        private int _numberOfGuests = 3;
+        private int _totalNumberOfGuests = 3;
         private BookingState _state2 = BookingState.PENDING_OF_PAY;
         private string _description2 = "This is another dummy description.";
 
@@ -41,7 +41,7 @@ namespace UnitTests.Web.Controllers
                     Description = _description,
                     CheckInDate = _checkInDate,
                     CheckOutDate = _checkOutDate,
-                    NumberOfGuests = _numberOfGuests,
+                    TotalNumberOfGuests = _totalNumberOfGuests
                 },
                 new Booking
                 {
@@ -51,7 +51,7 @@ namespace UnitTests.Web.Controllers
                     Description = _description,
                     CheckInDate = _checkInDate,
                     CheckOutDate = _checkOutDate,
-                    NumberOfGuests = _numberOfGuests,
+                    TotalNumberOfGuests = _totalNumberOfGuests
                 }
             };
             var mock = new Mock<IBookingService>(MockBehavior.Strict);
@@ -76,7 +76,9 @@ namespace UnitTests.Web.Controllers
                 TouristEmail = _touristEmail,
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
-                NumberOfGuests = _numberOfGuests,
+                NumberOfAdults = _totalNumberOfGuests,
+                NumberOfChildren = 0,
+                NumberOfBabies = 0
             };
             var bookingToReturn = new Booking
             {
@@ -86,7 +88,13 @@ namespace UnitTests.Web.Controllers
                 Description = _description,
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
-                NumberOfGuests = _numberOfGuests,
+                TotalNumberOfGuests = _totalNumberOfGuests,
+                Lodging = new Lodging
+                {
+                    ContactNumber = "9842350486",
+                    DescriptionForBookings = "Dummy description"
+                }
+                
             };
             var mock = new Mock<IBookingService>();
             mock.Setup(m => m.Add(It.IsAny<Booking>())).Returns(bookingToReturn);
@@ -111,7 +119,7 @@ namespace UnitTests.Web.Controllers
                 Description = _description,
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
-                NumberOfGuests = _numberOfGuests,
+                TotalNumberOfGuests = _totalNumberOfGuests,
             };
             var mock = new Mock<IBookingService>(MockBehavior.Strict);
             mock.Setup(m => m.Get(_bookingCode2)).Returns(bookingToReturn);
@@ -136,7 +144,7 @@ namespace UnitTests.Web.Controllers
                 Description = _description2,
                 CheckInDate = _checkInDate,
                 CheckOutDate = _checkOutDate,
-                NumberOfGuests = _numberOfGuests,
+                TotalNumberOfGuests = _totalNumberOfGuests,
             };
             var updateInfoBooking = new BookingUpdateInfoModel
             {

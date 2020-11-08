@@ -18,15 +18,14 @@ namespace Web.Controllers
             _administratorService = administratorService;
         }
 
-
         /// <summary>
-        /// Crea un nuevo Administrador.
+        /// Creates a new Administrator
         /// </summary>
-        /// <response code="201">Se creo exitosamente</response>
-        /// <response code="400">Ya hay un administrador registrado con ese email</response>
-        /// <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
-        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
-        /// <response code="500">Ocrrio un error en el servidor</response>
+        /// <response code="201">Created successfully.</response>
+        /// <response code="400">Bad Request, there is another Administrator with the same email.</response>
+        /// <response code="401">User does not send a token, not Authenticated.</response>
+        /// <response code="403">Not enough permissions, not Authorized.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpPost]
         public IActionResult AddAdministrator([FromBody] AdministratorCreatingModel administratorModel)
         {
@@ -35,13 +34,13 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Elimina un Administrador.
+        /// Delete an administrator
         /// </summary>
-        /// <response code="204">Se elimino exitosamente</response>
-        /// <response code="404">No existe el administrador con ese email</response>
-        /// <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
-        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
-        /// <response code="500">Ocrrio un error en el servidor</response>
+        /// <response code="204">Removed successfully.</response>
+        /// <response code="404">There is no administrator with that email.</response>
+        /// <response code="401">User does not send a token, not Authenticated.</response>
+        /// <response code="403">Not enough permissions, not Authorized.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpDelete("{email}")]
         public IActionResult DeleteAdministrator([FromRoute] string email)
         {
@@ -50,13 +49,13 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Actualiza los datos de un Administrador.
+        /// Update Administrator details
         /// </summary>
-        /// <response code="204">Se actualizo exitosamente</response>
-        /// <response code="404">No existe el administrador con ese email</response>
-        /// <response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
-        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
-        /// <response code="500">Ocrrio un error en el servidor</response>
+        /// <response code="204">Updated successfully.</response>
+        /// <response code="404">There is no administrator with that email.</response>
+        /// <response code="401">User does not send a token, not Authenticated</response>
+        /// <response code="403">Not enough permissions, not Authorized</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpPut("{email}")]
         public IActionResult UpdateAdministrator([FromRoute] string email, [FromBody] AdministratorUpdatingModel administratorUpdatingModel)
         {

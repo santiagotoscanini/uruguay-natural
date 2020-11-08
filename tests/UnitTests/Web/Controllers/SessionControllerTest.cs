@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Authentication;
+using Castle.Core.Internal;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SessionInterface;
@@ -37,6 +39,7 @@ namespace UnitTests.Web.Controllers
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidCredentialException))]
         public void LoginFailTest()
         {
             var loginModel = new LoginModel
@@ -46,14 +49,10 @@ namespace UnitTests.Web.Controllers
             };
 
             var mock = new Mock<ISessionService>();
-            mock.Setup(s => s.Login(_email, _password)).Returns(_tokenFail);
+            mock.Setup(s => s.Login(_email, _password)).Throws(new InvalidCredentialException());
             var sessionController = new SessionController(mock.Object);
-
-            IActionResult result = sessionController.Login(loginModel);
-            var status = result as BadRequestObjectResult;
-
-            mock.VerifyAll();
-            Assert.AreEqual(400, status.StatusCode);
+            
+            sessionController.Login(loginModel);;
         }
 
         [TestMethod]
@@ -70,29 +69,11 @@ namespace UnitTests.Web.Controllers
 
             IActionResult result = sessionController.Logout(logoutModel);
             var status = result as OkObjectResult;
+            var logoutModelResult = status.Value as LogoutOutModel;
 
             mock.VerifyAll();
             Assert.AreEqual(200, status.StatusCode);
+            Assert.IsFalse(logoutModelResult.Message.IsNullOrEmpty());
         }
-
-        [TestMethod]
-        public void LogoutFailTest()
-        {
-            var logoutModel = new LogoutModel
-            {
-                Token = _token,
-            };
-
-            var mock = new Mock<ISessionService>();
-            mock.Setup(s => s.Logout(_token)).Returns(false);
-            var sessionController = new SessionController(mock.Object);
-
-            IActionResult result = sessionController.Logout(logoutModel);
-            var status = result as BadRequestObjectResult;
-
-            mock.VerifyAll();
-            Assert.AreEqual(400, status.StatusCode);
-        }
-
     }
 }

@@ -9,9 +9,10 @@ using System.Collections.Generic;
 using Web.Filters;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using System.Net;
+using System.Security.Authentication;
 using Exceptions;
 
-namespace tests.UnitTests.Web.Filters
+namespace UnitTests.Web.Filters
 {
     [TestClass]
     public class ExceptionFilterTest
@@ -98,6 +99,29 @@ namespace tests.UnitTests.Web.Filters
             var exceptionContext = new ExceptionContext(actionContext, filters.Object)
             {
                 Exception = new ObjectAlreadyExistException(_errorMessage),
+            };
+
+            var exceptionFilter = new ExceptionFilter();
+            exceptionFilter.OnException(exceptionContext);
+
+            var contentResult = exceptionContext.Result as ContentResult;
+
+            Assert.AreEqual((int)HttpStatusCode.BadRequest, contentResult.StatusCode);
+        }
+        
+        [TestMethod]
+        public void ThrowInvalidCredentialException()
+        {
+            var actionContext = new ActionContext
+            {
+                HttpContext = new Mock<HttpContext>().Object,
+                RouteData = new Mock<RouteData>().Object,
+                ActionDescriptor = new Mock<ActionDescriptor>().Object,
+            };
+            var filters = new Mock<IList<IFilterMetadata>>(MockBehavior.Strict);
+            var exceptionContext = new ExceptionContext(actionContext, filters.Object)
+            {
+                Exception = new InvalidCredentialException(_errorMessage),
             };
 
             var exceptionFilter = new ExceptionFilter();

@@ -1,24 +1,23 @@
 ﻿using Entities;
-using InfrastructureInterface.Data.Repositories;
 using SessionInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
+using ApplicationCoreInterface.Services;
 
 namespace ApplicationCore.Services
 {
     public class SessionService : ISessionService
     {
-        private IAdministratorRepository _repository;
-        private static IDictionary<string, string> _tokenRepository = null;
-
-        public SessionService(IAdministratorRepository repository)
+        private IAdministratorService _administratorService;
+        private static IDictionary<string, string> _tokenRepository;
+        private readonly string InvalidEmailOrPasswordMessage = "Invalid email or password.";
+        
+        public SessionService(IAdministratorService administratorService)
         {
-            _repository = repository;
-            if (_tokenRepository == null)
-            {
-                _tokenRepository = new Dictionary<string, string>();
-            }
+            _administratorService = administratorService;
+            _tokenRepository ??= new Dictionary<string, string>();
         }
 
         public bool IsCorrectToken(string token)
@@ -31,14 +30,15 @@ namespace ApplicationCore.Services
             Administrator admin = GetAdmin(email, password);
             if (admin == null)
             {
-                return null;
+                throw new InvalidCredentialException(InvalidEmailOrPasswordMessage);
             }
+
             return GenerateAndInsertToken(admin);
         }
 
         private Administrator GetAdmin(string email, string password)
         {
-            IEnumerable<Administrator> admins = _repository.GetAll();
+            IEnumerable<Administrator> admins = _administratorService.GetAll();
             return admins.FirstOrDefault(x => x.Email == email && x.Password == password);
         }
 
@@ -51,11 +51,7 @@ namespace ApplicationCore.Services
 
         public bool Logout(string token)
         {
-            if (!_tokenRepository.Remove(token))
-            {
-                return false;
-            }
-            return true;
+            return _tokenRepository.Remove(token);
         }
     }
 }

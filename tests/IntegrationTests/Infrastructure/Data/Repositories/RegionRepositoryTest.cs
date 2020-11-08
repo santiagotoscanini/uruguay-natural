@@ -69,5 +69,25 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             _regionRepository.Add(region);
             _regionRepository.Add(region2);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
+        public void GetRegionFailTest()
+        {
+            _regionRepository.GetByName(_name);
+        }
+        
+        [TestMethod]
+        public void GetRegionTest()
+        {
+            var region = new Region
+            {
+                Name = _name
+            };
+            _regionRepository.Add(region);
+            Region regionSaved = _regionRepository.GetByName(_name);
+            
+            Assert.AreEqual(regionSaved.Name, _name);
+        }
     }
 }

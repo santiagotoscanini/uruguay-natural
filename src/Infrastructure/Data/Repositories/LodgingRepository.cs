@@ -45,7 +45,7 @@ namespace Infrastructure.Data.Repositories
         {
             try
             {
-                var lodging = _lodgings.First(l => l.Id == lodgingId);
+                var lodging = _lodgings.Include(l => l.Bookings).First(l => l.Id == lodgingId);
                 return lodging;
             }
             catch (InvalidOperationException)
@@ -73,6 +73,15 @@ namespace Infrastructure.Data.Repositories
             Lodging lodgingSaved = GetById(lodgingId);
             _lodgings.Remove(lodgingSaved);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Lodging> FilterLodgings(LodgingToFilter lodgingToFilter)
+        {
+            int totalNumberOfClients = lodgingToFilter.TotalNumberOfGuests;
+
+            return _lodgings
+                .Where(l => l.MaximumSize - l.CurrentlyOccupiedPlaces >= totalNumberOfClients)
+                .Where(l => l.TouristPoint.Id == lodgingToFilter.TouristPointId);
         }
     }
 }

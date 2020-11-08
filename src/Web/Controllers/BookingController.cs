@@ -18,10 +18,10 @@ namespace Web.Controllers
 
 
         /// <summary>
-        /// Obtiene las reservas.
+        /// Get Reservations
         /// </summary>
-        /// <response code="200">Se obtuvieron exitosamente</response>
-        /// <response code="500">Ocrrio un error en el servidor</response>
+        /// <response code="200">They were successfully obtained.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpGet]
         public IActionResult GetAllBookings([FromQuery(Name = "tourist-point")] string touristPoint)
         {
@@ -29,10 +29,10 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Se crea una nueva reserva.
+        /// Create reservation
         /// </summary>
-        /// <response code="201">Se creo exitosamente</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="201">Created successfully.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpPost]
         public IActionResult AddBooking([FromBody]BookingCreatingModel bookingModel)
         {
@@ -41,11 +41,11 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Se obtiene una reserva por su codigo.
+        /// Get reservation
         /// </summary>
-        /// <response code="200">Se obtuvo existosamente</response>
-        /// <response code="404">No existe una reserva con ese codigo</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="200">Obtained successfully.</response>
+        /// <response code="404">Doesn't exist a booking with that code.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpGet("{id}", Name = "GetBooking")]
         public IActionResult GetBookingById([FromRoute] string id)
         {
@@ -54,13 +54,13 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Se actualiza el estado de una reserva.
+        /// Update booking state
         /// </summary>
-        /// <response code="204">Se modifico existosamente</response>
-        ///<response code="401">El usuario no se encuentra autorizado a realizar la consulta.</response>
-        /// <response code="403">El usuario no se autentico con el perfil correspondiente para realizar la consulta</response>
-        /// <response code="404">No existe una reserva con ese codigo</response>
-        /// <response code="500">Ocurrio un error en el servidor</response>
+        /// <response code="204">Updated successfully</response>
+        ///<response code="401">User does not send a token, not Authenticated.</response>
+        /// <response code="403">Not enough permissions, not Authorized.</response>
+        /// <response code="404">Doesn't exist a booking with that code.</response>
+        /// <response code="500">Internal Server Error.</response>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult UpdateBooking([FromRoute] string id, [FromBody] BookingUpdateInfoModel booking)

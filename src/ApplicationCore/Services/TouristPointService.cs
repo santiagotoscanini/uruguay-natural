@@ -62,5 +62,10 @@ namespace ApplicationCore.Services
         {
             return _touristPointRepository.GetFilteredByRegionAndCategory(region, category);
         }
+
+        public TouristPoint GetTouristPointById(int touristPointId)
+        {
+            return _touristPointRepository.GetById(touristPointId);
+        }
     }
 }

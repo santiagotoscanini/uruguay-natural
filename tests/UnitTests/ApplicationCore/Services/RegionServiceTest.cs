@@ -38,5 +38,20 @@ namespace UnitTests.ApplicationCore.Services
             mock.VerifyAll();
             Assert.IsTrue(regionsSaved.SequenceEqual(regionsToReturn));
         }
+        
+        [TestMethod]
+        public void TestGetRegionByNameOk()
+        {
+            var region = new Region { Name = _regionName1 };
+            
+            var mock = new Mock<IRegionRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.GetByName(_regionName1)).Returns(region);
+            var regionService = new RegionService(mock.Object);
+
+            Region regionSaved = regionService.GetRegionByName(_regionName1);
+
+            mock.VerifyAll();
+            Assert.AreEqual(_regionName1, regionSaved.Name);
+        }
     }
 }

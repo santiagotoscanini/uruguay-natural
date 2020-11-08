@@ -10,7 +10,7 @@ namespace Infrastructure.Data.Config
         {
             builder.HasKey(b => b.Code);
             builder.HasOne(b => b.Lodging)
-                .WithMany(l => l.Bookings);
+                .WithMany(l => l.Bookings).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

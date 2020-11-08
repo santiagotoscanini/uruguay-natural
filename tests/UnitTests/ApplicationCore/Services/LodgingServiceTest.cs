@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Services;
+﻿using System;
+using ApplicationCore.Services;
 using ApplicationCoreInterface.Services;
 using Castle.Core.Internal;
 using Entities;
@@ -15,6 +16,15 @@ namespace UnitTests.ApplicationCore.Services
     {
         private readonly int _id = 1;
         private readonly int _id2 = 2;
+        private DateTime _bookingCheckin = new DateTime(2020, 11, 02);
+        private DateTime _bookingCheckout = new DateTime(2020, 12, 02);
+        private string _touristPointName = "Punta del este";
+        private double _costPerNight = 1.0;
+        private int _numberOfAdults = 1;
+        private int _totalNumberOfGuests = 1;
+        private int _touristPointId = 1;
+        private double _totalPrice = 30.0;
+        private int _occupedPlaces = 2;
 
         [TestMethod]
         public void TestGetAllOk()
@@ -26,7 +36,9 @@ namespace UnitTests.ApplicationCore.Services
             };
             var mock = new Mock<ILodgingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.GetAll()).Returns(lodgingsToReturn);
-            var lodgingService = new LodgingService(mock.Object, new Mock<ITouristPointService>().Object);
+            var mockPriceCalculatedService = new Mock<IPriceCalculatorService>().Object;
+            var lodgingService = new LodgingService(mock.Object, new Mock<ITouristPointService>().Object,
+                mockPriceCalculatedService);
 
             IEnumerable<Lodging> lodgingsSaved = lodgingService.GetAll();
 
@@ -37,7 +49,7 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void TestAddLodging()
         {
-            var touristPoint = new TouristPoint { Name = "Pde" };
+            var touristPoint = new TouristPoint { Name = _touristPointName };
             var lodgingToAdd = new Lodging
             {
                 Id = _id,
@@ -49,8 +61,9 @@ namespace UnitTests.ApplicationCore.Services
 
             var touristPointServiceMock = new Mock<ITouristPointService>();
             touristPointServiceMock.Setup(tp => tp.GetAll()).Returns(new List<TouristPoint>() { touristPoint });
+            var mockPriceCalculatedService = new Mock<IPriceCalculatorService>().Object;
 
-            var lodgingService = new LodgingService(mock.Object, touristPointServiceMock.Object);
+            var lodgingService = new LodgingService(mock.Object, touristPointServiceMock.Object, mockPriceCalculatedService);
 
             Lodging lodgingSaved = lodgingService.Add(lodgingToAdd, 0);
 
@@ -61,10 +74,16 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void TestGetLodging()
         {
-            var lodgingToGet = new Lodging { Id = _id };
+            var lodgingToGet = new Lodging
+            {
+                Id = _id, 
+                CostPerNight = _costPerNight,
+            };
             var mock = new Mock<ILodgingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.GetById(_id)).Returns(lodgingToGet);
-            var lodgingService = new LodgingService(mock.Object, new Mock<ITouristPointService>().Object);
+            var mockPriceCalculatedService = new Mock<IPriceCalculatorService>().Object;
+            var lodgingService = new LodgingService(mock.Object, new Mock<ITouristPointService>().Object,
+                mockPriceCalculatedService);
 
             Lodging lodgingGetted = lodgingService.GetById(_id);
 
@@ -72,18 +91,55 @@ namespace UnitTests.ApplicationCore.Services
             Assert.AreEqual(lodgingToGet, lodgingGetted);
         }
 
+        
+        [TestMethod]
+        public void TestGetFilteredLodging()
+        {
+            var lodgingToGet = new Lodging
+            {
+                Id = _id, 
+                CostPerNight = _costPerNight,
+            };
+            var lodgingFilter = new LodgingToFilter
+            {
+                TouristPointId = _touristPointId,
+                CheckInDate = _bookingCheckin,
+                CheckOutDate = _bookingCheckout,
+                NumberOfGuests = new NumberOfGuests{ NumberOfAdults = _numberOfAdults },
+                TotalNumberOfGuests = _totalNumberOfGuests
+                
+            };
+            var lodgingsFilter = new List<Lodging>{lodgingToGet};
+            var lodgingsAndPricesFilter = new Dictionary<Lodging, double>();
+            lodgingsAndPricesFilter.Add(lodgingToGet, _totalPrice);
+            var mock = new Mock<ILodgingRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.FilterLodgings(lodgingFilter)).Returns(lodgingsFilter);
+            var mockPriceCalculatedService = new Mock<IPriceCalculatorService>();
+            mockPriceCalculatedService.Setup(p => p.CalculatePrice(
+                It.IsAny<NumberOfGuests>(), _costPerNight)).Returns(_costPerNight);
+            var lodgingService = new LodgingService(mock.Object, new Mock<ITouristPointService>().Object,
+                mockPriceCalculatedService.Object);
+
+            Dictionary<Lodging, double> lodgingsGetted = lodgingService.FilterLodgings(lodgingFilter);
+
+            mock.VerifyAll();
+            Assert.IsTrue(lodgingsAndPricesFilter.SequenceEqual(lodgingsGetted));
+        }
+        
         [TestMethod]
         public void TestUpdateLodging()
         {
             var lodgingInfo = new Lodging
             {
                 Id = _id,
-                CurrentlyOccupiedPlaces = 2,
+                CurrentlyOccupiedPlaces = _occupedPlaces,
             };
 
             var mock = new Mock<ILodgingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.Update(lodgingInfo)).Returns(lodgingInfo);
-            var lodgingService = new LodgingService(mock.Object, new Mock<ITouristPointService>().Object);
+            var mockPriceCalculatedService = new Mock<IPriceCalculatorService>().Object;
+            var lodgingService = new LodgingService(mock.Object, new Mock<ITouristPointService>().Object,
+                mockPriceCalculatedService);
 
             var modifiedLodgingGetted = lodgingService.Update(lodgingInfo);
 
@@ -103,7 +159,9 @@ namespace UnitTests.ApplicationCore.Services
 
             var touristPointServiceMock = new Mock<ITouristPointService>();
             touristPointServiceMock.Setup(tp => tp.GetAll()).Returns(new List<TouristPoint>());
-            var lodgingService = new LodgingService(mock.Object, touristPointServiceMock.Object);
+            var mockPriceCalculatedService = new Mock<IPriceCalculatorService>().Object;
+            var lodgingService = new LodgingService(mock.Object, touristPointServiceMock.Object,
+                mockPriceCalculatedService);
 
             Lodging lodgingSaved = lodgingService.Add(lodging, 0);
             lodgingService.Delete(lodging.Id);

@@ -5,10 +5,14 @@ namespace Web.Models.BookingModels
     public class BookingBaseCreateModel
     {
         public string Code { get; set; }
+        public string ContactNumber { get; set; }
+        public string Information { get; set; }
 
         public BookingBaseCreateModel(Booking booking)
         {
             Code = booking.Code;
+            ContactNumber = booking.Lodging.ContactNumber;
+            Information = booking.Lodging.DescriptionForBookings;
         }
 
         public override bool Equals(object obj)
@@ -17,7 +21,7 @@ namespace Web.Models.BookingModels
 
             if (obj is BookingBaseCreateModel Booking)
             {
-                Result = this.Code == Booking.Code;
+                Result = Code == Booking.Code;
             }
 
             return Result;

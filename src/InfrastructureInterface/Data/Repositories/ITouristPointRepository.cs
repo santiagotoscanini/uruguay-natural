@@ -8,5 +8,6 @@ namespace InfrastructureInterface.Data.Repositories
         IEnumerable<TouristPoint> GetAll();
         TouristPoint Add(TouristPoint touristPoint);
         IEnumerable<TouristPoint> GetFilteredByRegionAndCategory(string region, string category);
+        TouristPoint GetById(int touristPointId);
     }
 }
