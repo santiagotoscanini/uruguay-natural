@@ -3,22 +3,27 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models.BookingModels
 {
-    public class BookingReviewUpdateInfoModel
+    public class BookingReviewUpdateModel
     {
         [Required]
-        public BookingState State { get; set; }
-
+        public string ReviewText { get; set; }
         [Required]
-        public string Description { get; set; }
+        [Range(0, 5, ErrorMessage = "The points must be between zero and five.")]
+        public int ReviewPoints { get; set; }
 
         public Booking ToEntity(string code)
         {
+            var review = new Review
+            {
+                Text = ReviewText,
+                NumberOfPoints = ReviewPoints,
+            };
             return new Booking()
             {
                 Code = code,
-                State = this.State,
-                Description = this.Description,
+                TouristReview = review,
             };
         }
+
     }
 }

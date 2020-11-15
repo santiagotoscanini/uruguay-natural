@@ -63,9 +63,22 @@ namespace Web.Controllers
         /// <response code="500">Internal Server Error.</response>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(AuthorizationAttributeFilter))]
-        public IActionResult UpdateBooking([FromRoute] string id, [FromBody] BookingUpdateInfoModel booking)
+        public IActionResult UpdateBookingState([FromRoute] string id, [FromBody] BookingStateUpdateModel bookingState)
         {
-            _bookingService.UpdateState(booking.ToEntity(id));
+            _bookingService.UpdateState(bookingState.ToEntity(id));
+            return NoContent();
+        }
+        
+        /// <summary>
+        /// Update booking review
+        /// </summary>
+        /// <response code="204">Updated successfully</response>
+        /// <response code="404">Doesn't exist a booking with that code.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [HttpPut("{review/id}")]
+        public IActionResult UpdateBookingReview([FromRoute] string id, [FromBody] BookingReviewUpdateModel bookingReview)
+        {
+            _bookingService.UpdateReview(bookingReview.ToEntity(id));
             return NoContent();
         }
     }
