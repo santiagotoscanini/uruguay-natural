@@ -14,6 +14,7 @@ namespace Entities
         public int TotalNumberOfGuests { get; set; }
         public Lodging Lodging { get; set; }
         public double Price { get; set; }
+        public Review TouristReview { get; set; }
 
         public override bool Equals(object obj)
         {
