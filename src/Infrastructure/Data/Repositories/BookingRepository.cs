@@ -70,6 +70,7 @@ namespace Infrastructure.Data.Repositories
 
             booking.State = updateBooking.State;
             booking.Description = updateBooking.Description;
+            booking.TouristReview = updateBooking.TouristReview;
             
             _bookings.Update(booking);
             _context.SaveChanges();
