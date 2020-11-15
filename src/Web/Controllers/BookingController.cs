@@ -65,7 +65,7 @@ namespace Web.Controllers
         [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult UpdateBooking([FromRoute] string id, [FromBody] BookingUpdateInfoModel booking)
         {
-            _bookingService.Update(booking.ToEntity(id));
+            _bookingService.UpdateState(booking.ToEntity(id));
             return NoContent();
         }
     }

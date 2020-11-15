@@ -8,6 +8,7 @@ namespace ApplicationCoreInterface.Services
         Booking Add(Booking booking);
         IEnumerable<Booking> GetAll();
         Booking Get(string bookingCode);
-        void Update(Booking booking);
+        void UpdateState(Booking booking);
+        void UpdateReview(Booking booking);
     }
 }

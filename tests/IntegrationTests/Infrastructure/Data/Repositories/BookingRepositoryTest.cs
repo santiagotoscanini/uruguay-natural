@@ -118,7 +118,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             _bookingRepository.Add(booking);
 
 
-            _bookingRepository.Update(bookingStateInfo);
+            _bookingRepository.UpdateState(bookingStateInfo);
 
 
             Assert.AreEqual(bookingStateInfo.State, _bookingRepository.Get(_code).State);
@@ -141,7 +141,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             _bookingRepository.Add(booking);
 
 
-            _bookingRepository.Update(bookingWithReview);
+            _bookingRepository.UpdateReview(bookingWithReview);
 
 
             Assert.AreEqual(_touristReview.Text, _bookingRepository.Get(_code).TouristReview.Text);
@@ -166,7 +166,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
                 Description = _description,
             };
 
-            _bookingRepository.Update(bookingStateInfo);
+            _bookingRepository.UpdateState(bookingStateInfo);
         }
 
         [TestMethod]

@@ -158,7 +158,7 @@ namespace UnitTests.Web.Controllers
                 Description = _description2,
             };
             var mock = new Mock<IBookingService>(MockBehavior.Strict);
-            mock.Setup(m => m.Update(stateInfoBooking));
+            mock.Setup(m => m.UpdateState(stateInfoBooking));
             mock.Setup(m => m.Get(_bookingCode2)).Returns(bookingToReturn);
             var controller = new BookingController(mock.Object);
 

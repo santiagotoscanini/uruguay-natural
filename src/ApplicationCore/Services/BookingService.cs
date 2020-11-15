@@ -88,9 +88,14 @@ namespace ApplicationCore.Services
             return _repository.Get(bookingCode);
         }
 
-        public void Update(Booking booking)
+        public void UpdateState(Booking booking)
         {
-            _repository.Update(booking);
+            _repository.UpdateState(booking);
+        }
+        
+        public void UpdateReview(Booking booking)
+        {
+            _repository.UpdateReview(booking);
         }
     }
 }
