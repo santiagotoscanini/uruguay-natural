@@ -17,6 +17,7 @@ namespace Web.Models.LodgingModels
         public int MaximumSize { get; set; }
         public int CurrentlyOccupiedPlaces { get; set; }
         public double CalculatedPrice { get; set; }
+        public int ReviewsCount { get; set; }
 
         public LodgingFilteredModel(Lodging lodging, double calculatedPrice)
         {
@@ -32,6 +33,7 @@ namespace Web.Models.LodgingModels
             CurrentlyOccupiedPlaces = lodging.CurrentlyOccupiedPlaces;
             CalculatedPrice = calculatedPrice;
             NumberOfStars = lodging.NumberOfStars;
+            ReviewsCount = lodging.ReviewsCount;
         }
         
         public override bool Equals(object obj)

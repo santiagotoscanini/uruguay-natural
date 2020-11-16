@@ -92,11 +92,13 @@ namespace UnitTests.Web.Controllers
                 NumberOfAdults = 1,
                 NumberOfBabies = 0,
                 NumberOfChildren = 0,
+                NumberOfRetired = 0,
             };
             var lodging = new Lodging
             {
                 Id = 1,
-                CostPerNight = 10.0
+                CostPerNight = 10.0,
+                ReviewsCount = 0,
             };
             var lodgingsAndPrices = new Dictionary<Lodging, double>();
             lodgingsAndPrices.Add(lodging, 10.0);
