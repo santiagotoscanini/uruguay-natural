@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Entities
 {
-    public class Lodging
+    public class Lodging : IComparable
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -28,6 +30,12 @@ namespace Entities
             }
 
             return result;
+        }
+
+        public int CompareTo(object obj)
+        {
+            var lodging = (Lodging) obj;
+            return this.Bookings.Count().CompareTo(lodging.Bookings.Count());
         }
     }
 }
