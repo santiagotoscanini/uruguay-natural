@@ -75,7 +75,7 @@ namespace Web.Controllers
         /// <response code="204">Updated successfully</response>
         /// <response code="404">Doesn't exist a booking with that code.</response>
         /// <response code="500">Internal Server Error.</response>
-        [HttpPut("{review/id}")]
+        [HttpPut("{id}/reviews")]
         public IActionResult UpdateBookingReview([FromRoute] string id, [FromBody] BookingReviewUpdateModel bookingReview)
         {
             _bookingService.UpdateReview(bookingReview.ToEntity(id));
@@ -83,4 +83,3 @@ namespace Web.Controllers
         }
     }
 }
-    

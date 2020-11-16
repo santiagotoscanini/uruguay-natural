@@ -141,20 +141,28 @@ namespace UnitTests.ApplicationCore.Services
         public void TestUpdateBookingReview()
         {
             var review = new Review{ Text = "Nice" };
-            var booking = new Booking { Code = _bookingCode1, TouristReview = review };
+            var lodging = new Lodging
+            {
+                Id = 0,
+                NumberOfStars = 1,
+                ReviewsCount = 1,
+            };
+            var booking = new Booking { Code = _bookingCode1, TouristReview = review, Lodging = lodging};
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.UpdateReview(booking));
             mock.Setup(r => r.Get(_bookingCode1)).Returns(booking);
+            
             var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
-            mockLodgingService.Setup(r => r.GetById(0)).Returns(new Lodging());
-            var mockPriceCalculatorService = new Mock<IPriceCalculatorService>().Object;
-            var bookingService = new BookingService(mock.Object, mockLodgingService.Object, mockPriceCalculatorService);
+            mockLodgingService.Setup(r => r.GetById(lodging.Id)).Returns(lodging);
+            mockLodgingService.Setup(r => r.Update(lodging)).Returns(lodging);
+            
+            var bookingService = new BookingService(mock.Object, mockLodgingService.Object, new Mock<IPriceCalculatorService>().Object);
 
             bookingService.UpdateReview(booking);
-            var modifiedBookingGetted = bookingService.Get(_bookingCode1);
+            var modifiedBookingFetched = bookingService.Get(_bookingCode1);
 
             mock.VerifyAll();
-            Assert.AreEqual(review.Text, modifiedBookingGetted.TouristReview.Text);
+            Assert.AreEqual(review.Text, modifiedBookingFetched.TouristReview.Text);
         }
 
         [TestMethod]
