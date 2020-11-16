@@ -79,5 +79,17 @@ namespace Web.Controllers
                 lodgingsAndPrices.Select(l => new LodgingFilteredModel(l.Key, l.Value)).ToList().AsEnumerable();
             return Ok(lodgingsToReturn);
         }
+
+        /// <summary>
+        /// Get Filtered by Tourist Point and Range of time
+        /// </summary>
+        /// <response code="200">Obtained successfully.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [HttpGet("reports")]
+        public IActionResult GetLodgingsFilteredByTouristPointAndRange([FromQuery] LodgingFilterByTouristPointAndRangeModel lodgingFilterModel)
+        {
+            var lodgings = _lodgingService.GetFilteredByTouristPointAndRange(lodgingFilterModel.ToEntity());
+            return Ok(lodgings.Select(l => new LodgingModelOut(l)));
+        }
     }
 }
