@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
+using Exceptions;
 
 namespace UnitTests.ApplicationCore.Services
 {
@@ -186,6 +187,12 @@ namespace UnitTests.ApplicationCore.Services
                 CheckInDate = _bookingCheckin,
                 CheckOutDate = _bookingCheckout,
             };
+            var booking1 = new Booking
+            {
+                CheckInDate = _bookingCheckin,
+                CheckOutDate = _bookingCheckout,
+                State = BookingState.REJECT
+            };
             var booking2 = new Booking
             {
                 CheckInDate = new DateTime(2020, 10, 02),
@@ -197,6 +204,15 @@ namespace UnitTests.ApplicationCore.Services
                 Bookings = new List<Booking>
                 {
                     booking,
+                    booking2
+                }
+            };
+            var lodging1 = new Lodging
+            {
+                TouristPoint = touristPoint,
+                Bookings = new List<Booking>
+                {
+                    booking1,
                     booking2
                 }
             };
@@ -215,6 +231,7 @@ namespace UnitTests.ApplicationCore.Services
             var lodgings = new List<Lodging>
             {
                 lodging,
+                lodging1,
                 lodging2,
                 lodging3
             };
@@ -230,6 +247,76 @@ namespace UnitTests.ApplicationCore.Services
             mock.VerifyAll();
             Assert.AreEqual(lodging, filteredLodgings.First());
             Assert.AreEqual(1, filteredLodgings.Count());
+        }
+        
+        
+        [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
+        public void TestGetLodgingsFilteredByTouristPointAndRageFail()
+        {
+            var lodgingToFilter = new LodgingToFilter
+            {
+                CheckInDate = _bookingCheckin,
+                CheckOutDate = _bookingCheckout,
+                TouristPointId = _touristPointId,
+            };
+            var touristPoint = new TouristPoint{Id = _touristPointId};
+            var booking1 = new Booking
+            {
+                CheckInDate = _bookingCheckin,
+                CheckOutDate = _bookingCheckout,
+                State = BookingState.REJECT
+            };
+            var booking2 = new Booking
+            {
+                CheckInDate = new DateTime(2020, 10, 02),
+                CheckOutDate = new DateTime(2020, 11, 01),
+            };
+            var lodging = new Lodging
+            {
+                TouristPoint = touristPoint,
+                Bookings = new List<Booking>
+                {
+                    booking2
+                }
+            };
+            var lodging1 = new Lodging
+            {
+                TouristPoint = touristPoint,
+                Bookings = new List<Booking>
+                {
+                    booking1,
+                    booking2
+                }
+            };
+            var lodging2 = new Lodging
+            {
+                TouristPoint = touristPoint,
+                Bookings = new List<Booking>
+                {
+                    booking2
+                }
+            };
+            var lodging3 = new Lodging
+            {
+                TouristPoint = new TouristPoint{Id = 11},
+            };
+            var lodgings = new List<Lodging>
+            {
+                lodging,
+                lodging1,
+                lodging2,
+                lodging3
+            };
+            var mock = new Mock<ILodgingRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.GetAll()).Returns(lodgings);
+            var mockTouristPointService = new Mock<ITouristPointService>().Object;
+            var mockPriceCalculator = new Mock<IPriceCalculatorService>().Object;
+            
+            var lodgingService = new LodgingService(mock.Object, mockTouristPointService, mockPriceCalculator);
+
+            lodgingService.GetFilteredByTouristPointAndRange(lodgingToFilter);
+            
         }
     }
 }
