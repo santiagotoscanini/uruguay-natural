@@ -54,7 +54,7 @@ namespace ApplicationCore.Services
             Dictionary<Lodging, double> lodgingWithPrices = UpdateCalculatedPrice(lodgingsToReturn, lodgingToFilter);
             return lodgingWithPrices;
         }
-
+        
         private Dictionary<Lodging, double> UpdateCalculatedPrice(IEnumerable<Lodging> lodgings,
             LodgingToFilter lodgingToFilter)
         {
@@ -70,6 +70,30 @@ namespace ApplicationCore.Services
             }
 
             return lodgingsAndPrices;
+        }
+        
+        public IEnumerable<Lodging> GetFilteredByTouristPointAndRange(LodgingToFilter lodgingToFilter)
+        {
+            var lodgings = GetAll().Where(l => l.TouristPoint.Id.Equals(lodgingToFilter.TouristPointId));
+            lodgings = FilterByDateRange(lodgings, lodgingToFilter);
+            ((List<Lodging>)lodgings).Sort();
+            return lodgings;
+        }
+
+        private IEnumerable<Lodging> FilterByDateRange(IEnumerable<Lodging> lodgings, LodgingToFilter lodgingToFilter)
+        {
+            var filteredLodgings = new List<Lodging>();
+            foreach (var lodging in lodgings)
+            {
+                var bookings = lodging.Bookings.Where(b => b.CheckOutDate >= lodgingToFilter.CheckInDate &&
+                                                           b.CheckInDate <= lodgingToFilter.CheckOutDate);
+                if (bookings.Any())
+                {
+                    filteredLodgings.Add(lodging);
+                }
+            }
+
+            return filteredLodgings;
         }
     }
 }

@@ -170,5 +170,66 @@ namespace UnitTests.ApplicationCore.Services
             mock.VerifyAll();
             Assert.IsTrue(lodgings.IsNullOrEmpty());
         }
+
+        [TestMethod]
+        public void TestGetLodgingsFilteredByTouristPointAndRage()
+        {
+            var lodgingToFilter = new LodgingToFilter
+            {
+                CheckInDate = _bookingCheckin,
+                CheckOutDate = _bookingCheckout,
+                TouristPointId = _touristPointId,
+            };
+            var touristPoint = new TouristPoint{Id = _touristPointId};
+            var booking = new Booking
+            {
+                CheckInDate = _bookingCheckin,
+                CheckOutDate = _bookingCheckout,
+            };
+            var booking2 = new Booking
+            {
+                CheckInDate = new DateTime(2020, 10, 02),
+                CheckOutDate = new DateTime(2020, 11, 01),
+            };
+            var lodging = new Lodging
+            {
+                TouristPoint = touristPoint,
+                Bookings = new List<Booking>
+                {
+                    booking,
+                    booking2
+                }
+            };
+            var lodging2 = new Lodging
+            {
+                TouristPoint = touristPoint,
+                Bookings = new List<Booking>
+                {
+                    booking2
+                }
+            };
+            var lodging3 = new Lodging
+            {
+                TouristPoint = new TouristPoint{Id = 11},
+            };
+            var lodgings = new List<Lodging>
+            {
+                lodging,
+                lodging2,
+                lodging3
+            };
+            var mock = new Mock<ILodgingRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.GetAll()).Returns(lodgings);
+            var mockTouristPointService = new Mock<ITouristPointService>().Object;
+            var mockPriceCalculator = new Mock<IPriceCalculatorService>().Object;
+            
+            var lodgingService = new LodgingService(mock.Object, mockTouristPointService, mockPriceCalculator);
+
+            var filteredLodgings = lodgingService.GetFilteredByTouristPointAndRange(lodgingToFilter);
+            
+            mock.VerifyAll();
+            Assert.AreEqual(lodging, filteredLodgings.First());
+            Assert.AreEqual(1, filteredLodgings.Count());
+        }
     }
 }
