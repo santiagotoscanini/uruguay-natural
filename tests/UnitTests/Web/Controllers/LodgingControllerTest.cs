@@ -114,5 +114,45 @@ namespace UnitTests.Web.Controllers
             var lodgingsExpected = new List<LodgingFilteredModel> {lodgingFilteredModel};
             Assert.IsTrue(lodgingsExpected.SequenceEqual(lodgings));
         }
+
+        [TestMethod]
+        public void GetLodgingsFilteredByTouristPointAndRangeTest()
+        {
+            var lodgingFilter = new LodgingFilterByTouristPointAndRangeModel
+            {
+                TouristPointId = _touristPointId,
+                CheckInDate = _checkInDate,
+                CheckOutDate = _checkOutDate,
+            };
+            var lodging = new Lodging
+            {
+                Id = 1,
+                TouristPoint = new TouristPoint{Id = _touristPointId}
+            };
+            var lodging2 = new Lodging
+            {
+                Id = 2,
+                TouristPoint = new TouristPoint{Id = _touristPointId}
+            };
+            var lodgings = new List<Lodging>
+            {
+                lodging,
+                lodging2
+            };
+            var mock = new Mock<ILodgingService>(MockBehavior.Strict);
+            mock.Setup(s => s.GetFilteredByTouristPointAndRange(It.IsAny<LodgingToFilter>())).Returns(
+                lodgings);
+            
+            var lodgingController = new LodgingController(mock.Object);
+            
+            IActionResult result = lodgingController.GetLodgingsFilteredByTouristPointAndRange(lodgingFilter);
+            var status = result as OkObjectResult;
+            var lodgingsFiltered = status.Value as IEnumerable<LodgingModelOut>;
+
+            mock.VerifyAll();
+            Assert.AreEqual(200, status.StatusCode);
+            Assert.AreEqual(lodgings.Count(), lodgingsFiltered.Count());
+            Assert.AreEqual(lodgings.First().Id, lodgingsFiltered.First().Id );
+        }
     }
 }
