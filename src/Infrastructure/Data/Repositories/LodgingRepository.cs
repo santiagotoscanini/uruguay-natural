@@ -66,7 +66,8 @@ namespace Infrastructure.Data.Repositories
         public IEnumerable<Lodging> GetAll()
         {
             return _lodgings.Include(t => t.TouristPoint)
-                .Include(l => l.Bookings);
+                .Include(l => l.Bookings).ThenInclude(b => b.TouristReview)
+                .Include(l => l.Bookings).ThenInclude(b => b.Tourist);
         }
 
         public void Delete(int lodgingId)
@@ -80,7 +81,8 @@ namespace Infrastructure.Data.Repositories
         {
             int totalNumberOfClients = lodgingToFilter.TotalNumberOfGuests;
 
-            return _lodgings
+            return _lodgings.Include(l => l.Bookings).ThenInclude(b => b.TouristReview)
+                .Include(l => l.Bookings).ThenInclude(b => b.Tourist)
                 .Where(l => l.MaximumSize - l.CurrentlyOccupiedPlaces >= totalNumberOfClients)
                 .Where(l => l.TouristPoint.Id == lodgingToFilter.TouristPointId);
         }

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Entities;
+using Web.Models.BookingModels;
 
 namespace Web.Models.LodgingModels
 {
@@ -9,7 +11,7 @@ namespace Web.Models.LodgingModels
         public string Name { get; set; }
         public int NumberOfStars { get; set; }
         public TouristPoint TouristPoint { get; set; }
-        public IEnumerable<Booking> Bookings { get; set; } = new List<Booking>();
+        public IEnumerable<BookingModel> Bookings { get; set; } = new List<BookingModel>();
         public string Address { get; set; }
         public IEnumerable<string> Images { get; set; }
         public double CostPerNight { get; set; }
@@ -17,13 +19,14 @@ namespace Web.Models.LodgingModels
         public int MaximumSize { get; set; }
         public int CurrentlyOccupiedPlaces { get; set; }
         public double CalculatedPrice { get; set; }
+        public int ReviewsCount { get; set; }
 
         public LodgingFilteredModel(Lodging lodging, double calculatedPrice)
         {
             Id = lodging.Id;
             Name = lodging.Name;
             TouristPoint = lodging.TouristPoint;
-            Bookings = lodging.Bookings;
+            Bookings = lodging.Bookings.Select(b => new BookingModel(b));
             Address = lodging.Address;
             Images = lodging.Images;
             CostPerNight = lodging.CostPerNight;
@@ -32,6 +35,7 @@ namespace Web.Models.LodgingModels
             CurrentlyOccupiedPlaces = lodging.CurrentlyOccupiedPlaces;
             CalculatedPrice = calculatedPrice;
             NumberOfStars = lodging.NumberOfStars;
+            ReviewsCount = lodging.ReviewsCount;
         }
         
         public override bool Equals(object obj)

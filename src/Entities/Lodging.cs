@@ -19,6 +19,7 @@ namespace Entities
         public string DescriptionForBookings { get; set; }
         public int MaximumSize { get; set; }
         public int CurrentlyOccupiedPlaces { get; set; }
+        public int ReviewsCount { get; set; }
 
         public override bool Equals(object obj)
         {

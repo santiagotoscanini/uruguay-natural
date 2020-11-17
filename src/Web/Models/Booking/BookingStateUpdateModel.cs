@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models.BookingModels
 {
-    public class BookingUpdateInfoModel
+    public class BookingStateUpdateModel
     {
         [Required]
         public BookingState State { get; set; }
