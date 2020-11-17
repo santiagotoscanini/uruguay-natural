@@ -88,5 +88,31 @@ namespace UnitTests.Entities
             Assert.AreEqual(_currentlyOccupiedPlaces, lodging.CurrentlyOccupiedPlaces);
             Assert.IsTrue(new List<Booking>().SequenceEqual(lodging.Bookings));
         }
+
+        [TestMethod]
+        public void GetSortListOfLodgingsByBookingsCount()
+        {
+            var lodging = new Lodging
+            {
+                Bookings = new List<Booking>
+                {
+                    new Booking()
+                }
+            };
+            var lodging2 = new Lodging
+            {
+                Bookings = new List<Booking>(),
+            };
+            var lodgings = new List<Lodging>
+            {
+                lodging,
+                lodging2
+            };
+            
+            lodgings.Sort();
+
+            Assert.AreEqual(lodging2, lodgings[0]);
+            Assert.AreEqual(lodging, lodgings[1]);
+        }
     }
 }

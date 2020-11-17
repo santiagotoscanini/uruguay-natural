@@ -65,7 +65,8 @@ namespace Infrastructure.Data.Repositories
 
         public IEnumerable<Lodging> GetAll()
         {
-            return _lodgings.Include(t => t.TouristPoint);
+            return _lodgings.Include(t => t.TouristPoint)
+                .Include(l => l.Bookings);
         }
 
         public void Delete(int lodgingId)
