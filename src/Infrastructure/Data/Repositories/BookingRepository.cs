@@ -61,7 +61,9 @@ namespace Infrastructure.Data.Repositories
 
         private Booking GetBookingByCodeIncludingTourist(string code)
         {
-            return _bookings.Include(b => b.Tourist).First(b => b.Code == code);
+            return _bookings.Include(b => b.Tourist)
+                .Include(b =>  b.Lodging)
+                .First(b => b.Code == code);
         }
 
         public void UpdateState(Booking updateBooking)

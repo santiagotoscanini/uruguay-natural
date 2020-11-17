@@ -112,7 +112,12 @@ namespace ApplicationCore.Services
 
         private int CalculateLodging(Lodging lodging, int points)
         {
-            return ((lodging.NumberOfStars * lodging.ReviewsCount) + points) / lodging.ReviewsCount + 1;
+            if (lodging.ReviewsCount > 0)
+            {
+                return ((lodging.NumberOfStars * lodging.ReviewsCount) + points) / (lodging.ReviewsCount + 1);
+            }
+
+            return points;
         }
     }
 }

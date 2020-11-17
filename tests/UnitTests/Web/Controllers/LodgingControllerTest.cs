@@ -60,13 +60,14 @@ namespace UnitTests.Web.Controllers
             var lodgingModel = new LodgingCreatingModel
             {
                 Name = "Lod1",
-                TouristPointId = _touristPointId
+                TouristPointId = _touristPointId,
             };
             var lodging = new Lodging
             {
                 Name = "Lod1",
                 TouristPoint = touristPoint,
                 Id = _id,
+                Bookings = new List<Booking>(),
             };
 
             var mockLodgingService = new Mock<ILodgingService>();
@@ -129,17 +130,19 @@ namespace UnitTests.Web.Controllers
             var lodging = new Lodging
             {
                 Id = 1,
-                TouristPoint = new TouristPoint{Id = _touristPointId}
+                TouristPoint = new TouristPoint{Id = _touristPointId},
+                Bookings = new List<Booking>(),
             };
             var lodging2 = new Lodging
             {
                 Id = 2,
-                TouristPoint = new TouristPoint{Id = _touristPointId}
+                TouristPoint = new TouristPoint{Id = _touristPointId},
+                Bookings = new List<Booking>(),
             };
             var lodgings = new List<Lodging>
             {
                 lodging,
-                lodging2
+                lodging2,
             };
             var mock = new Mock<ILodgingService>(MockBehavior.Strict);
             mock.Setup(s => s.GetFilteredByTouristPointAndRange(It.IsAny<LodgingToFilter>())).Returns(
