@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Entities;
+using Web.Models.BookingModels;
 
 namespace Web.Models.LodgingModels
 {
@@ -9,7 +11,7 @@ namespace Web.Models.LodgingModels
         public string Name { get; set; }
         public int NumberOfStars { get; set; }
         public TouristPoint TouristPoint { get; set; }
-        public IEnumerable<Booking> Bookings { get; set; } = new List<Booking>();
+        public IEnumerable<BookingModel> Bookings { get; set; } = new List<BookingModel>();
         public string Address { get; set; }
         public IEnumerable<string> Images { get; set; }
         public double CostPerNight { get; set; }
@@ -24,7 +26,7 @@ namespace Web.Models.LodgingModels
             Id = lodging.Id;
             Name = lodging.Name;
             TouristPoint = lodging.TouristPoint;
-            Bookings = lodging.Bookings;
+            Bookings = lodging.Bookings.Select(b => new BookingModel(b));
             Address = lodging.Address;
             Images = lodging.Images;
             CostPerNight = lodging.CostPerNight;
