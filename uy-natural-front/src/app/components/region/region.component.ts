@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {RegionService} from "../../services/region.service";
-import {Region} from "../../models/Region";
+import {Region} from "../../models/region/Region";
 
 @Component({
   selector: 'app-region',

@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from "../../environments/environment";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
+import {Region} from "../models/region/Region";
 import {catchError} from "rxjs/operators";
-import {Category} from "../models/category/Category";
+import {Login} from "../models/session/Login";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
-  private uri = environment.URI_BASE + "categories";
+export class SessionService {
+  private uri = environment.URI_BASE + "sessions";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
-  getCategories():Observable<Category[]>{
-    return this.httpClient.get<Category[]>(this.uri).pipe(catchError(this.handleError))
+  postLogin():Observable<Login[]>{
+    return this.httpClient.post<Login[]>(this.uri).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse){

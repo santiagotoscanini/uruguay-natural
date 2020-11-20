@@ -1,4 +1,3 @@
 ﻿export interface Region {
-    "name": string;
+  "name": string;
 }
-
