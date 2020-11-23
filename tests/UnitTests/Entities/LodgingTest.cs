@@ -20,11 +20,11 @@ namespace UnitTests.Entities
             },
             Name = "Rocha",
             Description = "Good place",
-            Image = "sfafg222",
+            Image = new byte[1],
             Id = 2,
          };
         private string _address = "Av. Rio 123";
-        private ICollection<string> _images = new List<string>{"1234jnj"};
+        private ICollection<byte[]> _images = new List<byte[]>{new byte[1]};
         private double _costPerNight = 200.0;
         private string _description = "Good place";
         private string _contactNumber = "23346789";
