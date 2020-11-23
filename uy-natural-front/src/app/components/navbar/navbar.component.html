@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-success">
+  <a class="navbar-brand" routerLink="/">Uruguay Natural</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar"
+          aria-controls="mainNavbar"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="mainNavbar">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" *ngFor="let item of treeOfItems">
+        <a *ngIf="item.child.length == 0 && item.method == null" class="{{item.class}}"
+           routerLink="/{{item.path}}">{{item.text}}</a>
+        <button *ngIf="item.method != null" class="{{item.class}}"
+                (click)="item.method()">{{item.text}}</button>
+        <div *ngIf="item.child.length > 0" class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle {{item.class}}" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"> {{item.text}} </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a *ngFor="let subItem of item.child" class="dropdown-item" href="/{{subItem.path}}">{{subItem.text}}</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

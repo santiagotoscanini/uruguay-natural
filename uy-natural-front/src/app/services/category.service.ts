@@ -9,7 +9,7 @@ import {Category} from "../models/category/Category";
   providedIn: 'root'
 })
 export class CategoryService {
-  private uri = environment.URI_BASE + "categories";
+  private uri = environment.URI_BASE + "/categories";
 
   constructor(private httpClient: HttpClient) { }
 

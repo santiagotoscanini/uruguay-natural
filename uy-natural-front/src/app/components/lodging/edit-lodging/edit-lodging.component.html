@@ -1,0 +1,19 @@
+<app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
+<div class="col-lg-1 mt-2">
+  <form (ngSubmit)="editLodgingCapacity()" class="form-create-admin">
+    <h2>Update Occupied Places</h2>
+    <div class="form-group">
+      <label for="inputLodgingId">Lodging ID</label>
+      <input type="number" class="form-control" id="inputLodgingId" name="lodgingId"
+             [(ngModel)]="lodgingUpdateCapacity.lodgingId"
+             placeholder="Enter Lodging ID">
+    </div>
+    <div class="form-group">
+      <label for="inputCapacity">New Lodging Capacity</label>
+      <input type="number" class="form-control" id="inputCapacity" name="capacity"
+             [(ngModel)]="lodgingUpdateCapacity.newCapacity"
+             placeholder="Enter new capacity">
+    </div>
+    <button type="submit" class="btn btn-primary mb-4">Edit Lodging</button>
+  </form>
+</div>

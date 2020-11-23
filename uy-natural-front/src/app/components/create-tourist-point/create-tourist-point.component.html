@@ -1,0 +1,45 @@
+<app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
+<div class="col-lg-1 mt-2">
+  <form (ngSubmit)="createTouristPoint()" class="form-create-admin">
+    <h2>Create Tourist Point</h2>
+    <div class="form-group">
+      <label for="inputName">Name</label>
+      <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="touristPoint.name"
+             placeholder="Enter name">
+    </div>
+    <div class="form-group">
+      <label for="inputRegion">Region</label>
+      <select class="custom-select" id="inputRegion" name="region" [(ngModel)]="touristPoint.regionName">
+        <option *ngFor="let reg of regions" id="{{reg.id}}">{{reg.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="inputImage">Image</label>
+      <input type="text" class="form-control" id="inputImage" name="image" [(ngModel)]="touristPoint.image"
+             placeholder="Enter image">
+    </div>
+    <div class="form-group">
+      <label for="categories">Categories</label>
+      <div *ngIf="categories.length != 0"><select class="custom-select" id="categories" name="categories"
+                                                  [(ngModel)]="selectedCategory">
+        <option *ngFor="let cat of categories" id="{{cat.id}}">{{cat.name}}</option>
+      </select>
+        <label class="btn btn-info mt-2 mb-2" (click)="addCategory()">Add category</label>
+      </div>
+      <div *ngIf="categories.length == 0">
+        <h5>There's no more categories</h5>
+      </div>
+      <br>
+      <h6 *ngIf="touristPoint.categories.length > 0">Click the categories to remove them</h6>
+      <label class="btn btn-danger mr-2  mt-2" *ngFor="let category of touristPoint.categories"
+              (click)="deleteCategory(category)">{{category}}</label>
+    </div>
+    <div class="form-group">
+      <label for="inputDescription">Description</label>
+      <input type="text" class="form-control" id="inputDescription" name="description"
+             [(ngModel)]="touristPoint.description"
+             placeholder="Enter description">
+    </div>
+    <button type="submit" class="btn btn-primary mb-4">Create Lodging</button>
+  </form>
+</div>

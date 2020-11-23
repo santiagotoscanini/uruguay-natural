@@ -1,0 +1,13 @@
+<app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
+
+<div class="col-lg-1 mt-2">
+  <form (ngSubmit)="deleteAdmin()" class="form-create-admin">
+    <h2>Delete Administrator</h2>
+    <div class="form-group">
+      <label for="inputEmail">Email address</label>
+      <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp" [(ngModel)]="admin.email"
+             placeholder="Enter email" required="required">
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+</div>

@@ -1,0 +1,14 @@
+<app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
+
+<div class="col-lg-1 mt-2">
+  <form (ngSubmit)="deleteLodging()" class="form-create-admin">
+    <h2>Delete Lodging</h2>
+    <div class="form-group">
+      <label for="inputLodgingId">Lodging ID</label>
+      <input type="number" class="form-control" id="inputLodgingId" name="lodgingId"
+             [(ngModel)]="lodgingId"
+             placeholder="Enter Lodging ID">
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+</div>

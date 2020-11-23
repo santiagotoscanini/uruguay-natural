@@ -1,0 +1,22 @@
+<app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
+<div class="col-lg-1 mt-2">
+  <form (ngSubmit)="createReview()" class="form-create-admin">
+    <h2>Leave us your review!</h2>
+    <div class="form-group">
+      <label for="bookingId">Booking ID</label>
+      <input type="text" class="form-control" id="bookingId" name="bookingId"
+             [(ngModel)]="review.bookingId">
+    </div>
+    <div class="form-group">
+      <label for="pointsInput">Points</label>
+      <input type="number" class="form-control" id="pointsInput" name="points"
+             [(ngModel)]="review.reviewPoints">
+    </div>
+    <div class="form-group">
+      <label for="reviewInput">Review</label>
+      <input type="text" class="form-control" id="reviewInput" name="review"
+             [(ngModel)]="review.reviewText">
+    </div>
+    <button type="submit" class="btn btn-primary mb-4">Send review</button>
+  </form>
+</div>
