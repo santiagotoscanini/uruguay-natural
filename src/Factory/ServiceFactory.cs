@@ -38,6 +38,7 @@ namespace Factory
             _services.AddScoped<ILodgingService, LodgingService>();
             _services.AddScoped<IGuestService, GuestService>();
             _services.AddScoped<IPriceCalculatorService, PriceCalculatorService>();
+            _services.AddScoped<IImporterService, ImporterService>();
         }
 
         public void AddDbContextService()

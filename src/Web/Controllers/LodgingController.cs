@@ -3,6 +3,7 @@ using System.Linq;
 using ApplicationCoreInterface.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Web.Filters;
 using Web.Models.LodgingModels;
 
 namespace Web.Controllers
@@ -86,6 +87,7 @@ namespace Web.Controllers
         /// <response code="200">Obtained successfully.</response>
         /// <response code="500">Internal Server Error.</response>
         [HttpGet("reports")]
+        [ServiceFilter(typeof(AuthorizationAttributeFilter))]
         public IActionResult GetLodgingsFilteredByTouristPointAndRange([FromQuery] LodgingFilterByTouristPointAndRangeModel lodgingFilterModel)
         {
             var lodgings = _lodgingService.GetFilteredByTouristPointAndRange(lodgingFilterModel.ToEntity());

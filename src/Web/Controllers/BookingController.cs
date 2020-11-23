@@ -23,7 +23,7 @@ namespace Web.Controllers
         /// <response code="200">They were successfully obtained.</response>
         /// <response code="500">Internal Server Error.</response>
         [HttpGet]
-        public IActionResult GetAllBookings([FromQuery(Name = "tourist-point")] string touristPoint)
+        public IActionResult GetAllBookings()
         {
             return Ok(_bookingService.GetAll().Select(b => new BookingModel(b)));
         }

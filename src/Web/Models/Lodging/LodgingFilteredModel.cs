@@ -29,7 +29,7 @@ namespace Web.Models.LodgingModels
             TouristPoint = lodging.TouristPoint;
             Bookings = lodging.Bookings.Select(b => new BookingModel(b));
             Address = lodging.Address;
-            Images = lodging.Images.Select(image => GetImage(image));
+            Images = lodging.Images.Select(GetImage);
             CostPerNight = lodging.CostPerNight;
             Description = lodging.Description;
             MaximumSize = lodging.MaximumSize;

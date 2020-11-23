@@ -58,7 +58,7 @@ namespace UnitTests.Web.Controllers
             mock.Setup(m => m.GetAll()).Returns(bookingsToReturn);
             var controller = new BookingController(mock.Object);
 
-            IActionResult result = controller.GetAllBookings(null);
+            IActionResult result = controller.GetAllBookings();
             var okResult = result as OkObjectResult;
             var bookings = okResult.Value as IEnumerable<BookingModel>;
 
@@ -211,7 +211,7 @@ namespace UnitTests.Web.Controllers
             var controller = new BookingController(mock.Object);
 
             controller.UpdateBookingReview(_bookingCode2, updateInfoBooking);
-            IActionResult result = controller.GetAllBookings("");
+            IActionResult result = controller.GetAllBookings();
             var okResult = result as OkObjectResult;
             var bookings = okResult.Value as IEnumerable<BookingModel>;
             var booking = bookings.First();
