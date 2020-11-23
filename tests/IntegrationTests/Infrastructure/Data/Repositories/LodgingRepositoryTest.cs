@@ -30,7 +30,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             },
             Name = "Rocha",
             Description = "Good place",
-            Image = "sfafg222",
+            Image = new byte[1],
             Id = 2,
         };
 

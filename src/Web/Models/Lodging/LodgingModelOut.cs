@@ -1,5 +1,7 @@
-﻿using Entities;
+﻿using System;
+using Entities;
 using System.Collections.Generic;
+using System.Linq;
 using Web.Models.BookingModels;
 
 namespace Web.Models.LodgingModels
@@ -26,13 +28,19 @@ namespace Web.Models.LodgingModels
             NumberOfStars = lodging.NumberOfStars;
             TouristPointId = lodging.TouristPoint.Id;
             Address = lodging.Address;
-            Images = lodging.Images;
-            Images = lodging.Images;
+            Images = lodging.Images.Select(GetImage);
+            Bookings = lodging.Bookings.Select(b => new BookingModel(b));
             CostPerNight = lodging.CostPerNight;
             Description = lodging.Description;
             ContactNumber = lodging.ContactNumber;
             DescriptionForBookings = lodging.DescriptionForBookings;
             MaximumSize = lodging.MaximumSize;
+        }
+        
+        private string GetImage(byte[] image)
+        {
+            var imageBase64 = Convert.ToBase64String(image);
+            return string.Format("data:image/jpg;base64, {0}", imageBase64);
         }
     }
 }

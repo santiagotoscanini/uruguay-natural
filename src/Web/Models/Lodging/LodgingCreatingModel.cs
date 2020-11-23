@@ -1,5 +1,7 @@
-﻿using Entities;
+﻿using System;
+using Entities;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Web.Models.LodgingModels
 {
@@ -23,7 +25,7 @@ namespace Web.Models.LodgingModels
                 Name = this.Name,
                 NumberOfStars = this.NumberOfStars,
                 Address = this.Address,
-                Images = this.Images,
+                Images = this.Images.Select(image => Convert.FromBase64String(image)),
                 CostPerNight = this.CostPerNight,
                 Description = this.Description,
                 ContactNumber = this.ContactNumber,

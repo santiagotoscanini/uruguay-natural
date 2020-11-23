@@ -36,7 +36,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
 
         private string _name = "Punta Cana";
         private string _description = "PC is a nice place";
-        private string _image = "aaaaabb223";
+        private byte[] _image = new byte[1];
         private int _id = 1;
         private int _id2 = 2;
 
