@@ -12,7 +12,7 @@ namespace Entities
         public TouristPoint TouristPoint { get; set; }
         public IEnumerable<Booking> Bookings { get; set; } = new List<Booking>();
         public string Address { get; set; }
-        public IEnumerable<string> Images { get; set; }
+        public IEnumerable<byte[]> Images { get; set; }
         public double CostPerNight { get; set; }
         public string Description { get; set; }
         public string ContactNumber { get; set; }

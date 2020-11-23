@@ -21,6 +21,7 @@ namespace UnitTests.Web.Controllers
         private int _touristPointId = 1;
         private DateTime _checkInDate = DateTime.Now;
         private DateTime _checkOutDate = DateTime.Now;
+        private byte[] _byte = Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAJkAAAD2CAYAAADF/iU1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAGFwSURBVHhe7X0FgFVV9/2d7k6YYuju7hZJaQSUkAYBgaFrhhmGBkGRUFQUAwVbbOxCRUQEFAmRbpiu9d/r3DnD4/Hw933/jxEY3tHFfXPvuXH2WWfvfdrIy8uDHXYUJuwks6PQYSeZHYUOO8nsKHTYSWZHocNOMjsKHXaS2VHosJPMjkKHnWR2FDrsJLOj0GEnmR2FDjvJ7Ch02ElmR6HDTrL/Ebm5uQq2rtlhwk6y/wEkV05OjoKdaDeGnWT/H8gFkC2kyszKQlp6ukKW/FZky7OTzRp2kv0XyBXkCIkys7ORkZWJi5cuYcubb+HV11/HufPn5HwWMnOyhYS2779bYSfZf4HcvBxk5Yj2ykjH5StX8NjapxAcUQJB4RFIXrwIJ0+dQppcT8/JVEQjKW09526DnWT/BWgKM7IylHl85rnnERAcBmdHVzg5u8HZ3QNx06fh5OnTSM1MQ3aeaDS76VSwk+==");
 
         [TestMethod]
         public void UpdateLodgingTest()
@@ -61,6 +62,7 @@ namespace UnitTests.Web.Controllers
             {
                 Name = "Lod1",
                 TouristPointId = _touristPointId,
+                Images = new List<string>{"image"}
             };
             var lodging = new Lodging
             {
@@ -68,6 +70,7 @@ namespace UnitTests.Web.Controllers
                 TouristPoint = touristPoint,
                 Id = _id,
                 Bookings = new List<Booking>(),
+                Images = new List<byte[]>{_byte}
             };
 
             var mockLodgingService = new Mock<ILodgingService>();
@@ -100,6 +103,7 @@ namespace UnitTests.Web.Controllers
                 Id = 1,
                 CostPerNight = 10.0,
                 ReviewsCount = 0,
+                Images = new List<byte[]>{new byte[1]}
             };
             var lodgingsAndPrices = new Dictionary<Lodging, double>();
             lodgingsAndPrices.Add(lodging, 10.0);
@@ -132,12 +136,14 @@ namespace UnitTests.Web.Controllers
                 Id = 1,
                 TouristPoint = new TouristPoint{Id = _touristPointId},
                 Bookings = new List<Booking>(),
+                Images = new List<byte[]>{new byte[1]}
             };
             var lodging2 = new Lodging
             {
                 Id = 2,
                 TouristPoint = new TouristPoint{Id = _touristPointId},
                 Bookings = new List<Booking>(),
+                Images = new List<byte[]>{new byte[1]}
             };
             var lodgings = new List<Lodging>
             {

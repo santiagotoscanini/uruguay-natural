@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using System;
+using Entities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -25,7 +26,7 @@ namespace Web.Models.TouristPointModels
                 Region = new Region { Name = this.RegionName },
                 Name = this.Name,
                 Description = this.Description,
-                Image = this.Image
+                Image = Convert.FromBase64String(this.Image),
             };
         }
     }

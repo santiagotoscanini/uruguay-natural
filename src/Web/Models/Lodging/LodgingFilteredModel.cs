@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entities;
 using Web.Models.BookingModels;
@@ -28,7 +29,7 @@ namespace Web.Models.LodgingModels
             TouristPoint = lodging.TouristPoint;
             Bookings = lodging.Bookings.Select(b => new BookingModel(b));
             Address = lodging.Address;
-            Images = lodging.Images;
+            Images = lodging.Images.Select(image => GetImage(image));
             CostPerNight = lodging.CostPerNight;
             Description = lodging.Description;
             MaximumSize = lodging.MaximumSize;
@@ -36,6 +37,12 @@ namespace Web.Models.LodgingModels
             CalculatedPrice = calculatedPrice;
             NumberOfStars = lodging.NumberOfStars;
             ReviewsCount = lodging.ReviewsCount;
+        }
+        
+        private string GetImage(byte[] image)
+        {
+            var imageBase64 = Convert.ToBase64String(image);
+            return string.Format("data:image/jpg;base64, {0}", imageBase64);
         }
         
         public override bool Equals(object obj)
