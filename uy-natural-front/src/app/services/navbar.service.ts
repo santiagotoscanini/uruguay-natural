@@ -15,7 +15,7 @@ export class NavbarService {
     // unlogged user
     [
       {
-        path: "",
+        path: "booking/search-tourist-point",
         child: [],
         class: "nav-link",
         text: "Search"
