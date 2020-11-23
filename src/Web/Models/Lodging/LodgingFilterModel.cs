@@ -6,19 +6,22 @@ namespace Web.Models.LodgingModels
 {
     public class LodgingFilterModel
     {
+        [Required]
         public int TouristPointId { get; set; }
+        [Required]
         public DateTime CheckInDate { get; set; }
+        [Required]
         public DateTime CheckOutDate { get; set; }
-        
+        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
         public int NumberOfAdults { get; set; }
-        
+        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
         public int NumberOfChildren { get; set; }
-        
+        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
         public int NumberOfBabies { get; set; }
-        
+        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
         public int NumberOfRetired { get; set; }
 
