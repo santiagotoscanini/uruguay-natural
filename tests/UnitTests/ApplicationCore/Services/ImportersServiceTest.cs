@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApplicationCore.Services;
 using ApplicationCoreInterface.Services;
@@ -12,6 +13,8 @@ namespace UnitTests.ApplicationCore.Services
     [TestClass]
     public class ImportersServiceTest
     {
+        private byte[] _byte = Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAJkAAAD2CAYAAADF/iU1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAGFwSURBVHhe7X0FgFVV9/2d7k6YYuju7hZJaQSUkAYBgaFrhhmGBkGRUFQUAwVbbOxCRUQEFAmRbpiu9d/r3DnD4/Hw933/jxEY3tHFfXPvuXH2WWfvfdrIy8uDHXYUJuwks6PQYSeZHYUOO8nsKHTYSWZHocNOMjsKHXaS2VHosJPMjkKHnWR2FDrsJLOj0GEnmR2FDjvJ7Ch02ElmR6HDTrL/Ebm5uQq2rtlhwk6y/wEkV05OjoKdaDeGnWT/H8gFkC2kyszKQlp6ukKW/FZky7OTzRp2kv0XyBXkCIkys7ORkZWJi5cuYcubb+HV11/HufPn5HwWMnOyhYS2779bYSfZf4HcvBxk5Yj2ykjH5StX8NjapxAcUQJB4RFIXrwIJ0+dQppcT8/JVEQjKW09526DnWT/BWgKM7IylHl85rnnERAcBmdHVzg5u8HZ3QNx06fh5OnTSM1MQ3aeaDS76VSwk+==");
+        
         [TestMethod]
         public void GetNamesTest()
         {
@@ -28,8 +31,16 @@ namespace UnitTests.ApplicationCore.Services
         [TestMethod]
         public void ImportLodgingsTest()
         {
-            var touristPoint = new TouristPoint{Id = 4};
-            var lodging = new Lodging{Id = 5};
+            var touristPoint = new TouristPoint
+            {
+                Id = 4,
+                Image = _byte
+            };
+            var lodging = new Lodging
+            {
+                Id = 5,
+                Images = new List<byte[]>{_byte}
+            };
             var path = "path dummy";
             var mockTouristPointService = new Mock<ITouristPointService>();
             mockTouristPointService.Setup(t => 
