@@ -147,7 +147,8 @@ namespace UnitTests.ApplicationCore.Services
                 NumberOfStars = 1,
                 ReviewsCount = 1,
             };
-            var booking = new Booking { Code = _bookingCode1, TouristReview = review, Lodging = lodging};
+            var booking = new Booking { Code = _bookingCode1, TouristReview = null, Lodging = lodging};
+            var bookingWithReview = new Booking { Code = _bookingCode1, TouristReview = review, Lodging = lodging};
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
             mock.Setup(r => r.UpdateReview(booking));
             mock.Setup(r => r.Get(_bookingCode1)).Returns(booking);
@@ -158,15 +159,16 @@ namespace UnitTests.ApplicationCore.Services
             
             var bookingService = new BookingService(mock.Object, mockLodgingService.Object, new Mock<IPriceCalculatorService>().Object);
 
-            bookingService.UpdateReview(booking);
+            bookingService.UpdateReview(bookingWithReview);
             var modifiedBookingFetched = bookingService.Get(_bookingCode1);
 
             mock.VerifyAll();
             Assert.AreEqual(review.Text, modifiedBookingFetched.TouristReview.Text);
         }
-        
+
         [TestMethod]
-        public void TestUpdateBookingFirstReview()
+        [ExpectedException(typeof(ObjectAlreadyExistException))]
+        public void TestUpdateBookingSecondReview()
         {
             var review = new Review{ Text = "Nice" };
             var lodging = new Lodging
@@ -187,10 +189,6 @@ namespace UnitTests.ApplicationCore.Services
             var bookingService = new BookingService(mock.Object, mockLodgingService.Object, new Mock<IPriceCalculatorService>().Object);
 
             bookingService.UpdateReview(booking);
-            var modifiedBookingFetched = bookingService.Get(_bookingCode1);
-
-            mock.VerifyAll();
-            Assert.AreEqual(review.Text, modifiedBookingFetched.TouristReview.Text);
         }
 
         [TestMethod]

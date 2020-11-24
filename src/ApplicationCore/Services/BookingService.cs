@@ -16,6 +16,8 @@ namespace ApplicationCore.Services
 
         private const string InvalidDateErrorMessage =
             "Error, the Check-out date must be greater than the Check-in date.";
+        private const string ReviewAlreadyExistErrorMessage =
+            "A review has already been registered for this booking.";
 
         public BookingService(IBookingRepository repository, ILodgingService lodgingService,
             IPriceCalculatorService priceCalculatorService)
@@ -97,6 +99,11 @@ namespace ApplicationCore.Services
         public void UpdateReview(Booking updateBooking)
         {
             var booking = Get(updateBooking.Code);
+            if (booking.TouristReview != null)
+            {
+                throw new ObjectAlreadyExistException(ReviewAlreadyExistErrorMessage);
+            }
+
             booking.TouristReview = updateBooking.TouristReview;
             UpdateLodgingPoints(booking);
             _repository.UpdateReview(booking);
