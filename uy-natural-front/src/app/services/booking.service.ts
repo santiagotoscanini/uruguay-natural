@@ -4,6 +4,8 @@ import {BookingUpdateState} from "../models/booking/BookingUpdateState";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Review} from "../models/review/Review";
+import {BookingToCreate} from "../models/booking/BookingToCreate";
+import {BookingResponse} from "../models/booking/BookingResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +42,21 @@ export class BookingService {
     return this.httpClient.put(`${this.uri}/${review.bookingId}/reviews`, {
       reviewText: review.reviewText,
       reviewPoints: review.reviewPoints
+    })
+  }
+
+  postBooking(booking: BookingToCreate): Observable<BookingResponse>{
+    return this.httpClient.post<BookingResponse>(this.uri, {
+      touristName:booking.touristName,
+      touristSurname :booking.touristSurname,
+      touristEmail:booking.touristEmail,
+      checkInDate:booking.checkInDate,
+      checkOutDate:booking.checkOutDate,
+      numberOfAdults:booking.numberOfAdults,
+      numberOfChildren :booking.numberOfChildren,
+      numberOfBabies:booking.numberOfBabies,
+      numberOfRetired:booking.numberOfRetired,
+      lodgingId:booking.lodgingId
     })
   }
 }

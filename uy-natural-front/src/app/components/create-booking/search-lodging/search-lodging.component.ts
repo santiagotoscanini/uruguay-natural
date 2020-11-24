@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NavbarService} from "../../../services/navbar.service";
 import {Lodging} from "../../../models/lodging/Lodging";
 import {LodgingService} from "../../../services/lodging.service";
@@ -12,7 +12,7 @@ import {LodgingFilter} from "../../../models/lodging/LodgingFilter";
 })
 export class SearchLodgingComponent implements OnInit {
 
-  constructor(public navbarService: NavbarService, private activatedRoute: ActivatedRoute, private lodgingService: LodgingService) {
+  constructor(private router: Router, public navbarService: NavbarService, private activatedRoute: ActivatedRoute, private lodgingService: LodgingService) {
   }
 
   ngOnInit(): void {
@@ -44,7 +44,9 @@ export class SearchLodgingComponent implements OnInit {
     })
   }
 
-  goToLodging() {
-
+  goToLodging(lodging : Lodging) {
+    sessionStorage.setItem('lodging-filtered', JSON.stringify(this.lodgingFilter));
+    sessionStorage.setItem('lodging', JSON.stringify(lodging));
+    this.router.navigate([`booking/lodging-info`]);
   }
 }

@@ -1,1 +1,8 @@
-<p>booking-confirmation-info works!</p>
+<app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
+
+<div class="form-create-admin">
+  <h2>Booking Done!</h2>
+  <p>{{this.bookingRespnse.information}}</p>
+  <h5>Code: {{this.bookingRespnse.code}}</h5>
+  <h5>Contact: {{this.bookingRespnse.contactNumber}}</h5>
+</div>

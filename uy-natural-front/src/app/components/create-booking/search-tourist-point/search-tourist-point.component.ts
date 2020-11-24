@@ -54,7 +54,8 @@ export class SearchTouristPointComponent implements OnInit {
     })
   }
 
-  goToTouristPointPage(id: number) {
-    this.router.navigate([`booking/search-lodging/${id}`]);
+  goToTouristPointPage(touristPoint : TouristPoint) {
+    this.router.navigate([`booking/search-lodging/${touristPoint.id}`]);
+    sessionStorage.setItem('tourist-point-name', touristPoint.name)
   }
 }

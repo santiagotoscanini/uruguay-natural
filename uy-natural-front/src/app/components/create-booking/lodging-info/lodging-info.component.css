@@ -1,0 +1,20 @@
+.form-create-admin {
+  margin: 50px auto 0;
+  width: 50%;
+}
+
+.two-col label {
+  display: block;
+}
+
+.two-col .col1 {
+  float: left;
+}
+
+.two-col .col2 {
+  float: right;
+}
+
+.card-style {
+  padding: 15px;
+}
