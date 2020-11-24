@@ -21,8 +21,6 @@ export class CheckBookingStatusComponent implements OnInit {
 
   getBookingString(status: number) {
     let dict = this.bookingService.getBookingStates();
-    console.log(status)
-    console.log(dict)
     return Object.keys(dict).find(key => dict[key] == status)
   }
 

@@ -10,5 +10,7 @@
   "description": string,
   "contactNumber": string,
   "descriptionForBookings": string,
-  "maximumSize": number
+  "maximumSize": number,
+  "calculatedPrice"?: number,
+  "reviewsCount"?: number
 }

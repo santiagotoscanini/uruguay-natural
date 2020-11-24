@@ -39,7 +39,7 @@ export class BookingService {
   putBookingReview(review: Review): Observable<any> {
     return this.httpClient.put(`${this.uri}/${review.bookingId}/reviews`, {
       reviewText: review.reviewText,
-      reviewPoinrs: review.reviewPoints
+      reviewPoints: review.reviewPoints
     })
   }
 }

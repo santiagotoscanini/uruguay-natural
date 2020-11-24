@@ -1,1 +1,22 @@
-<p>migrate-lodgings works!</p>
+<app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
+<div class="col-lg-1 mt-2">
+  <form (ngSubmit)="executeMigration()" class="form-create-admin">
+    <h2>Create Tourist Point</h2>
+
+    <div class="form-group">
+      <label for="inputImporterName">Select importer dll</label>
+      <select class="custom-select" id="inputImporterName" name="importerName" [(ngModel)]="migrationData.importerName">
+        <option *ngFor="let impt of importers" id="impt">{{impt}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="filePathInput">Path of file in server</label>
+      <input type="text" class="form-control" id="filePathInput" name="path" [(ngModel)]="migrationData.path"
+             placeholder="Enter path">
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-4">Execute migration</button>
+
+  </form>
+</div>

@@ -44,7 +44,6 @@ export class CreateLodgingComponent implements OnInit {
   }
 
   createLodging() {
-    console.log(this.lodging)
     this.lodging.touristPointId = this.touristPoints.find(tp => tp.name == this.touristPointName).id
     this.lodgingService.postCreateLodging(this.lodging).subscribe(m => {
     })

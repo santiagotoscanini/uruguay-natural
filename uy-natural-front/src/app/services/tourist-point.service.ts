@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {TouristPoint} from "../models/touristPoint/TouristPoint";
+import {FilterTouristPoint} from "../models/touristPoint/FilterTouristPoint";
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class TouristPointService {
       regionName: touristPoint.regionName,
       categories: touristPoint.categories
     })
+  }
+
+  getTouristPointsFiltered(filterTouristPoint: FilterTouristPoint): Observable<TouristPoint[]> {
+    return this.httpClient.get<TouristPoint[]>(`${this.uri}?region=${filterTouristPoint.regionName}&category=${filterTouristPoint.categoryName}`)
   }
 }

@@ -1,1 +1,58 @@
-<p>search-lodging works!</p>
+<app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
+<div class="col-lg-1 mt-2">
+  <form (ngSubmit)="filterLodgings()" class="form-create-admin">
+    <h2>Now select your ideal Lodging</h2>
+    <div class="form-group">
+      <label for="checkInInput">Check In Date</label>
+      <input type="date" class="form-control" id="checkInInput" name="checkInDate"
+             [ngModel]="this.checkInDate | date:'yyyy-MM-dd'"
+             (ngModelChange)="this.checkInDate = $event">
+    </div>
+    <div class="form-group">
+      <label for="checkOutInput">Check Out Date</label>
+      <input type="date" class="form-control" id="checkOutInput" name="checkOutDate"
+             [ngModel]="this.checkOutDate | date:'yyyy-MM-dd'"
+             (ngModelChange)="this.checkOutDate = $event">
+    </div>
+
+    <div class="form-group">
+      <label for="numberOfAdultsInput">Number of Adults</label>
+      <input type="number" class="form-control" id="numberOfAdultsInput" name="numberOfAdults"
+             [(ngModel)]="lodgingFilter.numberOfAdults">
+    </div>
+    <div class="form-group">
+      <label for="numberOfChildrenInput">Number of Children</label>
+      <input type="number" class="form-control" id="numberOfChildrenInput" name="numberOfChildren"
+             [(ngModel)]="lodgingFilter.numberOfChildren">
+    </div>
+    <div class="form-group">
+      <label for="numberOfBabiesInput">Number of Babies</label>
+      <input type="number" class="form-control" id="numberOfBabiesInput" name="numberOfBabies"
+             [(ngModel)]="lodgingFilter.numberOfBabies">
+    </div>
+    <div class="form-group">
+      <label for="numberOfRetiredInput">Number of Retired</label>
+      <input type="number" class="form-control" id="numberOfRetiredInput" name="numberOfRetired"
+             [(ngModel)]="lodgingFilter.numberOfRetired">
+    </div>
+    <button type="submit" class="btn btn-primary mb-4">Search</button>
+  </form>
+
+  <div class="align-self-center mb-3">
+    <div *ngFor="let lod of lodgingsToShow" class="card">
+      <img class="card-img-top" width="10" height="150"
+           src="{{lod.images[0]}}"
+           alt="Card image cap">
+
+      <div class="card-body">
+        <h5 class="card-title">{{lod.name}}</h5>
+        <b *ngIf="lod.reviewsCount!=0">{{lod.numberOfStars}}/5 pts.</b>
+        <h6>Cost per night: {{lod.costPerNight}}</h6>
+        <h6>Final price: {{lod.calculatedPrice}}</h6>
+        <p class="card-text">{{lod.description}}</p>
+
+        <label class="btn btn-info" (click)="goToLodging()">Select this Lodging</label>
+      </div>
+    </div>
+  </div>
+</div>

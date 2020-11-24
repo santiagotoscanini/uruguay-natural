@@ -18,11 +18,12 @@ import {SearchLodgingComponent} from "./components/create-booking/search-lodging
 import {LodgingInfoComponent} from "./components/create-booking/lodging-info/lodging-info.component";
 import {SubmitBookingInfoComponent} from "./components/create-booking/submit-booking-info/submit-booking-info.component";
 import {BookingConfirmationInfoComponent} from "./components/create-booking/booking-confirmation-info/booking-confirmation-info.component";
+import {MigrateLodgingsComponent} from "./components/lodging/migrate-lodgings/migrate-lodgings.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'administrator/create', component: CreateAdministratorComponent},
   {path: 'administrator/delete', component: DeleteAdministratorComponent},
   {path: 'administrator/edit', component: EditAdministratorComponent},
@@ -35,10 +36,11 @@ const routes: Routes = [
   {path: 'booking/check-status', component: CheckBookingStatusComponent},
   {path: 'booking/review', component: CreateReviewComponent},
   {path: 'booking/search-tourist-point', component: SearchTouristPointComponent},
-  {path: 'booking/search-lodging', component: SearchLodgingComponent},
+  {path: 'booking/search-lodging/:touristPointId', component: SearchLodgingComponent},
   {path: 'booking/lodging-info', component: LodgingInfoComponent},
   {path: 'booking/submit-info', component: SubmitBookingInfoComponent},
   {path: 'booking/confirmation', component: BookingConfirmationInfoComponent},
+  {path: 'lodgings/migration', component: MigrateLodgingsComponent},
 ];
 
 @NgModule({

@@ -19,6 +19,8 @@ export class CreateTouristPointComponent implements OnInit {
   regions = []
   categories = []
 
+  fileSelected = ""
+
   selectedCategory: string = ""
 
   touristPoint: TouristPoint = {
@@ -64,5 +66,9 @@ export class CreateTouristPointComponent implements OnInit {
   createTouristPoint() {
     this.touristPointService.postCreateTouristPoint(this.touristPoint).subscribe(() => {
     })
+  }
+
+  encodeImageFileAsURL(e) {
+    console.log(e)
   }
 }

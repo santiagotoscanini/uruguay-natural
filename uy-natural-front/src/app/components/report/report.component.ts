@@ -41,10 +41,6 @@ export class ReportComponent implements OnInit {
     })
   }
 
-  parseDate(e) {
-
-  }
-
   applyReport() {
     this.reportFilter.touristPointId = this.touristPoints.find(tp => tp.name == this.touristPointName).id
     this.reportFilter.checkInDate = new Date(this.checkInDate).toISOString()

@@ -96,7 +96,7 @@ export class NavbarService {
             text: "Delete Lodging"
           },
           {
-            path: "lodging/migrate",
+            path: "lodgings/migration",
             child: [],
             class: "",
             text: "Migrate Lodgings"

@@ -5,6 +5,7 @@ import {Lodging} from "../models/lodging/Lodging";
 import {Observable} from "rxjs";
 import {LodgingUpdateCapacity} from "../models/lodging/LodgingUpdateCapacity";
 import {Report} from "../models/report/Report";
+import {LodgingFilter} from "../models/lodging/LodgingFilter";
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,11 @@ export class LodgingService {
 
   getReportFromLodgings(report: Report): Observable<Lodging[]> {
     let reportURI = `${this.uri}/reports?TouristPointId=${report.touristPointId}&CheckInDate=${report.checkInDate}&CheckOutDate=${report.checkOutDate}`
-    console.log(reportURI)
     return this.httpClient.get<Lodging[]>(reportURI)
+  }
+
+  getLodgingsFiltered(lodgingFilter: LodgingFilter): Observable<Lodging[]> {
+    let finalURL = `${this.uri}?touristPointId=${lodgingFilter.touristPointId}&checkInDate=${lodgingFilter.checkInDate}&checkOutDate=${lodgingFilter.checkOutDate}&numberOfAdults=${lodgingFilter.numberOfAdults}&numberOfChildren=${lodgingFilter.numberOfChildren}&numberOfBabies=${lodgingFilter.numberOfBabies}&numberOfRetired=${lodgingFilter.numberOfRetired}`;
+    return this.httpClient.get<Lodging[]>(finalURL)
   }
 }
