@@ -73,6 +73,7 @@ namespace Web.Controllers
         /// Update booking review
         /// </summary>
         /// <response code="204">Updated successfully</response>
+        /// <response code="400">Bad Request, a review has already been registered for this booking.</response>
         /// <response code="404">Doesn't exist a booking with that code.</response>
         /// <response code="500">Internal Server Error.</response>
         [HttpPut("{id}/reviews")]

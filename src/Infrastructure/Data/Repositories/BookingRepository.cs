@@ -63,6 +63,7 @@ namespace Infrastructure.Data.Repositories
         {
             return _bookings.Include(b => b.Tourist)
                 .Include(b =>  b.Lodging)
+                .Include(b => b.TouristReview)
                 .First(b => b.Code == code);
         }
 
