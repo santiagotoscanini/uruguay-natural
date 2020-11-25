@@ -1,12 +1,12 @@
 <app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
 
 <div class="col-lg-1 mt-2">
-  <form (ngSubmit)="saveAdmin()" class="form-create-admin">
+  <form ngNativeValidate (ngSubmit)="saveAdmin()" class="form-create-admin">
     <h2>Create Administrator</h2>
     <div class="form-group">
       <label for="inputName">Name</label>
       <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="admin.name"
-             placeholder="Enter name">
+             placeholder="Enter name" required="required">
     </div>
     <div class="form-group">
       <label for="inputEmail">Email address</label>
@@ -17,8 +17,14 @@
     <div class="form-group">
       <label for="exampleInputPassword1">Password</label>
       <input type="password" class="form-control" id="exampleInputPassword1" name="pass" [(ngModel)]="admin.password"
-             placeholder="Password">
+             placeholder="Password" required="required">
     </div>
     <button type="submit" class="btn btn-primary">Create administrator</button>
+    <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage != null" style="margin-top: 10px">
+      {{this.errorMessage}}
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="this.saved" style="margin-top: 10px">
+      Created succesfully
+    </div>
   </form>
 </div>

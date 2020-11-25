@@ -15,6 +15,8 @@ export class EditBookingStateComponent implements OnInit {
   }
 
   bookingStates;
+  errorMessage :string
+  saved = false
 
   ngOnInit(): void {
   }
@@ -34,7 +36,13 @@ export class EditBookingStateComponent implements OnInit {
 
   editBookingState() {
     this.bookingUpdateState.state = this.bookingStates[this.selectedState]
-    this.bookingService.PutUpdateBookingState(this.bookingUpdateState).subscribe(() => {
-    })
+    this.bookingService.putUpdateBookingState(this.bookingUpdateState).subscribe(m => {
+      this.saved = true;
+      this.errorMessage = null;
+    }, error => {
+      console.error(error);
+      this.errorMessage = error;
+      this.saved = false;
+    });
   }
 }

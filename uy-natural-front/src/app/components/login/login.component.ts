@@ -21,10 +21,15 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  errorMessage : string
+
   onLogin() {
     return this.sessionService.postLogin(this.login).subscribe(data => {
       this.sessionService.saveToken(data);
       this.router.navigate(['/home']);
+    }, error => {
+      console.error(error)
+      this.errorMessage = error
     });
   }
 }

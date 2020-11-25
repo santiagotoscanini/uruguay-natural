@@ -6,22 +6,24 @@ import {environment} from "../../environments/environment";
 import {Review} from "../models/review/Review";
 import {BookingToCreate} from "../models/booking/BookingToCreate";
 import {BookingResponse} from "../models/booking/BookingResponse";
+import {HandlerError} from "./handler-error/handler-error";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private handlerError: HandlerError) {
   }
 
   private uri = environment.URI_BASE + "/bookings";
 
-  PutUpdateBookingState(bookingUpdateState: BookingUpdateState): Observable<any> {
+  putUpdateBookingState(bookingUpdateState: BookingUpdateState): Observable<any> {
     return this.httpClient.put(`${this.uri}/${bookingUpdateState.bookingId}`, {
       state: bookingUpdateState.state,
       description: bookingUpdateState.description
-    })
+    }).pipe(catchError(this.handlerError.handleError));
   }
 
   getBookingStates(): { [key: string]: number } {
@@ -35,14 +37,14 @@ export class BookingService {
   }
 
   getBookingStatusById(bookingId: string): Observable<BookingUpdateState> {
-    return this.httpClient.get<BookingUpdateState>(`${this.uri}/${bookingId}`);
+    return this.httpClient.get<BookingUpdateState>(`${this.uri}/${bookingId}`).pipe(catchError(this.handlerError.handleError));
   }
 
   putBookingReview(review: Review): Observable<any> {
     return this.httpClient.put(`${this.uri}/${review.bookingId}/reviews`, {
       reviewText: review.reviewText,
       reviewPoints: review.reviewPoints
-    })
+    }).pipe(catchError(this.handlerError.handleError));
   }
 
   postBooking(booking: BookingToCreate): Observable<BookingResponse>{
@@ -57,6 +59,6 @@ export class BookingService {
       numberOfBabies:booking.numberOfBabies,
       numberOfRetired:booking.numberOfRetired,
       lodgingId:booking.lodgingId
-    })
+    }).pipe(catchError(this.handlerError.handleError));
   }
 }

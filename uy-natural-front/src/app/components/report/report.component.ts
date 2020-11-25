@@ -47,6 +47,9 @@ export class ReportComponent implements OnInit {
     this.reportFilter.checkOutDate = new Date(this.checkOutDate).toISOString()
     this.lodgingService.getReportFromLodgings(this.reportFilter).subscribe(d => {
       this.lodgingsToShow = d;
-    })
+    }, error => {
+      console.error(error);
+      alert(error);
+    });
   }
 }

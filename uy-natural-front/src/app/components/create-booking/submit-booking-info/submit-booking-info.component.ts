@@ -15,6 +15,8 @@ export class SubmitBookingInfoComponent implements OnInit {
 
   constructor(private router: Router, public navbarService: NavbarService, private bookingService : BookingService) { }
 
+  errorMessage :string
+
   ngOnInit(): void {
     this.booking.lodgingId = (JSON.parse(sessionStorage.getItem('lodging'))).id;
     this.setBookingInfo(JSON.parse(sessionStorage.getItem('lodging-filtered')))
@@ -44,8 +46,12 @@ export class SubmitBookingInfoComponent implements OnInit {
 
   createBooking(){
     this.bookingService.postBooking(this.booking).subscribe(b => {
+      this.errorMessage = null;
       sessionStorage.setItem('booking-response', JSON.stringify(b));
       this.router.navigate([`booking/confirmation`]);
-    })
+    }, error => {
+      console.error(error);
+      this.errorMessage = error;
+    });
   }
 }

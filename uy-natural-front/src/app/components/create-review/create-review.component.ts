@@ -13,6 +13,9 @@ export class CreateReviewComponent implements OnInit {
   constructor(public navbarService: NavbarService, private bookingService: BookingService) {
   }
 
+  errorMessage :string
+  saved = false
+
   review: Review = {
     reviewPoints: 0,
     reviewText: "",
@@ -24,6 +27,12 @@ export class CreateReviewComponent implements OnInit {
 
   createReview() {
     this.bookingService.putBookingReview(this.review).subscribe(m => {
-    })
+      this.saved = true;
+      this.errorMessage = null;
+    }, error => {
+      console.error(error);
+      this.errorMessage = error;
+      this.saved = false;
+    });
   }
 }

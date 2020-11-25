@@ -7,7 +7,7 @@
         <div class="card_login">
           <div class="card">
             <div class="card-body text-center">
-              <form (ngSubmit)="onLogin()">
+              <form ngNativeValidate (ngSubmit)="onLogin()">
 
                 <h1 class="h3 mb-3 font-weight-normal">Login</h1>
                 <div class="form-group">
@@ -17,6 +17,9 @@
                   <input type="password" id="password" name="password" class="form-control" placeholder="Password" [(ngModel)]="login.password" required>
                 </div>
                 <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+                <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage != null" style="margin-top: 10px">
+                  {{this.errorMessage}}
+                </div>
               </form>
             </div>
           </div>

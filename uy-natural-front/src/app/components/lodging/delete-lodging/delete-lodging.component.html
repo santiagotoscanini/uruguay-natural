@@ -1,14 +1,20 @@
 <app-navbar [treeOfItems]="navbarService.getNavbarItems()"></app-navbar>
 
 <div class="col-lg-1 mt-2">
-  <form (ngSubmit)="deleteLodging()" class="form-create-admin">
+  <form ngNativeValidate (ngSubmit)="deleteLodging()" class="form-create-admin">
     <h2>Delete Lodging</h2>
     <div class="form-group">
       <label for="inputLodgingId">Lodging ID</label>
       <input type="number" class="form-control" id="inputLodgingId" name="lodgingId"
              [(ngModel)]="lodgingId"
-             placeholder="Enter Lodging ID">
+             placeholder="Enter Lodging ID" required="required">
     </div>
     <button type="submit" class="btn btn-danger">Delete</button>
+    <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage != null" style="margin-top: 10px">
+      {{this.errorMessage}}
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="this.saved" style="margin-top: 10px">
+      Deleted succesfully
+    </div>
   </form>
 </div>

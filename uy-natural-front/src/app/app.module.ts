@@ -32,6 +32,8 @@ import { LodgingInfoComponent } from './components/create-booking/lodging-info/l
 import { SubmitBookingInfoComponent } from './components/create-booking/submit-booking-info/submit-booking-info.component';
 import { BookingConfirmationInfoComponent } from './components/create-booking/booking-confirmation-info/booking-confirmation-info.component';
 import { MigrateLodgingsComponent } from './components/lodging/migrate-lodgings/migrate-lodgings.component';
+import {HandlerError} from './services/handler-error/handler-error';
+import {AuthGuard} from "./services/guards/auth.guard";
 
 @NgModule({
   imports: [
@@ -70,11 +72,13 @@ import { MigrateLodgingsComponent } from './components/lodging/migrate-lodgings/
     SessionService,
     AdministratorService,
     NavbarService,
+    HandlerError,
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    },
+    }
   ],
   bootstrap: [AppComponent],
   exports: []

@@ -13,6 +13,9 @@ export class EditLodgingComponent implements OnInit {
   constructor(public navbarService: NavbarService, private lodgingService: LodgingService) {
   }
 
+  errorMessage :string
+  saved = false
+
   ngOnInit(): void {
   }
 
@@ -22,6 +25,13 @@ export class EditLodgingComponent implements OnInit {
   }
 
   editLodgingCapacity() {
-    this.lodgingService.putUpdateLodgingCapacity(this.lodgingUpdateCapacity).subscribe(()=>{})
+    this.lodgingService.putUpdateLodgingCapacity(this.lodgingUpdateCapacity).subscribe(()=>{
+      this.saved = true;
+      this.errorMessage = null;
+    }, error => {
+      console.error(error);
+      this.errorMessage = error;
+      this.saved = false;
+    });
   }
 }

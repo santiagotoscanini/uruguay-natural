@@ -15,6 +15,7 @@ export class CheckBookingStatusComponent implements OnInit {
 
   bookingStatus: BookingUpdateState
   bookingId: string = ""
+  errorMessage :string
 
   ngOnInit(): void {
   }
@@ -26,7 +27,12 @@ export class CheckBookingStatusComponent implements OnInit {
 
   checkBookingStatus() {
     this.bookingService.getBookingStatusById(this.bookingId).subscribe(m => {
-      this.bookingStatus = m
-    })
+      this.bookingStatus = m;
+      this.errorMessage = null;
+    }, error => {
+      console.error(error);
+      this.errorMessage = error;
+      this.bookingStatus = null;
+    });
   }
 }

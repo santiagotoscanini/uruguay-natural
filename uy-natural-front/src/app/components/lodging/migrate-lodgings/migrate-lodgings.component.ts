@@ -13,6 +13,9 @@ export class MigrateLodgingsComponent implements OnInit {
   constructor(public navbarService: NavbarService, private importerService: ImporterService) {
   }
 
+  errorMessage :string
+  saved = false
+
   importers: string[] = []
 
   migrationData: Migration = {
@@ -28,11 +31,20 @@ export class MigrateLodgingsComponent implements OnInit {
     this.importerService.getAllImporters().subscribe(m => {
       this.importers = m
       this.migrationData.importerName = m[0]
-    })
+    }, error => {
+      console.error(error);
+      alert(error);
+    });
   }
 
   executeMigration() {
     this.importerService.postExecuteMigration(this.migrationData).subscribe(_ => {
-    })
+      this.saved = true;
+      this.errorMessage = null;
+    }, error => {
+      console.error(error);
+      this.errorMessage = error;
+      this.saved = false;
+    });
   }
 }

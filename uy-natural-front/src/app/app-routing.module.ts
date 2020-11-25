@@ -19,20 +19,21 @@ import {LodgingInfoComponent} from "./components/create-booking/lodging-info/lod
 import {SubmitBookingInfoComponent} from "./components/create-booking/submit-booking-info/submit-booking-info.component";
 import {BookingConfirmationInfoComponent} from "./components/create-booking/booking-confirmation-info/booking-confirmation-info.component";
 import {MigrateLodgingsComponent} from "./components/lodging/migrate-lodgings/migrate-lodgings.component";
+import {AuthGuard} from "./services/guards/auth.guard";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'administrator/create', component: CreateAdministratorComponent},
-  {path: 'administrator/delete', component: DeleteAdministratorComponent},
-  {path: 'administrator/edit', component: EditAdministratorComponent},
-  {path: 'lodging/create', component: CreateLodgingComponent},
-  {path: 'lodging/edit', component: EditLodgingComponent},
-  {path: 'lodging/delete', component: DeleteLodgingComponent},
-  {path: 'tourist-point/create', component: CreateTouristPointComponent},
-  {path: 'booking/edit-state', component: EditBookingStateComponent},
-  {path: 'report', component: ReportComponent},
+  {path: 'administrator/create', component: CreateAdministratorComponent, canActivate: [AuthGuard]},
+  {path: 'administrator/delete', component: DeleteAdministratorComponent, canActivate:[AuthGuard]},
+  {path: 'administrator/edit', component: EditAdministratorComponent, canActivate:[AuthGuard]},
+  {path: 'lodging/create', component: CreateLodgingComponent,canActivate:[AuthGuard]},
+  {path: 'lodging/edit', component: EditLodgingComponent, canActivate:[AuthGuard]},
+  {path: 'lodging/delete', component: DeleteLodgingComponent, canActivate:[AuthGuard]},
+  {path: 'tourist-point/create', component: CreateTouristPointComponent, canActivate:[AuthGuard]},
+  {path: 'booking/edit-state', component: EditBookingStateComponent, canActivate:[AuthGuard]},
+  {path: 'report', component: ReportComponent, canActivate:[AuthGuard]},
   {path: 'booking/check-status', component: CheckBookingStatusComponent},
   {path: 'booking/review', component: CreateReviewComponent},
   {path: 'booking/search-tourist-point', component: SearchTouristPointComponent},

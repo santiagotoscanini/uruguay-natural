@@ -3,6 +3,7 @@ import {NavbarService} from "../../../services/navbar.service";
 import {LodgingFilter} from "../../../models/lodging/LodgingFilter";
 import {Lodging} from "../../../models/lodging/Lodging";
 import {Router} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-lodging-info',
@@ -11,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class LodgingInfoComponent implements OnInit {
 
-  constructor(private router: Router, public navbarService: NavbarService) { }
+  constructor(private router: Router, public navbarService: NavbarService, public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.lodging = JSON.parse(sessionStorage.getItem('lodging'));

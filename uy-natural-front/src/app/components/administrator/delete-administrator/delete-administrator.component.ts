@@ -13,6 +13,9 @@ export class DeleteAdministratorComponent implements OnInit {
   constructor(public navbarService: NavbarService, private administratorService: AdministratorService) {
   }
 
+  errorMessage :string
+  saved = false
+
   public admin: Administrator = {
     name: "",
     email: "",
@@ -22,7 +25,13 @@ export class DeleteAdministratorComponent implements OnInit {
   }
 
   deleteAdmin() {
-    this.administratorService.deleteAdmin(this.admin).subscribe(() => {
+    this.administratorService.deleteAdmin(this.admin).subscribe(m => {
+      this.saved = true;
+      this.errorMessage = null;
+    }, error => {
+      console.error(error);
+      this.errorMessage = error;
+      this.saved = false;
     });
   }
 }

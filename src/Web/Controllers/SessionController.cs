@@ -32,7 +32,7 @@ namespace Web.Controllers
         /// Logout
         /// </summary>
         /// <response code="200">Successfully logged out.</response>
-        /// <response code="401">User does not send a token, not Authenticated</response>
+        /// <response code="401">c</response>
         /// <response code="403">Not enough permissions, not Authorized</response>
         /// <response code="500">Internal Server Error.</response>
         [HttpPost("logout")]

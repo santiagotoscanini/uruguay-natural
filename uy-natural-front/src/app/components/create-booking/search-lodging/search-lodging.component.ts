@@ -4,6 +4,7 @@ import {NavbarService} from "../../../services/navbar.service";
 import {Lodging} from "../../../models/lodging/Lodging";
 import {LodgingService} from "../../../services/lodging.service";
 import {LodgingFilter} from "../../../models/lodging/LodgingFilter";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-search-lodging',
@@ -12,7 +13,7 @@ import {LodgingFilter} from "../../../models/lodging/LodgingFilter";
 })
 export class SearchLodgingComponent implements OnInit {
 
-  constructor(private router: Router, public navbarService: NavbarService, private activatedRoute: ActivatedRoute, private lodgingService: LodgingService) {
+  constructor(private router: Router, public navbarService: NavbarService, private activatedRoute: ActivatedRoute, private lodgingService: LodgingService, public sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -35,13 +36,18 @@ export class SearchLodgingComponent implements OnInit {
     numberOfRetired: 0,
   }
 
+  alreadySearch = false
+
   filterLodgings() {
     this.lodgingFilter.checkInDate = new Date(this.checkInDate).toISOString()
     this.lodgingFilter.checkOutDate = new Date(this.checkOutDate).toISOString()
     this.lodgingService.getLodgingsFiltered(this.lodgingFilter).subscribe(m => {
-      this.lodgingsToShow = m
-      console.log(m)
-    })
+      this.lodgingsToShow = m;
+      this.alreadySearch = true;
+    }, error => {
+      console.error(error);
+      alert(error);
+    });
   }
 
   goToLodging(lodging : Lodging) {

@@ -19,9 +19,10 @@ export class CreateTouristPointComponent implements OnInit {
   regions = []
   categories = []
 
-  fileSelected = ""
-
   selectedCategory: string = ""
+
+  errorMessage:string
+  saved: boolean = false
 
   touristPoint: TouristPoint = {
     name: "",
@@ -53,22 +54,36 @@ export class CreateTouristPointComponent implements OnInit {
     this.regionService.getRegions().subscribe(d => {
       this.regions = d
       this.touristPoint.regionName = d[0].name
-    })
+    }, error => {
+      console.error(error)
+      alert(error);
+    });
   }
 
   getCategories() {
     this.categoryService.getCategories().subscribe(d => {
       this.categories = d
       this.selectedCategory = d[0].name
-    })
+    }, error => {
+      console.error(error);
+      alert(error);
+    });
   }
 
   createTouristPoint() {
     this.touristPointService.postCreateTouristPoint(this.touristPoint).subscribe(() => {
-    })
+      this.saved = true;
+      this.errorMessage = null;
+    }, error => {
+      console.error(error);
+      this.errorMessage = error;
+      this.saved = false;
+    });
   }
 
   encodeImageFileAsURL(e) {
-    console.log(e)
+    let reader = new FileReader();
+    reader.onloadend = () => this.touristPoint.image = reader.result.toString().replace('data:image/png;base64,', '').replace('data:image/jpeg;base64,', '')
+    reader.readAsDataURL(e[0]);
   }
 }

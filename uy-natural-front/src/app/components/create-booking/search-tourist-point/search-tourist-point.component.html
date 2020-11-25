@@ -19,10 +19,13 @@
   </form>
 
   <div class="align-self-center mb-3">
-    <div *ngFor="let tp of touristPointsToShow" class="card">
+    <div class="alert alert-light" role="alert" *ngIf="touristPointsToShow.length == 0 && alreadySearch">
+      No tourist point was found
+    </div>
+    <div *ngFor="let tp of touristPointsToShow" class="card" style="margin-top: 30px">
       <img class="card-img-top" width="10" height="150"
-           src="{{tp.image}}"
-           alt="Card image cap">
+           [src]="sanitizer.bypassSecurityTrustUrl(tp.image)"
+           alt="image">
 
       <div class="card-body">
         <h5 class="card-title">{{tp.name}}</h5>

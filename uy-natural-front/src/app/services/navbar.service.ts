@@ -58,12 +58,6 @@ export class NavbarService {
             class: "",
             text: "Edit Booking"
           },
-          {
-            path: "report",
-            child: [],
-            class: "",
-            text: "Report"
-          },
         ],
         class: "bg-info",
         text: "Bookings"
@@ -100,6 +94,12 @@ export class NavbarService {
             child: [],
             class: "",
             text: "Migrate Lodgings"
+          },
+          {
+            path: "report",
+            child: [],
+            class: "",
+            text: "Report"
           },
         ],
         class: "bg-info mr-2",
@@ -139,6 +139,9 @@ export class NavbarService {
           this.sessionService.postLogout().subscribe(() => {
             this.sessionService.removeToken();
             this.router.navigate(['home'])
+          }, error => {
+            console.error(error)
+            alert(error)
           })
         }
       },
