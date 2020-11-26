@@ -1,6 +1,5 @@
 ﻿using Entities;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models.BookingModels
@@ -26,21 +25,31 @@ namespace Web.Models.BookingModels
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
         public int NumberOfAdults { get; set; }
-        
+
         [Required]
-        
         [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
         public int NumberOfChildren { get; set; }
-        
+
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
         public int NumberOfBabies { get; set; }
-        
-        [Required]
-        public int LodgingId { get; set; }
+
+
+        [Range(0, int.MaxValue, ErrorMessage = "The number of guests cannot be less than zero.")]
+        public int NumberOfRetired { get; set; }
+
+        [Required] public int LodgingId { get; set; }
 
         public Booking ToEntity()
         {
+            var numberOfGuests = new NumberOfGuests
+            {
+                NumberOfAdults = this.NumberOfAdults,
+                NumberOfChildren = this.NumberOfChildren,
+                NumberOfBabies = this.NumberOfBabies,
+                NumberOfRetired = this.NumberOfRetired
+            };
+
             return new Booking()
             {
                 Tourist = new Tourist
@@ -53,20 +62,10 @@ namespace Web.Models.BookingModels
                 Description = "",
                 CheckInDate = CheckInDate,
                 CheckOutDate = CheckOutDate,
-                Lodging = new Lodging { Id = LodgingId },
-                NumberOfGuests = new NumberOfGuests
-                {
-                    NumberOfAdults = this.NumberOfAdults,
-                    NumberOfChildren = this.NumberOfChildren,
-                    NumberOfBabies = this.NumberOfBabies
-                },
-                TotalNumberOfGuests = GetTotalCountOfGuests()
+                Lodging = new Lodging {Id = LodgingId},
+                NumberOfGuests = numberOfGuests,
+                TotalNumberOfGuests = numberOfGuests.GetTotalNumberOfGuests()
             };
-        }
-
-        private int GetTotalCountOfGuests()
-        {
-            return NumberOfAdults + NumberOfChildren + NumberOfBabies;
         }
     }
 }

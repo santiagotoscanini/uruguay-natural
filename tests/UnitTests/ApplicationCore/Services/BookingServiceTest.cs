@@ -118,23 +118,77 @@ namespace UnitTests.ApplicationCore.Services
         }
 
         [TestMethod]
-        public void TestUpdateBooking()
+        public void TestUpdateBookingState()
         {
             var booking = new Booking { Code = _bookingCode1, State = BookingState.EXPIRED };
             var updateStateInfoModel = new Booking { Code = _bookingCode1, State = BookingState.EXPIRED };
             var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
-            mock.Setup(r => r.Update(updateStateInfoModel));
+            mock.Setup(r => r.UpdateState(updateStateInfoModel));
             mock.Setup(r => r.Get(_bookingCode1)).Returns(booking);
             var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
             mockLodgingService.Setup(r => r.GetById(0)).Returns(new Lodging());
             var mockPriceCalculatorService = new Mock<IPriceCalculatorService>().Object;
             var bookingService = new BookingService(mock.Object, mockLodgingService.Object, mockPriceCalculatorService);
 
-            bookingService.Update(updateStateInfoModel);
+            bookingService.UpdateState(updateStateInfoModel);
             var modifiedBookingGetted = bookingService.Get(_bookingCode1);
 
             mock.VerifyAll();
             Assert.AreEqual(updateStateInfoModel.State, modifiedBookingGetted.State);
+        }
+        
+        [TestMethod]
+        public void TestUpdateBookingReview()
+        {
+            var review = new Review{ Text = "Nice" };
+            var lodging = new Lodging
+            {
+                Id = 0,
+                NumberOfStars = 1,
+                ReviewsCount = 1,
+            };
+            var booking = new Booking { Code = _bookingCode1, TouristReview = null, Lodging = lodging};
+            var bookingWithReview = new Booking { Code = _bookingCode1, TouristReview = review, Lodging = lodging};
+            var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.UpdateReview(booking));
+            mock.Setup(r => r.Get(_bookingCode1)).Returns(booking);
+            
+            var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
+            mockLodgingService.Setup(r => r.GetById(lodging.Id)).Returns(lodging);
+            mockLodgingService.Setup(r => r.Update(lodging)).Returns(lodging);
+            
+            var bookingService = new BookingService(mock.Object, mockLodgingService.Object, new Mock<IPriceCalculatorService>().Object);
+
+            bookingService.UpdateReview(bookingWithReview);
+            var modifiedBookingFetched = bookingService.Get(_bookingCode1);
+
+            mock.VerifyAll();
+            Assert.AreEqual(review.Text, modifiedBookingFetched.TouristReview.Text);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ObjectAlreadyExistException))]
+        public void TestUpdateBookingSecondReview()
+        {
+            var review = new Review{ Text = "Nice" };
+            var lodging = new Lodging
+            {
+                Id = 0,
+                NumberOfStars = 1,
+                ReviewsCount = 0,
+            };
+            var booking = new Booking { Code = _bookingCode1, TouristReview = review, Lodging = lodging};
+            var mock = new Mock<IBookingRepository>(MockBehavior.Strict);
+            mock.Setup(r => r.UpdateReview(booking));
+            mock.Setup(r => r.Get(_bookingCode1)).Returns(booking);
+            
+            var mockLodgingService = new Mock<ILodgingService>(MockBehavior.Strict);
+            mockLodgingService.Setup(r => r.GetById(lodging.Id)).Returns(lodging);
+            mockLodgingService.Setup(r => r.Update(lodging)).Returns(lodging);
+            
+            var bookingService = new BookingService(mock.Object, mockLodgingService.Object, new Mock<IPriceCalculatorService>().Object);
+
+            bookingService.UpdateReview(booking);
         }
 
         [TestMethod]

@@ -1,0 +1,37 @@
+
+<div class="col-lg-1 mt-2">
+  <form (ngSubmit)="searchTouristPoints()" class="form-create-admin">
+    <h2>Search Tourist Point</h2>
+    <div class="form-group">
+      <label for="inputRegion">Region</label>
+      <select class="custom-select" id="inputRegion" name="region" [(ngModel)]="filterTouristPoint.regionName">
+        <option *ngFor="let reg of regionsToShow" id="{{reg.name}}">{{reg.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="inputCategory">Category</label>
+      <select class="custom-select" id="inputCategory" name="category" [(ngModel)]="filterTouristPoint.categoryName">
+        <option *ngFor="let cat of categoriesToShow" id="{{cat.name}}">{{cat.name}}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+
+  <div class="align-self-center mb-3">
+    <div class="alert alert-light" role="alert" *ngIf="touristPointsToShow.length == 0 && alreadySearch">
+      No tourist point was found
+    </div>
+    <div *ngFor="let tp of touristPointsToShow" class="card" style="margin-top: 30px">
+      <img class="card-img-top" width="10" height="150"
+           [src]="sanitizer.bypassSecurityTrustUrl(tp.image)"
+           alt="image">
+
+      <div class="card-body">
+        <h5 class="card-title">{{tp.name}}</h5>
+        <p class="card-text">{{tp.description}}</p>
+        <label class="btn btn-info" (click)="goToTouristPointPage(tp)">Select this tourist point</label>
+      </div>
+    </div>
+  </div>
+</div>

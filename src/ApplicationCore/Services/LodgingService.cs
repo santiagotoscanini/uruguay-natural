@@ -3,6 +3,7 @@ using Entities;
 using InfrastructureInterface.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using Exceptions;
 
 namespace ApplicationCore.Services
 {
@@ -12,6 +13,7 @@ namespace ApplicationCore.Services
 
         private ITouristPointService _touristPointService;
         private IPriceCalculatorService _priceCalculatorService;
+        private string _notFoundLodgingsMessage = "No lodgings were found that meet the conditions";
 
         public LodgingService(ILodgingRepository repository, ITouristPointService touristPointService,
             IPriceCalculatorService priceCalculatorService)
@@ -54,7 +56,7 @@ namespace ApplicationCore.Services
             Dictionary<Lodging, double> lodgingWithPrices = UpdateCalculatedPrice(lodgingsToReturn, lodgingToFilter);
             return lodgingWithPrices;
         }
-
+        
         private Dictionary<Lodging, double> UpdateCalculatedPrice(IEnumerable<Lodging> lodgings,
             LodgingToFilter lodgingToFilter)
         {
@@ -70,6 +72,36 @@ namespace ApplicationCore.Services
             }
 
             return lodgingsAndPrices;
+        }
+        
+        public IEnumerable<Lodging> GetFilteredByTouristPointAndRange(LodgingToFilter lodgingToFilter)
+        {
+            var lodgings = GetAll().Where(l => l.TouristPoint.Id.Equals(lodgingToFilter.TouristPointId));
+            lodgings = FilterByDateRange(lodgings, lodgingToFilter);
+            if (!lodgings.Any())
+            {
+                throw new NotFoundException(_notFoundLodgingsMessage);
+            }
+
+            ((List<Lodging>)lodgings).Sort();
+            return lodgings;
+        }
+
+        private IEnumerable<Lodging> FilterByDateRange(IEnumerable<Lodging> lodgings, LodgingToFilter lodgingToFilter)
+        {
+            var filteredLodgings = new List<Lodging>();
+            foreach (var lodging in lodgings)
+            {
+                var bookings = lodging.Bookings.Where(b => b.CheckOutDate >= lodgingToFilter.CheckInDate &&
+                                                           b.CheckInDate <= lodgingToFilter.CheckOutDate && b.State != BookingState.EXPIRED 
+                                                           && b.State != BookingState.REJECT);
+                if (bookings.Any())
+                {
+                    filteredLodgings.Add(lodging);
+                }
+            }
+
+            return filteredLodgings;
         }
     }
 }

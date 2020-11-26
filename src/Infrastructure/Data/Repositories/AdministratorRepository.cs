@@ -28,6 +28,10 @@ namespace Infrastructure.Data.Repositories
             {
                 return AddAndReturnAdmin(administrator);
             }
+            catch (DbUpdateException)
+            {
+                throw new ObjectAlreadyExistException(AdministratorAlreadyExistMessage + administrator.Email);
+            }
             catch (InvalidOperationException)
             {
                 throw new ObjectAlreadyExistException(AdministratorAlreadyExistMessage + administrator.Email);

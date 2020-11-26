@@ -21,6 +21,7 @@ namespace UnitTests.Web.Controllers
         private int _touristPointId = 1;
         private DateTime _checkInDate = DateTime.Now;
         private DateTime _checkOutDate = DateTime.Now;
+        private byte[] _byte = Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAJkAAAD2CAYAAADF/iU1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAGFwSURBVHhe7X0FgFVV9/2d7k6YYuju7hZJaQSUkAYBgaFrhhmGBkGRUFQUAwVbbOxCRUQEFAmRbpiu9d/r3DnD4/Hw933/jxEY3tHFfXPvuXH2WWfvfdrIy8uDHXYUJuwks6PQYSeZHYUOO8nsKHTYSWZHocNOMjsKHXaS2VHosJPMjkKHnWR2FDrsJLOj0GEnmR2FDjvJ7Ch02ElmR6HDTrL/Ebm5uQq2rtlhwk6y/wEkV05OjoKdaDeGnWT/H8gFkC2kyszKQlp6ukKW/FZky7OTzRp2kv0XyBXkCIkys7ORkZWJi5cuYcubb+HV11/HufPn5HwWMnOyhYS2779bYSfZf4HcvBxk5Yj2ykjH5StX8NjapxAcUQJB4RFIXrwIJ0+dQppcT8/JVEQjKW09526DnWT/BWgKM7IylHl85rnnERAcBmdHVzg5u8HZ3QNx06fh5OnTSM1MQ3aeaDS76VSwk+==");
 
         [TestMethod]
         public void UpdateLodgingTest()
@@ -60,13 +61,16 @@ namespace UnitTests.Web.Controllers
             var lodgingModel = new LodgingCreatingModel
             {
                 Name = "Lod1",
-                TouristPointId = _touristPointId
+                TouristPointId = _touristPointId,
+                Images = new List<string>{"image"}
             };
             var lodging = new Lodging
             {
                 Name = "Lod1",
                 TouristPoint = touristPoint,
                 Id = _id,
+                Bookings = new List<Booking>(),
+                Images = new List<byte[]>{_byte}
             };
 
             var mockLodgingService = new Mock<ILodgingService>();
@@ -92,11 +96,14 @@ namespace UnitTests.Web.Controllers
                 NumberOfAdults = 1,
                 NumberOfBabies = 0,
                 NumberOfChildren = 0,
+                NumberOfRetired = 0,
             };
             var lodging = new Lodging
             {
                 Id = 1,
-                CostPerNight = 10.0
+                CostPerNight = 10.0,
+                ReviewsCount = 0,
+                Images = new List<byte[]>{new byte[1]}
             };
             var lodgingsAndPrices = new Dictionary<Lodging, double>();
             lodgingsAndPrices.Add(lodging, 10.0);
@@ -113,6 +120,50 @@ namespace UnitTests.Web.Controllers
             Assert.AreEqual(200, status.StatusCode);
             var lodgingsExpected = new List<LodgingFilteredModel> {lodgingFilteredModel};
             Assert.IsTrue(lodgingsExpected.SequenceEqual(lodgings));
+        }
+
+        [TestMethod]
+        public void GetLodgingsFilteredByTouristPointAndRangeTest()
+        {
+            var lodgingFilter = new LodgingFilterByTouristPointAndRangeModel
+            {
+                TouristPointId = _touristPointId,
+                CheckInDate = _checkInDate,
+                CheckOutDate = _checkOutDate,
+            };
+            var lodging = new Lodging
+            {
+                Id = 1,
+                TouristPoint = new TouristPoint{Id = _touristPointId},
+                Bookings = new List<Booking>(),
+                Images = new List<byte[]>{new byte[1]}
+            };
+            var lodging2 = new Lodging
+            {
+                Id = 2,
+                TouristPoint = new TouristPoint{Id = _touristPointId},
+                Bookings = new List<Booking>(),
+                Images = new List<byte[]>{new byte[1]}
+            };
+            var lodgings = new List<Lodging>
+            {
+                lodging,
+                lodging2,
+            };
+            var mock = new Mock<ILodgingService>(MockBehavior.Strict);
+            mock.Setup(s => s.GetFilteredByTouristPointAndRange(It.IsAny<LodgingToFilter>())).Returns(
+                lodgings);
+            
+            var lodgingController = new LodgingController(mock.Object);
+            
+            IActionResult result = lodgingController.GetLodgingsFilteredByTouristPointAndRange(lodgingFilter);
+            var status = result as OkObjectResult;
+            var lodgingsFiltered = status.Value as IEnumerable<LodgingModelOut>;
+
+            mock.VerifyAll();
+            Assert.AreEqual(200, status.StatusCode);
+            Assert.AreEqual(lodgings.Count(), lodgingsFiltered.Count());
+            Assert.AreEqual(lodgings.First().Id, lodgingsFiltered.First().Id );
         }
     }
 }

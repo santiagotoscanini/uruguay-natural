@@ -8,6 +8,7 @@ namespace InfrastructureInterface.Data.Repositories
         IEnumerable<Booking> GetAll();
         Booking Add(Booking booking);
         Booking Get(string code);
-        void Update(Booking booking);
+        void UpdateState(Booking booking);
+        void UpdateReview(Booking booking);
     }
 }

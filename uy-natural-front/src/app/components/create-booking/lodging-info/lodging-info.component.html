@@ -1,0 +1,43 @@
+
+<div class="align-self-center mb-3 form-create-admin">
+  <div class="two-col">
+    <h2 class="col1">{{this.lodging.name}}</h2>
+    <h5 class="col2" *ngIf="this.lodging.reviewsCount!=0">{{this.lodging.numberOfStars}}/5 pts.</h5>
+  </div>
+  <div id="carouselExampleControls" data-interval="false" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let photo of this.lodging.images let i = index"
+           [ngClass]="{'active': i == 0 }">
+        <img [src]="sanitizer.bypassSecurityTrustUrl(photo)" class="d-block" height="300xp" width="500xp">
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+
+  <div>
+    <h5>{{this.touristPointName}}</h5>
+    <h5>Price per night: {{this.lodging.costPerNight}}</h5>
+    <h5>Total: {{this.lodging.calculatedPrice}}</h5>
+    <h5>Address: {{this.lodging.address}}</h5>
+    <p>{{this.lodging.description}}</p>
+  </div>
+  <label class="btn btn-info" (click)="goToBooking()">Reserve</label>
+
+  <div *ngIf="this.lodging.reviewsCount!=0">
+    <h6>Reviews</h6>
+    <div *ngFor="let booking of this.lodging.bookings">
+      <div class="card card-style" *ngIf="booking.touristReview != null">
+        <p>{{booking.touristReview.numberOfPoints}}/5 pts.</p>
+        <p>{{booking.touristReview.text}}</p>
+        <p>{{booking.tourist.email}}</p>
+      </div>
+    </div>
+  </div>
+</div>

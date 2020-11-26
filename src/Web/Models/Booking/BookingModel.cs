@@ -12,6 +12,7 @@ namespace Web.Models.BookingModels
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
         public int TotalNumberOfGuests { get; set; }
+        public Review TouristReview { get; set; }
 
         public BookingModel(Booking booking)
         {
@@ -22,6 +23,7 @@ namespace Web.Models.BookingModels
             CheckInDate = booking.CheckInDate;
             CheckOutDate = booking.CheckOutDate;
             TotalNumberOfGuests = booking.TotalNumberOfGuests;
+            TouristReview = booking.TouristReview;
         }
 
         public override bool Equals(object obj)

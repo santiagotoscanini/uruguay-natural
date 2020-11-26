@@ -58,7 +58,7 @@ namespace UnitTests.Web.Controllers
             mock.Setup(m => m.GetAll()).Returns(bookingsToReturn);
             var controller = new BookingController(mock.Object);
 
-            IActionResult result = controller.GetAllBookings(null);
+            IActionResult result = controller.GetAllBookings();
             var okResult = result as OkObjectResult;
             var bookings = okResult.Value as IEnumerable<BookingModel>;
 
@@ -146,7 +146,7 @@ namespace UnitTests.Web.Controllers
                 CheckOutDate = _checkOutDate,
                 TotalNumberOfGuests = _totalNumberOfGuests,
             };
-            var updateInfoBooking = new BookingUpdateInfoModel
+            var updateInfoBooking = new BookingStateUpdateModel
             {
                 State = _state2,
                 Description = _description2,
@@ -158,11 +158,11 @@ namespace UnitTests.Web.Controllers
                 Description = _description2,
             };
             var mock = new Mock<IBookingService>(MockBehavior.Strict);
-            mock.Setup(m => m.Update(stateInfoBooking));
+            mock.Setup(m => m.UpdateState(stateInfoBooking));
             mock.Setup(m => m.Get(_bookingCode2)).Returns(bookingToReturn);
             var controller = new BookingController(mock.Object);
 
-            controller.UpdateBooking(_bookingCode2, updateInfoBooking);
+            controller.UpdateBookingState(_bookingCode2, updateInfoBooking);
             IActionResult result = controller.GetBookingById(_bookingCode2);
             var okResult = result as OkObjectResult;
             var booking = okResult.Value as BookingStateInfoModel;
@@ -170,6 +170,55 @@ namespace UnitTests.Web.Controllers
             mock.VerifyAll();
             Assert.AreEqual(stateInfoBooking.State, booking.State);
             Assert.AreEqual(stateInfoBooking.Description, booking.Description);
+        }
+        
+        [TestMethod]
+        public void TestPutBookingReviewOk()
+        {
+            var bookingToReturn = new Booking
+            {
+                Code = _bookingCode2,
+                Tourist = _tourist,
+                State = _state2,
+                Description = _description2,
+                CheckInDate = _checkInDate,
+                CheckOutDate = _checkOutDate,
+                TotalNumberOfGuests = _totalNumberOfGuests,
+                TouristReview = new Review
+                {
+                    Text = "Nice place",
+                    NumberOfPoints = 5,
+                },
+                Lodging = new Lodging{Id = 1},
+            };
+            var updateInfoBooking = new BookingReviewUpdateModel
+            {
+                ReviewText = "Nice place",
+                ReviewPoints = 5,
+            };
+            var reviewInfoBooking = new Booking
+            {
+                Code = _bookingCode2,
+                TouristReview = new Review
+                {
+                    Text = "Nice place",
+                    NumberOfPoints = 5,
+                }
+            };
+            var mock = new Mock<IBookingService>(MockBehavior.Strict);
+            mock.Setup(m => m.UpdateReview(reviewInfoBooking));
+            mock.Setup(m => m.GetAll()).Returns(new List<Booking>{bookingToReturn});
+            var controller = new BookingController(mock.Object);
+
+            controller.UpdateBookingReview(_bookingCode2, updateInfoBooking);
+            IActionResult result = controller.GetAllBookings();
+            var okResult = result as OkObjectResult;
+            var bookings = okResult.Value as IEnumerable<BookingModel>;
+            var booking = bookings.First();
+
+            mock.VerifyAll();
+            Assert.AreEqual(reviewInfoBooking.TouristReview.Text, booking.TouristReview.Text);
+            Assert.AreEqual(reviewInfoBooking.TouristReview.NumberOfPoints, booking.TouristReview.NumberOfPoints);
         }
     }
 }

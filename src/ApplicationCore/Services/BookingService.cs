@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ApplicationCoreInterface.Services;
 using InfrastructureInterface.Data.Repositories;
 using System;
+using System.Dynamic;
 using Exceptions;
 
 namespace ApplicationCore.Services
@@ -15,6 +16,8 @@ namespace ApplicationCore.Services
 
         private const string InvalidDateErrorMessage =
             "Error, the Check-out date must be greater than the Check-in date.";
+        private const string ReviewAlreadyExistErrorMessage =
+            "A review has already been registered for this booking.";
 
         public BookingService(IBookingRepository repository, ILodgingService lodgingService,
             IPriceCalculatorService priceCalculatorService)
@@ -88,9 +91,40 @@ namespace ApplicationCore.Services
             return _repository.Get(bookingCode);
         }
 
-        public void Update(Booking booking)
+        public void UpdateState(Booking booking)
         {
-            _repository.Update(booking);
+            _repository.UpdateState(booking);
+        }
+        
+        public void UpdateReview(Booking updateBooking)
+        {
+            var booking = Get(updateBooking.Code);
+            if (booking.TouristReview != null)
+            {
+                throw new ObjectAlreadyExistException(ReviewAlreadyExistErrorMessage);
+            }
+
+            booking.TouristReview = updateBooking.TouristReview;
+            UpdateLodgingPoints(booking);
+            _repository.UpdateReview(booking);
+        }
+
+        private void UpdateLodgingPoints(Booking booking)
+        {
+            Lodging lodging = booking.Lodging;
+            lodging.NumberOfStars = CalculateLodging(lodging, booking.TouristReview.NumberOfPoints);
+            lodging.ReviewsCount++;
+            _lodgingService.Update(lodging);
+        }
+
+        private int CalculateLodging(Lodging lodging, int points)
+        {
+            if (lodging.ReviewsCount > 0)
+            {
+                return ((lodging.NumberOfStars * lodging.ReviewsCount) + points) / (lodging.ReviewsCount + 1);
+            }
+
+            return points;
         }
     }
 }
