@@ -17,6 +17,7 @@ export class EditLodgingComponent implements OnInit {
   saved = false
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems();
   }
 
   lodgingUpdateCapacity: LodgingUpdateCapacity = {

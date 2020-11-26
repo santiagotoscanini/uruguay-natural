@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {NavbarService} from "../../services/navbar.service";
-import {Report} from "../../models/report/Report";
-import {Lodging} from "../../models/lodging/Lodging";
-import {LodgingService} from "../../services/lodging.service";
-import {TouristPoint} from "../../models/touristPoint/TouristPoint";
-import {TouristPointService} from "../../services/tourist-point.service";
+import {NavbarService} from "../../../services/navbar.service";
+import {Report} from "../../../models/report/Report";
+import {Lodging} from "../../../models/lodging/Lodging";
+import {LodgingService} from "../../../services/lodging.service";
+import {TouristPoint} from "../../../models/touristPoint/TouristPoint";
+import {TouristPointService} from "../../../services/tourist-point.service";
 
 @Component({
   selector: 'app-report',
@@ -17,7 +17,8 @@ export class ReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTouristPoints()
+    this.getTouristPoints();
+    this.navbarService.getNavbarItems();
   }
 
   touristPoints: TouristPoint[] = []

@@ -35,6 +35,7 @@ export class CreateLodgingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTouristPoints();
+    this.navbarService.getNavbarItems();
   }
 
   getTouristPoints() {

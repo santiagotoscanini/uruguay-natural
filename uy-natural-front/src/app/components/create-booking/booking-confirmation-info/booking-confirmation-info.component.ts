@@ -13,6 +13,7 @@ export class BookingConfirmationInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookingRespnse = (JSON.parse(sessionStorage.getItem('booking-response')));
+    this.navbarService.getNavbarItems();
   }
 
   bookingRespnse: BookingResponse

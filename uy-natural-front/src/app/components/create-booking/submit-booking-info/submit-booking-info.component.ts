@@ -20,6 +20,7 @@ export class SubmitBookingInfoComponent implements OnInit {
   ngOnInit(): void {
     this.booking.lodgingId = (JSON.parse(sessionStorage.getItem('lodging'))).id;
     this.setBookingInfo(JSON.parse(sessionStorage.getItem('lodging-filtered')))
+    this.navbarService.getNavbarItems();
   }
 
   private setBookingInfo(lodgingFilter: LodgingFilter){

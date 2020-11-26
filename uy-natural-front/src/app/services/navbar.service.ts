@@ -90,13 +90,13 @@ export class NavbarService {
             text: "Delete Lodging"
           },
           {
-            path: "lodgings/migration",
+            path: "lodging/migration",
             child: [],
             class: "",
             text: "Migrate Lodgings"
           },
           {
-            path: "report",
+            path: "lodging/report",
             child: [],
             class: "",
             text: "Report"

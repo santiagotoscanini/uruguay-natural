@@ -23,6 +23,7 @@ export class SearchTouristPointComponent implements OnInit {
   ngOnInit(): void {
     this.getRegions()
     this.getCategories()
+    this.navbarService.getNavbarItems()
   }
 
   regionsToShow: Region[]

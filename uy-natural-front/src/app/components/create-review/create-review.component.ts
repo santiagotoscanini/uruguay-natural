@@ -23,6 +23,7 @@ export class CreateReviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems();
   }
 
   createReview() {

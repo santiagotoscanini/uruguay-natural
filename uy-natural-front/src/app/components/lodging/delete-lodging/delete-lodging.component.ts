@@ -16,6 +16,7 @@ export class DeleteLodgingComponent implements OnInit {
   saved = false
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems();
   }
 
   lodgingId: number = 0

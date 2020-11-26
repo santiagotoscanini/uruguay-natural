@@ -18,6 +18,7 @@ export class LodgingInfoComponent implements OnInit {
     this.lodging = JSON.parse(sessionStorage.getItem('lodging'));
     this.lodgignFiltered = JSON.parse(sessionStorage.getItem('lodging-filtered'));
     this.touristPointName = sessionStorage.getItem('tourist-point-name');
+    this.navbarService.getNavbarItems();
   }
 
   touristPointName = ""

@@ -10,6 +10,7 @@ export class HomeComponent implements OnInit {
   constructor(public navbarService: NavbarService) { }
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems()
   }
 
 }

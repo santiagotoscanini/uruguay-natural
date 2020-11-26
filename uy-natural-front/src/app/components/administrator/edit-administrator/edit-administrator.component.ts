@@ -23,6 +23,7 @@ export class EditAdministratorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems();
   }
 
   updateAdmin() {

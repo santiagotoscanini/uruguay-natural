@@ -19,6 +19,7 @@ export class EditBookingStateComponent implements OnInit {
   saved = false
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems()
   }
 
   selectedState = ""

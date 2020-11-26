@@ -19,6 +19,7 @@ export class SearchLodgingComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => this.lodgingFilter.touristPointId = parseInt(params.get('touristPointId')))
     console.log(this.lodgingFilter.touristPointId)
+    this.navbarService.getNavbarItems();
   }
 
   checkInDate = new Date()

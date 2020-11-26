@@ -18,6 +18,7 @@ export class CheckBookingStatusComponent implements OnInit {
   errorMessage :string
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems();
   }
 
   getBookingString(status: number) {

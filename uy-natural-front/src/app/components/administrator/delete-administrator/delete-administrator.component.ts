@@ -22,6 +22,7 @@ export class DeleteAdministratorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems();
   }
 
   deleteAdmin() {

@@ -35,6 +35,7 @@ export class CreateTouristPointComponent implements OnInit {
   ngOnInit(): void {
     this.getRegions();
     this.getCategories();
+    this.navbarService.getNavbarItems();
   }
 
   addCategory() {

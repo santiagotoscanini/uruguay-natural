@@ -23,6 +23,7 @@ export class CreateAdministratorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.navbarService.getNavbarItems();
   }
 
   saveAdmin() {

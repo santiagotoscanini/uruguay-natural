@@ -24,7 +24,8 @@ export class MigrateLodgingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadImporters()
+    this.loadImporters();
+    this.navbarService.getNavbarItems();
   }
 
   loadImporters() {
