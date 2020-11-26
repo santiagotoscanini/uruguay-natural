@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Web</name>
+    </assembly>
+    <members>
+        <member name="M:Web.Controllers.AdministratorController.AddAdministrator(Web.Models.AdministratorModels.AdministratorCreatingModel)">
+            <summary>
+            Creates a new Administrator
+            </summary>
+            <response code="201">Created successfully.</response>
+            <response code="400">Bad Request, there is another Administrator with the same email.</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+            <response code="403">Not enough permissions, not Authorized.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.AdministratorController.DeleteAdministrator(System.String)">
+            <summary>
+            Delete an administrator
+            </summary>
+            <response code="204">Removed successfully.</response>
+            <response code="404">There is no administrator with that email.</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+            <response code="403">Not enough permissions, not Authorized.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.AdministratorController.UpdateAdministrator(System.String,Web.Models.AdministratorModel.AdministratorUpdatingModel)">
+            <summary>
+            Update Administrator details
+            </summary>
+            <response code="204">Updated successfully.</response>
+            <response code="404">There is no administrator with that email.</response>
+            <response code="401">User does not send a token, not Authenticated</response>
+            <response code="403">Not enough permissions, not Authorized</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.GetAllBookings">
+            <summary>
+            Get Reservations
+            </summary>
+            <response code="200">They were successfully obtained.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.AddBooking(Web.Models.BookingModels.BookingCreatingModel)">
+            <summary>
+            Create reservation
+            </summary>
+            <response code="201">Created successfully.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.GetBookingById(System.String)">
+            <summary>
+            Get reservation
+            </summary>
+            <response code="200">Obtained successfully.</response>
+            <response code="404">Doesn't exist a booking with that code.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.UpdateBookingState(System.String,Web.Models.BookingModels.BookingStateUpdateModel)">
+             <summary>
+             Update booking state
+             </summary>
+             <response code="204">Updated successfully</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+             <response code="403">Not enough permissions, not Authorized.</response>
+             <response code="404">Doesn't exist a booking with that code.</response>
+             <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.BookingController.UpdateBookingReview(System.String,Web.Models.BookingModels.BookingReviewUpdateModel)">
+            <summary>
+            Update booking review
+            </summary>
+            <response code="204">Updated successfully</response>
+            <response code="400">Bad Request, a review has already been registered for this booking.</response>
+            <response code="404">Doesn't exist a booking with that code.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.CategoryController.GetAllCategories">
+            <summary>
+            Get categories
+            </summary>
+            <response code="200">They were successfully obtained.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.ImporterController.GetImporters">
+            <summary>
+            Get names of importers
+            </summary>
+            <response code="200">Obtained successfully.</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+            <response code="403">Not enough permissions, not Authorized.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.ImporterController.ImportLodgings(Web.Models.ImporterModel.ImporterBaseModel)">
+             <summary>
+             Save lodgings using the selected importer
+             </summary>
+             <response code="201">Created successfully.</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+             <response code="403">Not enough permissions, not Authorized.</response>
+             <response code="404">Doesn't exist a importer with that name.</response>
+             <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.LodgingController.UpdateLodging(System.Int32,Web.Models.LodgingModels.LodgingUpdateCapacityModel)">
+            <summary>
+            Update Lodging capacity
+            </summary>
+            <response code="204">Updated successfully.</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+            <response code="403">Not enough permissions, not Authorized.</response>
+            <response code="404">Doesn't exist a lodging with that id.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.LodgingController.DeleteLodging(System.Int32)">
+             <summary>
+             Delete a Lodging
+             </summary>
+             <response code="204">Deleted successfully.</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+             <response code="403">Not enough permissions, not Authorized.</response>
+             <response code="404">Doesn't exist a lodging with that id.</response>
+             <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.LodgingController.AddLodging(Web.Models.LodgingModels.LodgingCreatingModel)">
+             <summary>
+             Create a Lodging
+             </summary>
+             <response code="201">Created successfully.</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+             <response code="403">Not enough permissions, not Authorized.</response>
+             <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.LodgingController.GetLodgingsFiltered(Web.Models.LodgingModels.LodgingFilterModel)">
+            <summary>
+            Get Lodgings Filtered
+            </summary>
+            <response code="200">Obtained successfully.</response>
+            <response code="400">Bad Request, the number of guests cannot be less than zero.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.LodgingController.GetLodgingsFilteredByTouristPointAndRange(Web.Models.LodgingModels.LodgingFilterByTouristPointAndRangeModel)">
+            <summary>
+            Get Filtered by Tourist Point and Range of time
+            </summary>
+            <response code="200">Obtained successfully.</response>
+            <response code="404">No lodgings were found that meet the conditions</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.RegionController.GetAllRegions">
+            <summary>
+            Get regions
+            </summary>
+            <response code="200">They were successfully obtained.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.SessionController.Login(Web.Models.Session.LoginModel)">
+            <summary>
+            Login
+            </summary>
+            <response code="200">Successfully logged in.</response>
+            <response code="400">Invalid credentials.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.SessionController.Logout(Web.Models.Session.LogoutModel)">
+            <summary>
+            Logout
+            </summary>
+            <response code="200">Successfully logged out.</response>
+            <response code="401">c</response>
+            <response code="403">Not enough permissions, not Authorized</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.TouristPointController.AddTouristPoint(Web.Models.TouristPointModels.TouristPointCreatingModel)">
+             <summary>
+             Create tourist point
+             </summary>
+             <response code="201">Created successfully.</response>
+            <response code="401">User does not send a token, not Authenticated.</response>
+             <response code="403">Not enough permissions, not Authorized.</response>
+             <response code="500">Internal Server Error.</response>
+        </member>
+        <member name="M:Web.Controllers.TouristPointController.GetTouristPointFiltered(System.String,System.String)">
+            <summary>
+            Get Tourist Point
+            </summary>
+            <response code="200">They were successfully obtained.</response>
+            <response code="500">Internal Server Error.</response>
+        </member>
+    </members>
+</doc>

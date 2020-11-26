@@ -29,13 +29,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SessionInterface", "src\Ses
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exceptions", "src\Exceptions\Exceptions.csproj", "{4172F0E1-0459-4A15-BE95-E19E45DD790F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importers", "src\Importers\Importers.csproj", "{793CCDF6-177C-44A0-8403-CA99C3D791D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importers", "src\Importers\Importers.csproj", "{793CCDF6-177C-44A0-8403-CA99C3D791D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonImporters", "JsonImporters\JsonImporters.csproj", "{94BA5449-D261-4731-BB9A-75BEACDBC4B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonImporters", "JsonImporters\JsonImporters.csproj", "{94BA5449-D261-4731-BB9A-75BEACDBC4B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlImporters", "XmlImporters\XmlImporters.csproj", "{20C28328-4587-4B68-96CF-9A6C6055F3B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlImporters", "XmlImporters\XmlImporters.csproj", "{20C28328-4587-4B68-96CF-9A6C6055F3B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeImporter", "FakeImporter\FakeImporter.csproj", "{AF3DD362-375A-49B1-A67E-2A4BF0643D86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeImporter", "FakeImporter\FakeImporter.csproj", "{AF3DD362-375A-49B1-A67E-2A4BF0643D86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

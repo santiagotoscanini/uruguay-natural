@@ -85,6 +85,7 @@ namespace Web.Controllers
         /// Get Filtered by Tourist Point and Range of time
         /// </summary>
         /// <response code="200">Obtained successfully.</response>
+        /// <response code="404">No lodgings were found that meet the conditions</response>
         /// <response code="500">Internal Server Error.</response>
         [HttpGet("reports")]
         [ServiceFilter(typeof(AuthorizationAttributeFilter))]

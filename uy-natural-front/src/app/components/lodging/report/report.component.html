@@ -1,0 +1,38 @@
+
+<div class="col-lg-1 mt-2">
+  <form ngNativeValidate (ngSubmit)="applyReport()" class="form-create-admin">
+    <h2>Report</h2>
+    <div class="form-group">
+      <label for="inputTouristPoint">Tourist Point</label>
+      <select class="custom-select" id="inputTouristPoint" name="touristPoint" [(ngModel)]="touristPointName">
+        <option *ngFor="let tp of touristPoints" id="{{tp.id}}">{{tp.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="checkInInput">Check In Date</label>
+      <input type="date" class="form-control" id="checkInInput" name="checkInDate"
+             [ngModel]="this.checkInDate | date:'yyyy-MM-dd'"
+             (ngModelChange)="this.checkInDate = $event" required="required">
+    </div>
+    <div class="form-group">
+      <label for="checkOutInput">Check Out Date</label>
+      <input type="date" class="form-control" id="checkOutInput" name="checkOutDate"
+             [ngModel]="this.checkOutDate | date:'yyyy-MM-dd'"
+             (ngModelChange)="this.checkOutDate = $event" required="required">
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-4">View Report</button>
+  </form>
+
+  <div class="align-self-center mb-3">
+    <div *ngFor="let lodg of lodgingsToShow" class="card">
+      <img class="card-img-top" [src]="sanitizer.bypassSecurityTrustUrl(lodg.images[0])" width="10" height="150" alt="star">
+
+      <div class="card-body">
+        <h5 class="card-title">{{lodg.name}}</h5>
+        <p class="card-text">{{lodg.description}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
