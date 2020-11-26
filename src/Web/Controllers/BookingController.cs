@@ -23,7 +23,7 @@ namespace Web.Controllers
         /// <response code="200">They were successfully obtained.</response>
         /// <response code="500">Internal Server Error.</response>
         [HttpGet]
-        public IActionResult GetAllBookings([FromQuery(Name = "tourist-point")] string touristPoint)
+        public IActionResult GetAllBookings()
         {
             return Ok(_bookingService.GetAll().Select(b => new BookingModel(b)));
         }
@@ -63,11 +63,24 @@ namespace Web.Controllers
         /// <response code="500">Internal Server Error.</response>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(AuthorizationAttributeFilter))]
-        public IActionResult UpdateBooking([FromRoute] string id, [FromBody] BookingUpdateInfoModel booking)
+        public IActionResult UpdateBookingState([FromRoute] string id, [FromBody] BookingStateUpdateModel bookingState)
         {
-            _bookingService.Update(booking.ToEntity(id));
+            _bookingService.UpdateState(bookingState.ToEntity(id));
+            return NoContent();
+        }
+        
+        /// <summary>
+        /// Update booking review
+        /// </summary>
+        /// <response code="204">Updated successfully</response>
+        /// <response code="400">Bad Request, a review has already been registered for this booking.</response>
+        /// <response code="404">Doesn't exist a booking with that code.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [HttpPut("{id}/reviews")]
+        public IActionResult UpdateBookingReview([FromRoute] string id, [FromBody] BookingReviewUpdateModel bookingReview)
+        {
+            _bookingService.UpdateReview(bookingReview.ToEntity(id));
             return NoContent();
         }
     }
 }
-    

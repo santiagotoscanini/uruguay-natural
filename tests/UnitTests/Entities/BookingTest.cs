@@ -16,6 +16,8 @@ namespace UnitTests.Entities
         private int _totalNumberOfGuests = 3;
         private Lodging _lodging = new Lodging();
         private NumberOfGuests _numberOfGuests= new NumberOfGuests();
+        private int _price = 3;
+        private Review _touristReview = new Review { Text = "Nice"};
 
             [TestMethod]
         public void CreateEmptyBooking()
@@ -31,6 +33,8 @@ namespace UnitTests.Entities
             Assert.IsNull(booking.NumberOfGuests);
             Assert.AreEqual(0, booking.TotalNumberOfGuests);
             Assert.IsNull(booking.Lodging);
+            Assert.AreEqual(0.0, booking.Price);
+            Assert.IsNull(booking.TouristReview);
         }
 
         [TestMethod]
@@ -47,6 +51,8 @@ namespace UnitTests.Entities
                 NumberOfGuests = _numberOfGuests,
                 TotalNumberOfGuests = _totalNumberOfGuests,
                 Lodging = _lodging,
+                Price = _price,
+                TouristReview = _touristReview,
             };
 
             Assert.AreEqual(booking.Tourist, _tourist);
@@ -58,6 +64,8 @@ namespace UnitTests.Entities
             Assert.AreEqual(booking.NumberOfGuests, _numberOfGuests);
             Assert.AreEqual(booking.TotalNumberOfGuests, _totalNumberOfGuests);
             Assert.AreEqual(booking.Lodging, _lodging);
+            Assert.AreEqual(_price, booking.Price);
+            Assert.AreEqual(_touristReview, booking.TouristReview);
         }
 
         [TestMethod]

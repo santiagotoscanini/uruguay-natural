@@ -64,11 +64,16 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("TouristId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TouristReviewId")
+                        .HasColumnType("int");
+
                     b.HasKey("Code");
 
                     b.HasIndex("LodgingId");
 
                     b.HasIndex("TouristId");
+
+                    b.HasIndex("TouristReviewId");
 
                     b.ToTable("Bookings");
                 });
@@ -139,6 +144,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("NumberOfStars")
                         .HasColumnType("int");
 
+                    b.Property<int>("ReviewsCount")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TouristPointId")
                         .HasColumnType("int");
 
@@ -157,6 +165,24 @@ namespace Infrastructure.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Region");
+                });
+
+            modelBuilder.Entity("Entities.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("NumberOfPoints")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("Entities.Tourist", b =>
@@ -190,8 +216,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -232,11 +258,16 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Entities.Lodging", "Lodging")
                         .WithMany("Bookings")
-                        .HasForeignKey("LodgingId");
+                        .HasForeignKey("LodgingId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Entities.Tourist", "Tourist")
                         .WithMany()
                         .HasForeignKey("TouristId");
+
+                    b.HasOne("Entities.Review", "TouristReview")
+                        .WithMany()
+                        .HasForeignKey("TouristReviewId");
                 });
 
             modelBuilder.Entity("Entities.Lodging", b =>

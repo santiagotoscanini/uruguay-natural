@@ -1,0 +1,18 @@
+
+<div class="col-lg-1 mt-2">
+  <form ngNativeValidate (ngSubmit)="deleteAdmin()" class="form-create-admin">
+    <h2>Delete Administrator</h2>
+    <div class="form-group">
+      <label for="inputEmail">Email address</label>
+      <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp" [(ngModel)]="admin.email"
+             placeholder="Enter email" required="required">
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage != null" style="margin-top: 10px">
+      {{this.errorMessage}}
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="this.saved" style="margin-top: 10px">
+      Deleted succesfully
+    </div>
+  </form>
+</div>

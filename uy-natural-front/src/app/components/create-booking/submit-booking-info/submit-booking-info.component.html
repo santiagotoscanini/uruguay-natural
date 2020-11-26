@@ -1,0 +1,56 @@
+
+<div class="col-lg-1 mt-2">
+  <form ngNativeValidate (ngSubmit)="createBooking()" class="form-create-admin">
+    <h2>Reserve your next holidays</h2>
+    <div class="form-group">
+      <label for="nameInput">Name</label>
+      <input type="text"  class="form-control" id="nameInput" name="name"
+             [(ngModel)]="this.booking.touristName" required="required">
+    </div>
+    <div class="form-group">
+      <label for="surnameInput">Surname</label>
+      <input type="text" class="form-control" id="surnameInput" name="surname"
+             [(ngModel)]="this.booking.touristSurname" required="required">
+    </div>
+    <div class="form-group">
+      <label for="emailInput">Email</label>
+      <input type="email"  class="form-control" id="emailInput" name="email"
+             [(ngModel)]="this.booking.touristEmail" required="required">
+    </div>
+    <div class="form-group">
+      <label for="checkInInput">Check In Date</label>
+      <input type="date" readonly class="form-control" id="checkInInput" name="checkInDate"
+             [ngModel]="this.booking.checkInDate | date:'yyyy-MM-dd'" required="required">
+    </div>
+    <div class="form-group">
+      <label for="checkOutInput">Check Out Date</label>
+      <input type="date" readonly class="form-control" id="checkOutInput" name="checkOutDate"
+             [ngModel]="this.booking.checkOutDate | date:'yyyy-MM-dd'" required="required">
+    </div>
+
+    <div class="form-group">
+      <label for="numberOfAdultsInput">Number of Adults</label>
+      <input type="number" min="0" readonly class="form-control" id="numberOfAdultsInput" name="numberOfAdults"
+             [(ngModel)]="this.booking.numberOfAdults" required="required">
+    </div>
+    <div class="form-group">
+      <label for="numberOfChildrenInput">Number of Children</label>
+      <input type="number" min="0"  readonly class="form-control" id="numberOfChildrenInput" name="numberOfChildren"
+             [(ngModel)]="this.booking.numberOfChildren" required="required">
+    </div>
+    <div class="form-group">
+      <label for="numberOfBabiesInput">Number of Babies</label>
+      <input type="number" min="0" readonly class="form-control" id="numberOfBabiesInput" name="numberOfBabies"
+             [(ngModel)]="this.booking.numberOfBabies" required="required">
+    </div>
+    <div class="form-group">
+      <label for="numberOfRetiredInput">Number of Retired</label>
+      <input type="number" min="0" readonly class="form-control" id="numberOfRetiredInput" name="numberOfRetired"
+             [(ngModel)]="this.booking.numberOfRetired" required="required">
+    </div>
+    <button type="submit" readonly class="btn btn-primary mb-4">Acept</button>
+    <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage != null" style="margin-top: 10px">
+      {{this.errorMessage}}
+    </div>
+  </form>
+</div>

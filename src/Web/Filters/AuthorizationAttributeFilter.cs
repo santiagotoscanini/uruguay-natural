@@ -10,7 +10,7 @@ namespace Web.Filters
         private readonly ISessionService _sessions;
         
         private const string UnautorizedTitleResponse = "The requested resource requires authentication";
-        private const string UnautorizedDescriptionResponse = "Send a token";
+        private const string UnautorizedDescriptionResponse = "User does not send a token, not Authenticated";
         private const string ForbiddenTitleResponse = "The requested resource is forbidden";
         private const string ForbiddenDescriptionResponse = "Not enough permissions";
 

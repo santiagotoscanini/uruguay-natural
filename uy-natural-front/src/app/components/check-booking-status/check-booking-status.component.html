@@ -1,0 +1,23 @@
+
+<div class="col-lg-1 mt-2">
+  <form ngNativeValidate (ngSubmit)="checkBookingStatus()" class="form-create-admin">
+    <h2>Check Status of Booking</h2>
+    <div class="form-group">
+      <label for="bookingId">Booking ID</label>
+      <input type="text" class="form-control" id="bookingId" name="bookingId"
+             [(ngModel)]="bookingId" required="required">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Check status</button>
+    <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage != null" style="margin-top: 10px">
+      {{this.errorMessage}}
+    </div>
+  </form>
+
+  <div class="form-create-admin" *ngIf="bookingStatus != null">
+    <h4>Status: </h4>
+    <p>{{getBookingString(bookingStatus.state)}}</p>
+    <h4>Description: </h4>
+    <p>{{bookingStatus.description}}</p>
+  </div>
+</div>

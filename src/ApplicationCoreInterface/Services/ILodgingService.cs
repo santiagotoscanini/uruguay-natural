@@ -11,5 +11,6 @@ namespace ApplicationCoreInterface.Services
         Lodging Update(Lodging lodging);
         void Delete(int lodgingId);
         Dictionary<Lodging, double> FilterLodgings(LodgingToFilter lodgingToFilter);
+        IEnumerable<Lodging> GetFilteredByTouristPointAndRange(LodgingToFilter lodgingToFilter);
     }
 }

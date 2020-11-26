@@ -15,18 +15,30 @@ namespace ApplicationCore.Services
 
         public double CalculatePrice(NumberOfGuests numberOfGuests, double price)
         {
-            double calculatedPrice = 0.0;
-            Dictionary<Guest, int> guestsMap = MappingGuests(numberOfGuests);
+            var calculatedPrice = 0.0;
+            IDictionary<Guest, int> guestsMap = MappingGuests(numberOfGuests);
             foreach (var guest in guestsMap)
             {
                 var percentagePayedByGuest = guest.Key.Percentage;
                 var numberOfGuestOfType = guest.Value;
-                calculatedPrice += (price * percentagePayedByGuest / 100) * numberOfGuestOfType;
+                if (guest.Key.Name.Equals("Retired"))
+                {
+                    var numberOfRetiredWithDiscount = numberOfGuestOfType / 2;
+                    calculatedPrice += price * percentagePayedByGuest / 100 * numberOfRetiredWithDiscount;
+
+                    var numberOfRetiredWithoutDiscount = numberOfGuestOfType % 2;
+                    calculatedPrice += price * (numberOfRetiredWithDiscount + numberOfRetiredWithoutDiscount);
+                }
+                else
+                {
+                    calculatedPrice += price * percentagePayedByGuest / 100 * numberOfGuestOfType;
+                }
             }
+
             return calculatedPrice;
         }
-        
-        private Dictionary<Guest, int> MappingGuests(NumberOfGuests numberOfGuests)
+
+        private IDictionary<Guest, int> MappingGuests(NumberOfGuests numberOfGuests)
         {
             var guestsMap = new Dictionary<Guest, int>();
             var guests = _guestService.GetAll();
@@ -37,14 +49,19 @@ namespace ApplicationCore.Services
                     guestsMap.Add(guest, numberOfGuests.NumberOfAdults);
                 }
                 else if (guest.Name.Equals("Child"))
-                {   
+                {
                     guestsMap.Add(guest, numberOfGuests.NumberOfChildren);
                 }
                 else if (guest.Name.Equals("Baby"))
                 {
                     guestsMap.Add(guest, numberOfGuests.NumberOfBabies);
                 }
+                else if (guest.Name.Equals("Retired"))
+                {
+                    guestsMap.Add(guest, numberOfGuests.NumberOfRetired);
+                }
             }
+
             return guestsMap;
         }
     }

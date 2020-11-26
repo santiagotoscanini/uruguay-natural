@@ -19,6 +19,11 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
         private readonly string _code = "test_code123";
         private readonly string _code2 = "test_code456";
         private readonly string _description = "This is a dummy description";
+        private readonly Review _touristReview = new Review
+        {
+            Text = "Nice",
+            NumberOfPoints = 3,
+        };
 
         [TestInitialize]
         public void Setup()
@@ -113,11 +118,34 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
             _bookingRepository.Add(booking);
 
 
-            _bookingRepository.Update(bookingStateInfo);
+            _bookingRepository.UpdateState(bookingStateInfo);
 
 
             Assert.AreEqual(bookingStateInfo.State, _bookingRepository.Get(_code).State);
             Assert.AreEqual(bookingStateInfo.Description, _bookingRepository.Get(_code).Description);
+        }
+        
+        [TestMethod]
+        public void UpdateBookingReviewTest()
+        {
+            var booking = new Booking
+            {
+                Code = _code,
+                TouristReview = null,
+            };
+            var bookingWithReview = new Booking
+            {
+                Code = _code,
+                TouristReview = _touristReview,
+            };
+            _bookingRepository.Add(booking);
+
+
+            _bookingRepository.UpdateReview(bookingWithReview);
+
+
+            Assert.AreEqual(_touristReview.Text, _bookingRepository.Get(_code).TouristReview.Text);
+            Assert.AreEqual(_touristReview.NumberOfPoints, _bookingRepository.Get(_code).TouristReview.NumberOfPoints);
         }
 
         [TestMethod]
@@ -138,7 +166,7 @@ namespace IntegrationTests.Infrastructure.Data.Repositories
                 Description = _description,
             };
 
-            _bookingRepository.Update(bookingStateInfo);
+            _bookingRepository.UpdateState(bookingStateInfo);
         }
 
         [TestMethod]

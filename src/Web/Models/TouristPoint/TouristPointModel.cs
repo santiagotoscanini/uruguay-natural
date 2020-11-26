@@ -1,5 +1,7 @@
-﻿using Entities;
+﻿using System;
+using Entities;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Web.Models.TouristPointModels
 {
@@ -14,12 +16,12 @@ namespace Web.Models.TouristPointModels
 
         public TouristPointModel(TouristPoint touristPoint)
         {
-            setCategoriesNames(touristPoint.TouristPointCategories);
+            SetCategoriesNames(touristPoint.TouristPointCategories);
             RegionName = touristPoint.Region.Name;
             Name = touristPoint.Name;
             Description = touristPoint.Description;
-            Image = touristPoint.Description;
             Id = touristPoint.Id;
+            Image = GetImage(touristPoint.Image);
         }
 
         public override bool Equals(object obj)
@@ -34,12 +36,18 @@ namespace Web.Models.TouristPointModels
             return Result;
         }
 
-        private void setCategoriesNames(ICollection<TouristPointCategory> touristPointCategories)
+        private void SetCategoriesNames(ICollection<TouristPointCategory> touristPointCategories)
         {
             foreach (TouristPointCategory touristPointCategory in touristPointCategories)
             {
                 Categories.Add(touristPointCategory.Category.Name);
             }
+        }
+
+        private string GetImage(byte[] image)
+        {
+            var imageBase64 = Convert.ToBase64String(image);
+            return string.Format("data:image/jpg;base64, {0}", imageBase64);
         }
     }
 }

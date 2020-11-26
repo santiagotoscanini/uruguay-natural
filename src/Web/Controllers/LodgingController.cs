@@ -3,6 +3,7 @@ using System.Linq;
 using ApplicationCoreInterface.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Web.Filters;
 using Web.Models.LodgingModels;
 
 namespace Web.Controllers
@@ -78,6 +79,20 @@ namespace Web.Controllers
             IEnumerable<LodgingFilteredModel> lodgingsToReturn =
                 lodgingsAndPrices.Select(l => new LodgingFilteredModel(l.Key, l.Value)).ToList().AsEnumerable();
             return Ok(lodgingsToReturn);
+        }
+
+        /// <summary>
+        /// Get Filtered by Tourist Point and Range of time
+        /// </summary>
+        /// <response code="200">Obtained successfully.</response>
+        /// <response code="404">No lodgings were found that meet the conditions</response>
+        /// <response code="500">Internal Server Error.</response>
+        [HttpGet("reports")]
+        [ServiceFilter(typeof(AuthorizationAttributeFilter))]
+        public IActionResult GetLodgingsFilteredByTouristPointAndRange([FromQuery] LodgingFilterByTouristPointAndRangeModel lodgingFilterModel)
+        {
+            var lodgings = _lodgingService.GetFilteredByTouristPointAndRange(lodgingFilterModel.ToEntity());
+            return Ok(lodgings.Select(l => new LodgingModelOut(l)));
         }
     }
 }

@@ -20,11 +20,11 @@ namespace UnitTests.Entities
             },
             Name = "Rocha",
             Description = "Good place",
-            Image = "sfafg222",
+            Image = new byte[1],
             Id = 2,
          };
         private string _address = "Av. Rio 123";
-        private ICollection<string> _images = new List<string>{"1234jnj"};
+        private ICollection<byte[]> _images = new List<byte[]>{new byte[1]};
         private double _costPerNight = 200.0;
         private string _description = "Good place";
         private string _contactNumber = "23346789";
@@ -87,6 +87,32 @@ namespace UnitTests.Entities
             Assert.AreEqual(_maximumSize, lodging.MaximumSize);
             Assert.AreEqual(_currentlyOccupiedPlaces, lodging.CurrentlyOccupiedPlaces);
             Assert.IsTrue(new List<Booking>().SequenceEqual(lodging.Bookings));
+        }
+
+        [TestMethod]
+        public void GetSortListOfLodgingsByBookingsCount()
+        {
+            var lodging = new Lodging
+            {
+                Bookings = new List<Booking>
+                {
+                    new Booking()
+                }
+            };
+            var lodging2 = new Lodging
+            {
+                Bookings = new List<Booking>(),
+            };
+            var lodgings = new List<Lodging>
+            {
+                lodging,
+                lodging2
+            };
+            
+            lodgings.Sort();
+
+            Assert.AreEqual(lodging2, lodgings[0]);
+            Assert.AreEqual(lodging, lodgings[1]);
         }
     }
 }

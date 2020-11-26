@@ -25,6 +25,19 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Guest", x => x.Name);
                 });
+            
+            migrationBuilder.CreateTable(
+                name: "Administrators",
+                columns: table => new
+                {
+                    Name = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Administrators", x => x.Email);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
