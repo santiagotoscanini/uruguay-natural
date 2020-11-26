@@ -40,10 +40,16 @@ export class EditBookingStateComponent implements OnInit {
     this.bookingService.putUpdateBookingState(this.bookingUpdateState).subscribe(m => {
       this.saved = true;
       this.errorMessage = null;
+      this.cleanFields();
     }, error => {
       console.error(error);
       this.errorMessage = error;
       this.saved = false;
     });
+  }
+
+  private cleanFields() {
+    this.bookingUpdateState.bookingId = "";
+    this.bookingUpdateState.description = "";
   }
 }
