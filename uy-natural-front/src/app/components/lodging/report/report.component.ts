@@ -5,6 +5,7 @@ import {Lodging} from "../../../models/lodging/Lodging";
 import {LodgingService} from "../../../services/lodging.service";
 import {TouristPoint} from "../../../models/touristPoint/TouristPoint";
 import {TouristPointService} from "../../../services/tourist-point.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-report',
@@ -13,7 +14,7 @@ import {TouristPointService} from "../../../services/tourist-point.service";
 })
 export class ReportComponent implements OnInit {
 
-  constructor(public navbarService: NavbarService, private lodgingService: LodgingService, private touristPointService: TouristPointService) {
+  constructor(public navbarService: NavbarService, private lodgingService: LodgingService, private touristPointService: TouristPointService, public sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {

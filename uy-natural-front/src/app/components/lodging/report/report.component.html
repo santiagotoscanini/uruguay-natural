@@ -26,9 +26,7 @@
 
   <div class="align-self-center mb-3">
     <div *ngFor="let lodg of lodgingsToShow" class="card">
-      <img class="card-img-top" width="10" height="150"
-           src="{{lodg.images[0]}}"
-           alt="Card image cap">
+      <img class="card-img-top" [src]="sanitizer.bypassSecurityTrustUrl(lodg.images[0])" width="10" height="150" alt="star">
 
       <div class="card-body">
         <h5 class="card-title">{{lodg.name}}</h5>
